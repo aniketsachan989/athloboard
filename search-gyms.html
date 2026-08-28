@@ -84,7 +84,26 @@
     }
 
     @media (max-width: 992px) {
-      .gym-explorer-layout { grid-template-columns: 1fr; }
+      .gym-explorer-layout {
+        grid-template-columns: 1fr;
+        padding: 0 1.25rem;
+        margin: 1.5rem auto;
+        gap: 1.5rem;
+      }
+      .gym-detail-card {
+        padding: 1.5rem 1.25rem;
+      }
+      .gym-detail-card h2 {
+        font-size: 1.9rem !important;
+      }
+      .spec-3-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
+      .schedule-2-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
     }
   </style>
 </head>
@@ -254,7 +273,7 @@
           <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-volt); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px;">
             <i class="fa-solid fa-weight-hanging"></i> Audited Equipment Specifications (Phase 2)
           </div>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center;">
+          <div class="spec-3-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center;">
             <div style="background: var(--bg-card); padding: 1.25rem; border-radius: var(--radius-sm);">
               <div style="font-size: 0.75rem; color: var(--text-slate); text-transform: uppercase;">Total Calibrated Plates</div>
               <div style="font-size: 2.2rem; font-weight: 900; color: var(--accent-volt); font-family: var(--font-display);">${(gym.plateWeightKg || 4500).toLocaleString()} KG</div>
@@ -274,7 +293,7 @@
         </div>
 
         <!-- Schedule & Pricing Grid -->
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="schedule-2-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
           <div style="background: var(--bg-slate); padding: 1.5rem; border-radius: var(--radius-md);">
             <div style="font-weight: 800; color: var(--accent-volt); margin-bottom: 0.5rem; text-transform: uppercase;">
               <i class="fa-solid fa-clock"></i> Operating Schedule

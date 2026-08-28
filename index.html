@@ -189,23 +189,23 @@
       </button>
     </div>
 
-    <!-- Live Stats Bar -->
-    <div class="card-stagger-reveal delay-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; text-align: left; background: var(--bg-card); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-      <div>
-        <div style="font-size: 2rem; font-weight: 800; color: #FFF; font-family: var(--font-display);" class="counter-val">10,000+</div>
-        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Verified Athletes</div>
+    <!-- Live Stats Bar (Responsive 4-col on desktop, 2x2 grid on mobile) -->
+    <div class="hero-stats-deck card-stagger-reveal delay-4">
+      <div class="stat-deck-item">
+        <div class="stat-deck-num counter-val">10,000+</div>
+        <div class="stat-deck-lbl">Verified Athletes</div>
       </div>
-      <div>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-volt); font-family: var(--font-display);" class="counter-val">4,500+</div>
-        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">kg Plates / Facility Avg.</div>
+      <div class="stat-deck-item">
+        <div class="stat-deck-num text-volt counter-val">4,500+</div>
+        <div class="stat-deck-lbl">kg Plates / Facility Avg.</div>
       </div>
-      <div>
-        <div style="font-size: 2rem; font-weight: 800; color: #FFF; font-family: var(--font-display);">100%</div>
-        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Video Refereed Lifts</div>
+      <div class="stat-deck-item">
+        <div class="stat-deck-num">100%</div>
+        <div class="stat-deck-lbl">Video Refereed Lifts</div>
       </div>
-      <div>
-        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-green); font-family: var(--font-display);">0%</div>
-        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Spiked Supplements</div>
+      <div class="stat-deck-item">
+        <div class="stat-deck-num text-green">0%</div>
+        <div class="stat-deck-lbl">Spiked Supplements</div>
       </div>
     </div>
   </div>

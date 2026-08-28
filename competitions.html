@@ -10,7 +10,7 @@
   <style>
     .meets-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
       max-width: 1400px;
       margin: 3rem auto;
@@ -45,6 +45,14 @@
     }
     .comp-card-bespoke:hover .comp-banner img {
       transform: scale(1.06);
+    }
+      @media (max-width: 992px) {
+      .meets-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1.25rem;
+        margin: 1.5rem auto;
+        gap: 1.25rem;
+      }
     }
   </style>
 </head>

@@ -225,6 +225,35 @@ p {
   gap: 1rem;
 }
 
+/* Hero Stats Bar Deck */
+.hero-stats-deck {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: left;
+  background: var(--bg-card);
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+.stat-deck-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #FFF;
+  font-family: var(--font-display);
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+.stat-deck-lbl {
+  font-size: 0.75rem;
+  color: var(--text-slate);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 /* ==================== BUTTONS ==================== */
 .btn-volt {
   background: var(--accent-volt);
@@ -735,3 +764,228 @@ p {
   cursor: pointer;
 }
 .modal-close:hover { color: var(--text-white); }
+
+/* ==================== MOBILE NAVIGATION & RESPONSIVE ENGINE ==================== */
+
+/* Mobile Hamburger Toggle Button */
+.athlo-menu-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: #FFFFFF;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.athlo-menu-btn:hover, .athlo-menu-btn:active {
+  background: rgba(212, 255, 0, 0.15);
+  border-color: var(--accent-volt);
+  color: var(--accent-volt);
+}
+
+/* Mobile Nav Drawer Overlay */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 8, 10, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  overflow-y: auto;
+}
+.mobile-nav-drawer.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.mobile-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.mobile-drawer-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  color: #FFFFFF;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.mobile-drawer-close:active {
+  background: var(--accent-red);
+  color: #FFF;
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: var(--bg-slate);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: #FFFFFF !important;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  transition: all var(--transition-fast);
+}
+.mobile-nav-item:active, .mobile-nav-item.active {
+  background: rgba(212, 255, 0, 0.12);
+  border-color: var(--accent-volt);
+  color: var(--accent-volt) !important;
+}
+
+.mobile-nav-actions-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ==================== COMPREHENSIVE RESPONSIVE MEDIA QUERIES ==================== */
+@media (max-width: 992px) {
+  .athlo-header {
+    padding: 0.85rem 1.25rem !important;
+  }
+  .athlo-nav-links, .athlo-nav-actions {
+    display: none !important;
+  }
+  .athlo-menu-btn {
+    display: flex !important;
+  }
+
+  /* Reveal Animations on Mobile: Guarantee instant visibility */
+  .slide-up-reveal, .slide-left-reveal, .slide-right-reveal, .card-stagger-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Hero Stage */
+  .hero-stage {
+    padding: 3rem 1.25rem 2rem !important;
+  }
+  .hero-tagline {
+    font-size: 2.15rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+  .hero-desc {
+    font-size: 0.925rem !important;
+    padding: 0 0.25rem !important;
+    margin-bottom: 1.75rem !important;
+  }
+  .hero-search-box {
+    max-width: 100% !important;
+    margin-bottom: 2rem !important;
+    padding: 0.35rem 0.4rem 0.35rem 1rem !important;
+  }
+  .hero-search-input {
+    font-size: 0.875rem !important;
+  }
+
+  /* Grid Reductions */
+  .grid-2, .grid-3, .grid-4, .pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+  }
+  .spec-meters-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+  .spec-showcase-box {
+    padding: 2rem 1.25rem !important;
+  }
+
+  /* Common Layout Containers */
+  .athlo-card {
+    padding: 1.35rem 1.25rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+  .gym-explorer-layout {
+    grid-template-columns: 1fr !important;
+    padding: 0 1.25rem !important;
+    margin: 1.5rem auto !important;
+    gap: 1.5rem !important;
+  }
+  .gym-rail-card {
+    max-height: none !important;
+  }
+
+  /* Form & Login Wrappers */
+  .signup-wrapper, .login-wrapper {
+    padding: 1rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+  .login-box {
+    padding: 2rem 1.25rem !important;
+  }
+
+  /* Dashboards */
+  .dash-layout {
+    flex-direction: column !important;
+  }
+  .dash-sidebar {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+  }
+  .dash-content {
+    padding: 1.5rem 1.25rem !important;
+  }
+
+  /* Footer */
+  footer {
+    padding: 3rem 1.25rem 2rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-tagline {
+    font-size: 1.85rem !important;
+  }
+  .spec-meters-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
