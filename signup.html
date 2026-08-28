@@ -6,7 +6,7 @@
   <title>Business Enrollment | Athloboard Athletic Ecosystem</title>
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="../shared/css/athloboard-core.css">
+  <link rel="stylesheet" href="shared/css/athloboard-core.css">
   <style>
     .signup-wrapper {
       max-width: 900px;
@@ -153,16 +153,16 @@
     <!-- Mandatory Rule 2 Notice: Athletes register inside Athloboard App -->
     <div class="athlete-notice-card">
       <div style="display: flex; align-items: center; gap: 1rem;">
-        <div style="color: var(--accent-volt); font-size: 2rem;"><i class="fa-brands fa-android"></i></div>
+        <div style="color: var(--accent-volt); font-size: 2rem;"><i class="fa-solid fa-trophy"></i></div>
         <div>
           <h3 style="font-size: 1.1rem; color: #FFF; margin-bottom: 0.2rem;">Are you an Athlete (Khiladi)?</h3>
           <p style="font-size: 0.85rem; color: var(--text-slate); margin: 0;">
-            Athlete registration and phone-OTP verification happens strictly inside the <strong>Athloboard Android App</strong>.
+            Athlete profiles, video refereeing, and verified totals are published on the <strong>Athloboard National Leaderboard</strong>.
           </p>
         </div>
       </div>
-      <a href="../index.html#android-guide" class="btn-volt" style="white-space: nowrap;">
-        <span>Open Athloboard App</span>
+      <a href="leaderboard.html" class="btn-volt" style="white-space: nowrap;">
+        <span>View SBD Rankings</span>
         <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
@@ -447,8 +447,8 @@
     </div>
   </div>
 
-  <script src="../shared/js/athlo-db.js"></script>
-  <script src="../shared/js/athlo-animations.js"></script>
+  <script src="shared/js/athlo-db.js"></script>
+  <script src="shared/js/athlo-animations.js"></script>
   <script>
     function switchTab(tabId) {
       document.querySelectorAll('.tab-trigger').forEach(btn => btn.classList.remove('active'));

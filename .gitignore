@@ -1,17 +1,15 @@
-# Build & IDE Artifacts
+# Exclude Admin HQ & Android App from this Common Website repo
+website-admin/
+android-app/
+website-common/
+athloboard_schema.sql
+gritloop_schema.sql
+
+# Build & System
 .gradle/
 build/
-*.iml
 .idea/
 .DS_Store
 Thumbs.db
-
-# Environment & Credentials
-.env
-.env.local
 *.log
-
-# Scratch & Brain Temp Files
 scratch/
-.system_generated/
-.user_uploaded/

@@ -3,25 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Athloboard | Master Athletic Ecosystem Gateway</title>
+  <title>Athloboard | Official Athletic Verification &amp; Strength Ecosystem</title>
   <!-- Google Fonts & Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="shared/css/athloboard-core.css">
   <style>
-    .master-hero-stage {
-      padding: 5rem 2rem 3rem;
-      text-align: center;
+    /* Kinetic Hero */
+    .hero-stage {
       position: relative;
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
     }
-    .platform-cards-grid {
+    .hero-tagline {
+      font-size: 3.6rem;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.03em;
+    }
+    .hero-desc {
+      font-size: 1.05rem;
+      color: var(--text-slate);
+      max-width: 680px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    /* Live Global Search Bar */
+    .hero-search-box {
+      max-width: 680px;
+      margin: 0 auto 3rem;
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-pill);
+      padding: 0.4rem 0.5rem 0.4rem 1.5rem;
+      display: flex;
+      align-items: center;
+      box-shadow: var(--shadow-card);
+      transition: border-color var(--transition-fast);
+    }
+    .hero-search-box:focus-within {
+      border-color: var(--accent-volt);
+      box-shadow: 0 0 25px rgba(212, 255, 0, 0.2);
+    }
+    .hero-search-input {
+      background: transparent;
+      border: none;
+      color: #FFF;
+      font-size: 1rem;
+      width: 100%;
+      outline: none;
+      font-family: var(--font-body);
+    }
+
+    /* 3 Pillars Grid */
+    .pillars-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
-      max-width: 1350px;
-      margin: 2rem auto 5rem;
-      padding: 0 2rem;
+      margin-top: 3rem;
     }
-    .portal-launch-card {
+    .pillar-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
@@ -31,34 +75,60 @@
       justify-content: space-between;
       transition: all var(--transition-normal);
     }
-    .portal-launch-card:hover {
+    .pillar-card:hover {
       border-color: var(--accent-volt);
       transform: translateY(-6px);
-      box-shadow: var(--shadow-card), 0 0 25px rgba(212, 255, 0, 0.2);
+      box-shadow: var(--shadow-card);
     }
-    .portal-card-banner {
-      height: 200px;
-      position: relative;
+    .pillar-banner {
+      height: 220px;
       background: #000;
+      position: relative;
       overflow: hidden;
     }
-    .portal-card-banner img {
+    .pillar-banner img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
-    .portal-launch-card:hover .portal-card-banner img {
+    .pillar-card:hover .pillar-banner img {
       transform: scale(1.08);
     }
+
+    /* Equipment Capacity Showcase */
+    .spec-showcase-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem;
+      margin-top: 3rem;
+    }
+    .spec-meters-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .spec-meter-tile {
+      background: var(--bg-slate);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.75rem;
+      text-align: center;
+    }
+
     @media (max-width: 992px) {
-      .platform-cards-grid { grid-template-columns: 1fr; }
+      .hero-tagline { font-size: 2.5rem; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .spec-meters-grid { grid-template-columns: repeat(2, 1fr); }
+      .spec-showcase-box { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Sticky Navbar -->
+  <!-- Bespoke Sticky Header -->
   <header class="athlo-header">
     <a href="index.html" class="athlo-brand">
       <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
@@ -66,145 +136,344 @@
     </a>
 
     <ul class="athlo-nav-links">
-      <li><a href="website-common/index.html" class="athlo-nav-link">Common Portal</a></li>
-      <li><a href="website-admin/index.html" class="athlo-nav-link">Super Admin HQ</a></li>
-      <li><a href="#android-guide" class="athlo-nav-link">Athlete App</a></li>
+      <li><a href="search-gyms.html" class="athlo-nav-link">Verified Gyms</a></li>
+      <li><a href="marketplace.html" class="athlo-nav-link">Supplements</a></li>
+      <li><a href="leaderboard.html" class="athlo-nav-link">SBD Rankings</a></li>
+      <li><a href="competitions.html" class="athlo-nav-link">Championships</a></li>
+      <li><a href="city-map.html" class="athlo-nav-link">City Radar</a></li>
     </ul>
 
     <div class="athlo-nav-actions">
-      <a href="website-common/login.html" class="btn-ghost">Business Login</a>
+      <a href="login.html" class="btn-ghost">Business Login</a>
+      <a href="signup.html" class="btn-volt">
+        <span>Partner Apply</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
     </div>
   </header>
 
-  <!-- Master Hero Stage -->
-  <div class="master-hero-stage">
+  <!-- Kinetic Hero Stage -->
+  <div class="hero-stage">
     <div class="reveal-mask">
-      <div class="section-tag slide-up-reveal"><i class="fa-solid fa-layer-group text-volt"></i> UNIFIED ATHLETIC ECOSYSTEM</div>
+      <div class="section-tag slide-up-reveal">
+        <i class="fa-solid fa-shield-halved text-volt"></i> 100% ADMIN VERIFIED STRENGTH &amp; NUTRITION
+      </div>
     </div>
+    
     <div class="reveal-mask">
-      <h1 class="slide-up-reveal delay-1" style="font-size: 3.2rem; margin-bottom: 0.75rem; letter-spacing: -0.03em;">
-        ATHLOBOARD PLATFORM
+      <h1 class="hero-tagline slide-up-reveal delay-1">
+        THE DEFINITIVE PLATFORM FOR<br>
+        <div class="sliding-word-wrapper">
+          <div class="sliding-word-reel">
+            <span>VERIFIED GYMS.</span>
+            <span>POWERLIFTING PRS.</span>
+            <span>PURE SUPPLEMENTS.</span>
+            <span>CALIBRATED IRON.</span>
+          </div>
+        </div>
       </h1>
     </div>
+
     <div class="reveal-mask">
-      <p class="text-slate slide-up-reveal delay-2" style="max-width: 680px; margin: 0 auto 2rem; font-size: 1.05rem; line-height: 1.6;">
-        The definitive athletic verification platform consisting of <strong>2 Web Portals</strong> (Common Web &amp; Super Admin HQ) and <strong>1 Standalone Native Android Studio App</strong>.
+      <p class="hero-desc slide-up-reveal delay-2">
+        Zero fake reps. Zero uninspected gym claims. Zero spiked supplements. Athloboard authenticates gym barbell capacities, certifies sports nutrition purity, and video-referees official powerlifting records.
       </p>
     </div>
+
+    <!-- Real-Time Global Quick Search -->
+    <div class="hero-search-box card-stagger-reveal delay-3">
+      <i class="fa-solid fa-magnifying-glass text-volt" style="margin-right: 0.75rem;"></i>
+      <input type="text" id="global-search" class="hero-search-input" placeholder="Search verified gyms, supplements, or powerlifters...">
+      <button class="btn-volt" style="padding: 0.65rem 1.25rem;" onclick="handleGlobalSearch()">
+        <span>Search</span>
+      </button>
+    </div>
+
+    <!-- Live Stats Bar -->
+    <div class="card-stagger-reveal delay-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 1000px; margin: 0 auto; text-align: left; background: var(--bg-card); padding: 1.5rem 2rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: #FFF; font-family: var(--font-display);" class="counter-val">10,000+</div>
+        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Verified Athletes</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-volt); font-family: var(--font-display);" class="counter-val">4,500+</div>
+        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">kg Plates / Facility Avg.</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: #FFF; font-family: var(--font-display);">100%</div>
+        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Video Refereed Lifts</div>
+      </div>
+      <div>
+        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-green); font-family: var(--font-display);">0%</div>
+        <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Spiked Supplements</div>
+      </div>
+    </div>
   </div>
 
-  <!-- 3 Pillars Grid -->
-  <div class="platform-cards-grid">
-    
-    <!-- 1. Common Website -->
-    <div class="portal-launch-card card-stagger-reveal delay-1">
-      <div>
-        <div class="portal-card-banner">
-          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80" alt="Common Website">
-          <div style="position: absolute; top: 12px; left: 12px;">
-            <span class="athlo-badge badge-volt">WEBSITE 1</span>
+  <!-- Sliding Kinetic Marquee Ticker 1 -->
+  <div class="glide-marquee-container">
+    <div class="glide-marquee-track">
+      <div class="marquee-item"><span class="dot-separator"></span> 4,500 KG CALIBRATED PLATES</div>
+      <div class="marquee-item"><span class="dot-separator"></span> 100% VIDEO REFEREED PRS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> HPLC LAB TESTED SUPPLEMENTS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> ZERO SPAM LISTINGS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> PARALLEL SQUAT DEPTH AUTHENTICATED</div>
+      <div class="marquee-item"><span class="dot-separator"></span> 10,000+ REGISTERED KHILADIS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> SANCTIONED CHAMPIONSHIP MEETS</div>
+      <!-- Duplicate for seamless infinite loop -->
+      <div class="marquee-item"><span class="dot-separator"></span> 4,500 KG CALIBRATED PLATES</div>
+      <div class="marquee-item"><span class="dot-separator"></span> 100% VIDEO REFEREED PRS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> HPLC LAB TESTED SUPPLEMENTS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> ZERO SPAM LISTINGS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> PARALLEL SQUAT DEPTH AUTHENTICATED</div>
+      <div class="marquee-item"><span class="dot-separator"></span> 10,000+ REGISTERED KHILADIS</div>
+      <div class="marquee-item"><span class="dot-separator"></span> SANCTIONED CHAMPIONSHIP MEETS</div>
+    </div>
+  </div>
+
+  <!-- 3 Pillars of Athloboard -->
+  <section class="athlo-section">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+      <div class="reveal-mask">
+        <div class="section-tag slide-up-reveal"><i class="fa-solid fa-cubes"></i> CORE PILLARS</div>
+      </div>
+      <div class="reveal-mask">
+        <h2 class="section-title slide-up-reveal delay-1">THE TRIAD OF ATHLETIC TRUST</h2>
+      </div>
+      <div class="reveal-mask">
+        <p class="slide-up-reveal delay-2">Three interconnected modules built for serious athletes, gym owners, and sports nutrition brands.</p>
+      </div>
+    </div>
+
+    <div class="pillars-grid">
+      <!-- Pillar 1: Verified Gyms -->
+      <div class="pillar-card card-stagger-reveal delay-1">
+        <div>
+          <div class="pillar-banner">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Gyms">
+            <div style="position: absolute; top: 12px; left: 12px;">
+              <span class="athlo-badge badge-volt">PHASE 1 &amp; 2 AUDITED</span>
+            </div>
           </div>
-          <div style="position: absolute; top: 12px; right: 12px;">
-            <span class="athlo-badge badge-verified">PUBLIC &amp; BUSINESS</span>
+          <div style="padding: 2rem;">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Verified Gym Directory</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">
+              Search facilities with physical inspection data: calibrated plate weight in kg, dumbbell totals, male/female trainer info counts, operational hours, and membership charges.
+            </p>
           </div>
         </div>
-        <div style="padding: 2rem;">
-          <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Common Web Portal</h2>
-          <p style="font-size: 0.875rem; color: var(--text-slate); margin-bottom: 1.25rem;">
-            Bespoke dark athletic platform with audited gym directory, supplement store, official leaderboard, and dedicated <strong>Business Dashboards</strong> for Gym Owners, Brands, and Local Vendors.
-          </p>
-          <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-slate); margin-bottom: 1.5rem;">
-            <div><i class="fa-solid fa-check text-volt"></i> Verified Gym Directory (Phase 1 &amp; 2)</div>
-            <div><i class="fa-solid fa-check text-volt"></i> 5-in-1 Registration Portals</div>
-            <div><i class="fa-solid fa-check text-volt"></i> Gym / Brand / Vendor Dashboards</div>
-          </div>
+        <div style="padding: 0 2rem 2rem;">
+          <a href="search-gyms.html" class="btn-ghost" style="width: 100%; justify-content: center;">
+            <span>Explore Facilities</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
         </div>
       </div>
-      <div style="padding: 0 2rem 2rem;">
-        <a href="website-common/index.html" class="btn-volt" style="width: 100%; justify-content: center;">
-          <span>Launch Common Website</span>
+
+      <!-- Pillar 2: Supplements -->
+      <div class="pillar-card card-stagger-reveal delay-2">
+        <div>
+          <div class="pillar-banner">
+            <img src="https://images.unsplash.com/photo-1584017911766-d451b3d0e843?w=800&q=80" alt="Supplements">
+            <div style="position: absolute; top: 12px; left: 12px;">
+              <span class="athlo-badge badge-verified"><i class="fa-solid fa-certificate"></i> HPLC LAB TESTED</span>
+            </div>
+          </div>
+          <div style="padding: 2rem;">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Verified Nutrition Store</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">
+              Buy authentic whey isolate, creatine, and lifting gear directly from certified brands and approved local nutrition stores. 100% lab certified.
+            </p>
+          </div>
+        </div>
+        <div style="padding: 0 2rem 2rem;">
+          <a href="marketplace.html" class="btn-ghost" style="width: 100%; justify-content: center;">
+            <span>Browse Products</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Pillar 3: Official SBD Rankings -->
+      <div class="pillar-card card-stagger-reveal delay-3">
+        <div>
+          <div class="pillar-banner">
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" alt="Leaderboard">
+            <div style="position: absolute; top: 12px; left: 12px;">
+              <span class="athlo-badge badge-cyan"><i class="fa-solid fa-video"></i> VIDEO REFEREED</span>
+            </div>
+          </div>
+          <div style="padding: 2rem;">
+            <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">National SBD Leaderboard</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 1.25rem;">
+              Official national powerlifting rankings. Every barbell squat depth, bench pause, and deadlift lockout is verified frame-by-frame by Super Admin referees.
+            </p>
+          </div>
+        </div>
+        <div style="padding: 0 2rem 2rem;">
+          <a href="leaderboard.html" class="btn-ghost" style="width: 100%; justify-content: center;">
+            <span>View Rankings</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Equipment Weight Capacity Visualizer -->
+  <section class="athlo-section" style="padding-top: 0;">
+    <div class="spec-showcase-box card-stagger-reveal">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
+        <div>
+          <div class="section-tag slide-left-reveal"><i class="fa-solid fa-sliders"></i> AUDITED GYM METRICS</div>
+          <h2 style="font-size: 2.2rem; margin-bottom: 0.25rem;" class="slide-left-reveal delay-1">EQUIPMENT CAPACITY AUDITING</h2>
+          <p class="slide-left-reveal delay-2">Every accredited gym provides verified Phase 1 &amp; Phase 2 metrics to prevent false gym claims.</p>
+        </div>
+        <a href="search-gyms.html" class="btn-volt slide-right-reveal">
+          <span>Search 100+ Audited Gyms</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+
+      <div class="spec-meters-grid">
+        <div class="spec-meter-tile card-stagger-reveal delay-1">
+          <div style="color: var(--accent-volt); font-size: 1.6rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-weight-hanging"></i></div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #FFF; font-family: var(--font-display);" class="counter-val">4,500 KG</div>
+          <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Calibrated Plates / Facility</div>
+        </div>
+
+        <div class="spec-meter-tile card-stagger-reveal delay-2">
+          <div style="color: var(--accent-gold); font-size: 1.6rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-dumbbell"></i></div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #FFF; font-family: var(--font-display);" class="counter-val">1,800 KG</div>
+          <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Dumbbell Sets Verified</div>
+        </div>
+
+        <div class="spec-meter-tile card-stagger-reveal delay-3">
+          <div style="color: var(--accent-cyan); font-size: 1.6rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-users"></i></div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #FFF; font-family: var(--font-display);">6M / 4F</div>
+          <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Staff Trainers (Info Count)</div>
+        </div>
+
+        <div class="spec-meter-tile card-stagger-reveal delay-4">
+          <div style="color: var(--accent-green); font-size: 1.6rem; margin-bottom: 0.5rem;"><i class="fa-solid fa-clock"></i></div>
+          <div style="font-size: 1.8rem; font-weight: 800; color: #FFF; font-family: var(--font-display);">05:30 - 23:00</div>
+          <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Audited Operating Hours</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reverse Sliding Kinetic Marquee Ticker 2 -->
+  <div class="glide-marquee-container">
+    <div class="glide-marquee-track reverse">
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> ANTI-SPIKING CERTIFIED</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> ZERO NITROGEN MANIPULATION</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> AUDITED LOCAL NUTRITION SHOPS</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> 1-CLICK CHAMPIONSHIP ENTRY</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> DIGITAL SBD RECORD CARD</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> REAL-TIME GPS RADAR</div>
+      <!-- Duplicate for seamless infinite loop -->
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> ANTI-SPIKING CERTIFIED</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> ZERO NITROGEN MANIPULATION</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> AUDITED LOCAL NUTRITION SHOPS</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> 1-CLICK CHAMPIONSHIP ENTRY</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> DIGITAL SBD RECORD CARD</div>
+      <div class="marquee-item"><span class="dot-separator" style="background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan);"></span> REAL-TIME GPS RADAR</div>
+    </div>
+  </div>
+
+  <!-- 5-in-1 Business Onboarding & Android Gateway -->
+  <section class="athlo-section">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">
+      <div class="reveal-mask">
+        <div class="section-tag slide-up-reveal"><i class="fa-solid fa-network-wired"></i> JOIN THE NETWORK</div>
+      </div>
+      <div class="reveal-mask">
+        <h2 class="section-title slide-up-reveal delay-1">INTELLIGENT ONBOARDING</h2>
+      </div>
+      <div class="reveal-mask">
+        <p class="slide-up-reveal delay-2">Seamless registration for facility owners, nutrition brands, local shops, and competitive powerlifters.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+      <!-- 1. Gym -->
+      <div class="athlo-card card-stagger-reveal delay-1" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="color: var(--accent-volt); font-size: 1.8rem; margin-bottom: 1rem;"><i class="fa-solid fa-dumbbell"></i></div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Gym Facility (2-Phase)</h3>
+          <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">Phase 1 (Basic info) + Phase 2 (Equipment weight audits &amp; photo gallery).</p>
+        </div>
+        <a href="signup.html?tab=gym" class="btn-ghost" style="width: 100%; justify-content: center;">Register Facility</a>
+      </div>
+
+      <!-- 2. Brand -->
+      <div class="athlo-card card-stagger-reveal delay-2" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="color: var(--accent-gold); font-size: 1.8rem; margin-bottom: 1rem;"><i class="fa-solid fa-trademark"></i></div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Nutrition Brand</h3>
+          <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">GSTIN validation and auto-generated credentials dispatched after admin approval.</p>
+        </div>
+        <a href="signup.html?tab=brand" class="btn-ghost" style="width: 100%; justify-content: center;">Register Brand</a>
+      </div>
+
+      <!-- 3. Local Vendor -->
+      <div class="athlo-card card-stagger-reveal delay-3" style="display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="color: var(--accent-cyan); font-size: 1.8rem; margin-bottom: 1rem;"><i class="fa-solid fa-store"></i></div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Local Vendor Shop</h3>
+          <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">Shop location mapping and local supplement stock management.</p>
+        </div>
+        <a href="signup.html?tab=vendor" class="btn-ghost" style="width: 100%; justify-content: center;">Register Store</a>
+      </div>
+
+      <!-- 4. Athletes & Powerlifters -->
+      <div class="athlo-card card-stagger-reveal delay-4" style="border-color: var(--accent-volt); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="color: var(--accent-volt); font-size: 1.8rem; margin-bottom: 1rem;"><i class="fa-solid fa-trophy"></i></div>
+          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Athlete SBD Rankings</h3>
+          <p style="font-size: 0.85rem; margin-bottom: 1.5rem;">Explore verified national powerlifting leaderboards, certified PRs, and sanctioned meets.</p>
+        </div>
+        <a href="leaderboard.html" class="btn-volt" style="width: 100%; justify-content: center;">
+          <span>View SBD Leaderboard</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
     </div>
+  </section>
 
-    <!-- 2. Super Admin HQ -->
-    <div class="portal-launch-card card-stagger-reveal delay-2">
-      <div>
-        <div class="portal-card-banner">
-          <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" alt="Super Admin HQ">
-          <div style="position: absolute; top: 12px; left: 12px;">
-            <span class="athlo-badge badge-red">WEBSITE 2</span>
-          </div>
-          <div style="position: absolute; top: 12px; right: 12px;">
-            <span class="athlo-badge badge-volt">GATEKEEPER HQ</span>
-          </div>
-        </div>
-        <div style="padding: 2rem;">
-          <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Super Admin Gatekeeper</h2>
-          <p style="font-size: 0.875rem; color: var(--text-slate); margin-bottom: 1.25rem;">
-            Central moderation cockpit where video lift submissions are refereed in slow-motion, gym equipment weights are audited, and brand/vendor credentials are generated.
-          </p>
-          <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-slate); margin-bottom: 1.5rem;">
-            <div><i class="fa-solid fa-check text-volt"></i> Slow-mo Lift Video Refereeing</div>
-            <div><i class="fa-solid fa-check text-volt"></i> Gym Phase 1 &amp; 2 Audits</div>
-            <div><i class="fa-solid fa-check text-volt"></i> Brand &amp; Product Lab Testing</div>
-          </div>
-        </div>
-      </div>
-      <div style="padding: 0 2rem 2rem;">
-        <a href="website-admin/index.html" class="btn-ghost" style="width: 100%; justify-content: center; border-color: var(--accent-red); color: var(--accent-red);">
-          <i class="fa-solid fa-shield-halved"></i> Access Super Admin HQ
-        </a>
-      </div>
-    </div>
-
-    <!-- 3. Native Android Studio App -->
-    <div class="portal-launch-card card-stagger-reveal delay-3" id="android-guide" style="border-color: rgba(212, 255, 0, 0.4);">
-      <div>
-        <div class="portal-card-banner">
-          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Android App">
-          <div style="position: absolute; top: 12px; left: 12px;">
-            <span class="athlo-badge badge-volt">NATIVE APP</span>
-          </div>
-          <div style="position: absolute; top: 12px; right: 12px;">
-            <span class="athlo-badge badge-verified">KOTLIN / GRADLE</span>
-          </div>
-        </div>
-        <div style="padding: 2rem;">
-          <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Athlete Android App</h2>
-          <p style="font-size: 0.875rem; color: var(--text-slate); margin-bottom: 1.25rem;">
-            Standalone Kotlin Android Studio project for athletes (Khiladi) featuring CameraX parallel squat depth recording HUD, digital SBD PR card, and personal leaderboards.
-          </p>
-          <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-slate); margin-bottom: 1.5rem;">
-            <div><i class="fa-solid fa-check text-volt"></i> CameraX Lift Recording HUD</div>
-            <div><i class="fa-solid fa-check text-volt"></i> Digital Verified PR Card</div>
-            <div><i class="fa-solid fa-check text-volt"></i> Ready to import in Android Studio</div>
-          </div>
-        </div>
-      </div>
-      <div style="padding: 0 2rem 2rem;">
-        <button class="btn-volt" style="width: 100%; justify-content: center;" onclick="alert('Android Studio Import Location:\nOpen Android Studio -> File -> Open -> Select directory: `c:\\Users\\ANIKET SACHAN\\Codes\\Athloboard\\android-app`')">
-          <span>Android Studio Import Path</span>
-          <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Clean Footer -->
-  <footer style="background: var(--bg-slate); border-top: 1px solid var(--border-subtle); padding: 3.5rem 2rem; text-align: center;">
-    <a href="index.html" class="athlo-brand" style="justify-content: center; margin-bottom: 1rem;">
+  <!-- Clean Luxury Footer -->
+  <footer style="background: var(--bg-slate); border-top: 1px solid var(--border-subtle); padding: 4rem 3.5rem 3rem; text-align: center;">
+    <a href="index.html" class="athlo-brand" style="justify-content: center; margin-bottom: 1.25rem;">
       <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
       ATHLO<span>BOARD</span>
     </a>
-    <p style="font-size: 0.85rem; color: var(--text-slate);">
-      Master Gateway • 2 Websites + 1 Native Android Studio App.
+    <p style="font-size: 0.85rem; color: var(--text-slate); max-width: 600px; margin: 0 auto 2rem;">
+      The world's premier sports and athletic verification network. Zero spam listings, audited gym equipment, and 100% video-refereed strength records.
     </p>
+
+    <div style="display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; margin-bottom: 2rem;">
+      <a href="search-gyms.html" style="color: var(--text-slate); text-decoration: none; font-size: 0.85rem;">Verified Gyms</a>
+      <a href="marketplace.html" style="color: var(--text-slate); text-decoration: none; font-size: 0.85rem;">Supplements</a>
+      <a href="leaderboard.html" style="color: var(--text-slate); text-decoration: none; font-size: 0.85rem;">Rankings</a>
+      <a href="competitions.html" style="color: var(--text-slate); text-decoration: none; font-size: 0.85rem;">Competitions</a>
+      <a href="city-map.html" style="color: var(--text-slate); text-decoration: none; font-size: 0.85rem;">Radar Map</a>
+      <a href="login.html" style="color: var(--accent-volt); text-decoration: none; font-size: 0.85rem; font-weight: 800;">Business Login</a>
+    </div>
+
+    <div style="font-size: 0.75rem; color: var(--text-muted);">
+      &copy; 2026 Athloboard Ecosystem &bull; Powered by Athloboard Athletic Tech Architecture.
+    </div>
   </footer>
 
   <script src="shared/js/athlo-db.js"></script>
   <script src="shared/js/athlo-animations.js"></script>
+  <script>
+    function handleGlobalSearch() {
+      const q = document.getElementById('global-search').value.trim();
+      if (!q) return;
+      window.location.href = `search-gyms.html?q=${encodeURIComponent(q)}`;
+    }
+  </script>
 </body>
 </html>
