@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctioned Meets &amp; Competitions | Athloboard Admin HQ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../shared/css/athloboard-core.css?v=2.1">
+  <style>
+    /* Critical Sidebar & Layout Fallbacks */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #08080A; color: #FFFFFF; font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+    a { color: inherit; text-decoration: none; }
+    .admin-layout {
+      display: flex !important;
+      flex-direction: row !important;
+      min-height: 100vh;
+      width: 100%;
+      background: #08080A;
+    }
+    .admin-sidebar {
+      width: 280px !important;
+      min-width: 280px !important;
+      max-width: 280px !important;
+      flex-shrink: 0 !important;
+      height: 100vh !important;
+      position: sticky !important;
+      top: 0 !important;
+      background: #0D0E13 !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.75rem 1.25rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    .admin-nav-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.35rem !important;
+    }
+    .admin-nav-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.75rem !important;
+      padding: 0.85rem 1rem !important;
+      border-radius: 8px !important;
+      color: #9CA3AF !important;
+      text-decoration: none !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      transition: all 0.15s ease !important;
+      border-left: 3px solid transparent !important;
+    }
+    .admin-nav-item:hover, .admin-nav-item.active {
+      background: rgba(212, 255, 0, 0.12) !important;
+      color: #FFFFFF !important;
+      border-left: 3px solid #D4FF00 !important;
+    }
+    .admin-nav-item i {
+      width: 20px;
+      text-align: center;
+      font-size: 1rem;
+    }
+    .admin-content {
+      flex: 1 !important;
+      min-width: 0 !important;
+      padding: 2.5rem 3rem !important;
+      background: #08080A !important;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div>
+        <div class="sidebar-brand-box" style="padding: 0 0.5rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.25rem;">
+          <a href="index.html" class="athlo-brand" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem; color: #FFFFFF !important;">
+            <div class="athlo-brand-icon" style="width: 36px; height: 36px; border-radius: 8px; background: #FF3366; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 0 16px rgba(255, 51, 102, 0.45); flex-shrink: 0;">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.15rem; font-weight: 900; letter-spacing: -0.02em; color: #FFFFFF !important; line-height: 1.1;">
+                ATHLOBOARD
+                <span style="background: rgba(212, 255, 0, 0.15); color: #D4FF00 !important; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(212, 255, 0, 0.3); letter-spacing: 0.05em;">ADMIN</span>
+              </div>
+              <div style="font-size: 0.65rem; color: #9CA3AF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px;">
+                Super Admin Gatekeeper HQ
+              </div>
+            </div>
+          </a>
+        </div>
+        <nav class="admin-nav-list">
+          <a href="index.html" class="admin-nav-item"><i class="fa-solid fa-gauge-high"></i> Overview Cockpit</a>
+          <a href="video-verification.html" class="admin-nav-item"><i class="fa-solid fa-video text-volt"></i> Lift Video Refereeing</a>
+          <a href="approvals-gyms.html" class="admin-nav-item"><i class="fa-solid fa-dumbbell text-gold"></i> Gym Phase 1 &amp; 2 Audits</a>
+          <a href="approvals-brands.html" class="admin-nav-item"><i class="fa-solid fa-trademark text-cyan"></i> Brand Approvals &amp; GSTIN</a>
+          <a href="approvals-vendors.html" class="admin-nav-item"><i class="fa-solid fa-store text-volt"></i> Vendor Shop KYC</a>
+          <a href="approvals-products.html" class="admin-nav-item"><i class="fa-solid fa-bottle-droplet text-volt"></i> Product Lab Moderation</a>
+          <a href="athletes-list.html" class="admin-nav-item"><i class="fa-solid fa-users text-white"></i> Athletes (Read-Only)</a>
+          <a href="revenue-analytics.html" class="admin-nav-item"><i class="fa-solid fa-indian-rupee-sign text-green"></i> Sales &amp; Revenue</a>
+        </nav>
+      </div>
+      <div>
+        <a href="../website-common/competitions.html" target="_blank" class="btn-ghost" style="width: 100%; font-size: 0.75rem; justify-content: center;"><i class="fa-solid fa-trophy"></i> Public Meets Page</a>
+      </div>
+    </aside>
+
+    <main class="admin-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <div>
+          <div class="section-tag"><i class="fa-solid fa-trophy text-gold"></i> SANCTIONING BODY</div>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">COMPETITION &amp; MEET SANCTIONING</h1>
+          <p class="text-slate">Approve official powerlifting and bodybuilding championship meets hosted by verified member gyms.</p>
+        </div>
+      </div>
+
+      <div class="athlo-card" style="margin-bottom: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <div>
+            <span class="athlo-badge badge-gold">SANCTIONED MEET #001</span>
+            <h3 style="font-size: 1.4rem; margin-top: 0.25rem;">Bangalore Open Powerlifting Championship 2026</h3>
+            <div style="font-size: 0.85rem; color: var(--text-slate);">Organized by: <strong>Titan Iron &amp; Fitness Club</strong> | Date: <strong>Nov 15, 2026</strong></div>
+          </div>
+          <span class="athlo-badge badge-verified"><i class="fa-solid fa-check"></i> SANCTIONED &amp; LIVE</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm);">
+          <div>Prize Pool: <strong class="text-gold">₹ 2,50,000</strong></div>
+          <div>Entry Fee: <strong class="text-volt">₹ 1,500</strong></div>
+          <div>Registered Athletes: <strong>68 / 100</strong></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../shared/js/athlo-db.js?v=2.1"></script>
+</body>
+</html>

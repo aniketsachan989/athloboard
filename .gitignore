@@ -1,0 +1,17 @@
+# Build & IDE Artifacts
+.gradle/
+build/
+*.iml
+.idea/
+.DS_Store
+Thumbs.db
+
+# Environment & Credentials
+.env
+.env.local
+*.log
+
+# Scratch & Brain Temp Files
+scratch/
+.system_generated/
+.user_uploaded/

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Lab Moderation | Athloboard Admin HQ</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../shared/css/athloboard-core.css?v=3.0">
+  <style>
+    /* 100% Guaranteed Self-Contained Layout & Styling */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background-color: #08080A !important;
+      color: #FFFFFF !important;
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif !important;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    a {
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+    .admin-layout {
+      display: flex !important;
+      flex-direction: row !important;
+      min-height: 100vh !important;
+      width: 100% !important;
+      background: #08080A !important;
+    }
+    .admin-sidebar {
+      width: 280px !important;
+      min-width: 280px !important;
+      max-width: 280px !important;
+      flex-shrink: 0 !important;
+      height: 100vh !important;
+      position: sticky !important;
+      top: 0 !important;
+      background: #0D0E13 !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+      padding: 1.75rem 1.25rem !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      z-index: 1000 !important;
+      overflow-y: auto !important;
+    }
+    .admin-nav-list {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.35rem !important;
+    }
+    .admin-nav-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.75rem !important;
+      padding: 0.85rem 1rem !important;
+      border-radius: 8px !important;
+      color: #9CA3AF !important;
+      text-decoration: none !important;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      transition: all 0.15s ease !important;
+      border-left: 3px solid transparent !important;
+    }
+    .admin-nav-item:hover, .admin-nav-item.active {
+      background: rgba(212, 255, 0, 0.12) !important;
+      color: #FFFFFF !important;
+      border-left: 3px solid #D4FF00 !important;
+    }
+    .admin-nav-item i {
+      width: 20px !important;
+      text-align: center !important;
+      font-size: 1rem !important;
+    }
+    .admin-content {
+      flex: 1 !important;
+      min-width: 0 !important;
+      padding: 2.5rem 3rem !important;
+      background: #08080A !important;
+      overflow-y: auto !important;
+    }
+    .athlo-brand {
+      font-size: 1.3rem !important;
+      font-weight: 800 !important;
+      color: #FFF !important;
+      text-decoration: none !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.6rem !important;
+    }
+    .athlo-brand-icon {
+      width: 30px !important;
+      height: 30px !important;
+      border-radius: 6px !important;
+      background: #FF3366 !important;
+      color: #FFF !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.9rem !important;
+    }
+    .athlo-brand span { color: #D4FF00 !important; }
+    .athlo-card {
+      background: #15161D !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      border-radius: 16px !important;
+      padding: 2rem !important;
+      margin-bottom: 1.75rem !important;
+    }
+    .btn-volt {
+      background: #D4FF00 !important;
+      color: #08080A !important;
+      font-size: 0.85rem !important;
+      font-weight: 700 !important;
+      padding: 0.65rem 1.35rem !important;
+      border-radius: 100px !important;
+      border: none !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+    }
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.04) !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: #FFF !important;
+      font-size: 0.85rem !important;
+      font-weight: 600 !important;
+      padding: 0.65rem 1.25rem !important;
+      border-radius: 100px !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+    }
+    .athlo-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.4rem !important;
+      padding: 0.3rem 0.8rem !important;
+      font-size: 0.75rem !important;
+      font-weight: 700 !important;
+      border-radius: 100px !important;
+    }
+    .badge-verified { background: rgba(0, 230, 118, 0.15) !important; color: #00E676 !important; border: 1px solid rgba(0, 230, 118, 0.3) !important; }
+    .badge-volt { background: rgba(212, 255, 0, 0.15) !important; color: #D4FF00 !important; border: 1px solid rgba(212, 255, 0, 0.3) !important; }
+    .badge-cyan { background: rgba(0, 242, 254, 0.15) !important; color: #00F2FE !important; border: 1px solid rgba(0, 242, 254, 0.3) !important; }
+    .badge-gold { background: rgba(255, 230, 0, 0.15) !important; color: #FFE600 !important; border: 1px solid rgba(255, 230, 0, 0.3) !important; }
+    .badge-red { background: rgba(255, 51, 102, 0.15) !important; color: #FF3366 !important; border: 1px solid rgba(255, 51, 102, 0.3) !important; }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sticky 280px Vertical Left Sidebar -->
+    <aside class="admin-sidebar">
+      <div>
+        <div class="sidebar-brand-box" style="padding: 0 0.5rem 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 1.25rem;">
+          <a href="index.html" class="athlo-brand" style="text-decoration: none; display: flex; align-items: center; gap: 0.75rem; color: #FFFFFF !important;">
+            <div class="athlo-brand-icon" style="width: 36px; height: 36px; border-radius: 8px; background: #FF3366; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; box-shadow: 0 0 16px rgba(255, 51, 102, 0.45); flex-shrink: 0;">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.4rem; font-size: 1.15rem; font-weight: 900; letter-spacing: -0.02em; color: #FFFFFF !important; line-height: 1.1;">
+                ATHLOBOARD
+                <span style="background: rgba(212, 255, 0, 0.15); color: #D4FF00 !important; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(212, 255, 0, 0.3); letter-spacing: 0.05em;">ADMIN</span>
+              </div>
+              <div style="font-size: 0.65rem; color: #9CA3AF; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 3px;">
+                Super Admin Gatekeeper HQ
+              </div>
+            </div>
+          </a>
+        </div>
+        <nav class="admin-nav-list">
+          <a href="index.html" class="admin-nav-item"><i class="fa-solid fa-gauge-high"></i> Overview Cockpit</a>
+          <a href="video-verification.html" class="admin-nav-item"><i class="fa-solid fa-video" style="color: #D4FF00;"></i> Lift Video Refereeing</a>
+          <a href="approvals-gyms.html" class="admin-nav-item"><i class="fa-solid fa-dumbbell" style="color: #FFE600;"></i> Gym Phase 1 &amp; 2 Audits</a>
+          <a href="approvals-brands.html" class="admin-nav-item"><i class="fa-solid fa-trademark" style="color: #00F2FE;"></i> Brand Approvals &amp; GSTIN</a>
+          <a href="approvals-vendors.html" class="admin-nav-item"><i class="fa-solid fa-store" style="color: #D4FF00;"></i> Vendor Shop KYC</a>
+          <a href="approvals-products.html" class="admin-nav-item active"><i class="fa-solid fa-bottle-droplet" style="color: #D4FF00;"></i> Product Lab Moderation</a>
+          <a href="athletes-list.html" class="admin-nav-item"><i class="fa-solid fa-users" style="color: #FFFFFF;"></i> Athletes (Read-Only)</a>
+          <a href="revenue-analytics.html" class="admin-nav-item"><i class="fa-solid fa-indian-rupee-sign" style="color: #00E676;"></i> Sales &amp; Revenue</a>
+        </nav>
+      </div>
+      <div>
+        <a href="../website-common/marketplace.html" target="_blank" class="btn-ghost" style="width: 100%; font-size: 0.75rem; justify-content: center;"><i class="fa-solid fa-globe"></i> Public Supplement Store</a>
+      </div>
+    </aside>
+
+    <main class="admin-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <div style="font-size: 0.75rem; font-weight: 700; color: #D4FF00; margin-bottom: 0.25rem;"><i class="fa-solid fa-flask-vial"></i> TWO-STEP GATE &amp; REPEAT-OFFENDER BAN ENGINE</div>
+          <h1 style="font-size: 2.2rem; margin-bottom: 0.25rem;">PER-PRODUCT SKU LAB MODERATION</h1>
+          <p style="color: #9CA3AF;">Every individual supplement and gear SKU requires independent sign-off. Rejection automatically records a strike on the brand/vendor (2 strikes = Lifetime Ban).</p>
+        </div>
+        <div style="background: rgba(255, 51, 102, 0.12); border: 1px solid rgba(255, 51, 102, 0.3); padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.8rem; color: #FF3366;">
+          <i class="fa-solid fa-triangle-exclamation"></i> <strong>Rule 9 Ban Policy:</strong> 2 product rejections trigger automatic business ban.
+        </div>
+      </div>
+
+      <div id="products-approval-feed">
+        <!-- Rendered by JS -->
+      </div>
+    </main>
+  </div>
+
+  <script src="../shared/js/athlo-db.js?v=3.0"></script>
+  <script>
+    function renderProductApprovals() {
+      const db = AthloboardDB.get();
+      const products = db.products;
+      const feed = document.getElementById('products-approval-feed');
+
+      feed.innerHTML = products.map(p => {
+        const ownerBrand = db.brands.find(b => b.brandName === p.ownerName);
+        const ownerVendor = db.vendors.find(v => v.shopName === p.ownerName);
+        const strikes = (ownerBrand ? ownerBrand.rejectionCount : (ownerVendor ? ownerVendor.rejectionCount : 0)) || 0;
+        const isBanned = (ownerBrand ? ownerBrand.isBanned : (ownerVendor ? ownerVendor.isBanned : false)) || false;
+
+        return `
+          <div class="athlo-card" style="border-left: 4px solid ${p.status === 'APPROVED' ? '#00E676' : (p.status === 'REJECTED' ? '#FF3366' : '#D4FF00')};">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+              <div style="display: flex; gap: 1.5rem; align-items: center;">
+                <img src="${p.photos[0]}" style="width: 110px; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem;">
+                    <span class="athlo-badge ${p.status === 'APPROVED' ? 'badge-verified' : (p.status === 'REJECTED' ? 'badge-red' : 'badge-gold')}">${p.status}</span>
+                    <span class="athlo-badge badge-volt">${p.category}</span>
+                    <span style="font-size: 0.8rem; color: #9CA3AF;">ID: ${p.id}</span>
+                  </div>
+                  <h2 style="font-size: 1.4rem; margin-bottom: 0.25rem;">${p.name}</h2>
+                  <div style="font-size: 0.85rem; color: #9CA3AF;">
+                    Owner Entity: <strong style="color: #FFF;">${p.ownerName}</strong> | Weight: <strong>${p.weight}</strong> | Servings: <strong>${p.servings}</strong>
+                  </div>
+                  <div style="font-size: 1.2rem; font-weight: 800; color: #D4FF00; margin-top: 0.25rem;">
+                    ₹${p.price.toLocaleString()} <span style="font-size: 0.8rem; color: #9CA3AF; font-weight: normal;">(Stock: ${p.stock} units)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                ${p.status === 'PENDING' ? `
+                  <div style="display: flex; gap: 0.75rem;">
+                    <button class="btn-volt" style="padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="approveProduct('${p.id}')">
+                      <i class="fa-solid fa-check"></i> Certify &amp; Publish SKU
+                    </button>
+                    <button class="btn-ghost" style="border-color: #FF3366; color: #FF3366; padding: 0.5rem 1rem; font-size: 0.8rem;" onclick="rejectProduct('${p.id}')">
+                      <i class="fa-solid fa-ban"></i> Reject SKU (Add Strike)
+                    </button>
+                  </div>
+                ` : `
+                  <span style="font-size: 0.9rem; color: ${p.status === 'APPROVED' ? '#00E676' : '#FF3366'}; font-weight: 800;">
+                    <i class="fa-solid ${p.status === 'APPROVED' ? 'fa-circle-check' : 'fa-circle-xmark'}"></i> ${p.status}
+                  </span>
+                `}
+              </div>
+            </div>
+
+            <!-- Business Strike Counter Box -->
+            <div style="background: #0D0E13; padding: 1rem 1.25rem; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.08);">
+              <div style="font-size: 0.825rem; color: #9CA3AF;">
+                <i class="fa-solid fa-building-shield" style="color: #00F2FE;"></i> Business Entity: <strong>${p.ownerName}</strong>
+              </div>
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 0.8rem; color: #9CA3AF;">
+                  Lifetime Rejection Strikes: <strong style="color: ${strikes > 0 ? '#FF3366' : '#00E676'}; font-size: 1rem;">${strikes} / 2</strong>
+                </div>
+                ${isBanned ? `
+                  <span class="athlo-badge badge-red"><i class="fa-solid fa-skull"></i> BUSINESS BANNED</span>
+                ` : `
+                  <span class="athlo-badge badge-verified"><i class="fa-solid fa-shield"></i> IN GOOD STANDING</span>
+                `}
+              </div>
+            </div>
+
+            ${p.rejectionReason ? `
+              <div style="margin-top: 1rem; background: rgba(255, 51, 102, 0.08); border: 1px solid rgba(255, 51, 102, 0.25); padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.825rem; color: #FF3366;">
+                <i class="fa-solid fa-triangle-exclamation"></i> <strong>Rejection Reason Logged:</strong> ${p.rejectionReason}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function approveProduct(id) {
+      AthloboardDB.verifyProduct(id, true, 'HPLC certificate verified and specs approved for public marketplace.');
+      renderProductApprovals();
+    }
+
+    function rejectProduct(id) {
+      const reason = prompt('Specify rejection reason (dispatched via email to brand/vendor):');
+      if (!reason) return;
+      AthloboardDB.verifyProduct(id, false, reason);
+      renderProductApprovals();
+    }
+
+    document.addEventListener('DOMContentLoaded', renderProductApprovals);
+    window.addEventListener('athloboard-db-updated', renderProductApprovals);
+  </script>
+</body>
+</html>

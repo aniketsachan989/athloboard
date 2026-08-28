@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athloboard | Master Athletic Ecosystem Gateway</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="shared/css/athloboard-core.css">
+  <style>
+    .master-hero-stage {
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+    }
+    .platform-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1350px;
+      margin: 2rem auto 5rem;
+      padding: 0 2rem;
+    }
+    .portal-launch-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition-normal);
+    }
+    .portal-launch-card:hover {
+      border-color: var(--accent-volt);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-card), 0 0 25px rgba(212, 255, 0, 0.2);
+    }
+    .portal-card-banner {
+      height: 200px;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+    .portal-card-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .portal-launch-card:hover .portal-card-banner img {
+      transform: scale(1.08);
+    }
+    @media (max-width: 992px) {
+      .platform-cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="athlo-header">
+    <a href="index.html" class="athlo-brand">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+
+    <ul class="athlo-nav-links">
+      <li><a href="website-common/index.html" class="athlo-nav-link">Common Portal</a></li>
+      <li><a href="website-admin/index.html" class="athlo-nav-link">Super Admin HQ</a></li>
+      <li><a href="#android-guide" class="athlo-nav-link">Athlete App</a></li>
+    </ul>
+
+    <div class="athlo-nav-actions">
+      <a href="website-common/login.html" class="btn-ghost">Business Login</a>
+    </div>
+  </header>
+
+  <!-- Master Hero Stage -->
+  <div class="master-hero-stage">
+    <div class="reveal-mask">
+      <div class="section-tag slide-up-reveal"><i class="fa-solid fa-layer-group text-volt"></i> UNIFIED ATHLETIC ECOSYSTEM</div>
+    </div>
+    <div class="reveal-mask">
+      <h1 class="slide-up-reveal delay-1" style="font-size: 3.2rem; margin-bottom: 0.75rem; letter-spacing: -0.03em;">
+        ATHLOBOARD PLATFORM
+      </h1>
+    </div>
+    <div class="reveal-mask">
+      <p class="text-slate slide-up-reveal delay-2" style="max-width: 680px; margin: 0 auto 2rem; font-size: 1.05rem; line-height: 1.6;">
+        The definitive athletic verification platform consisting of <strong>2 Web Portals</strong> (Common Web &amp; Super Admin HQ) and <strong>1 Standalone Native Android Studio App</strong>.
+      </p>
+    </div>
+  </div>
+
+  <!-- 3 Pillars Grid -->
+  <div class="platform-cards-grid">
+    
+    <!-- 1. Common Website -->
+    <div class="portal-launch-card card-stagger-reveal delay-1">
+      <div>
+        <div class="portal-card-banner">
+          <img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=80" alt="Common Website">
+          <div style="position: absolute; top: 12px; left: 12px;">
+            <span class="athlo-badge badge-volt">WEBSITE 1</span>
+          </div>
+          <div style="position: absolute; top: 12px; right: 12px;">
+            <span class="athlo-badge badge-verified">PUBLIC &amp; BUSINESS</span>
+          </div>
+        </div>
+        <div style="padding: 2rem;">
+          <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Common Web Portal</h2>
+          <p style="font-size: 0.875rem; color: var(--text-slate); margin-bottom: 1.25rem;">
+            Bespoke dark athletic platform with audited gym directory, supplement store, official leaderboard, and dedicated <strong>Business Dashboards</strong> for Gym Owners, Brands, and Local Vendors.
+          </p>
+          <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-slate); margin-bottom: 1.5rem;">
+            <div><i class="fa-solid fa-check text-volt"></i> Verified Gym Directory (Phase 1 &amp; 2)</div>
+            <div><i class="fa-solid fa-check text-volt"></i> 5-in-1 Registration Portals</div>
+            <div><i class="fa-solid fa-check text-volt"></i> Gym / Brand / Vendor Dashboards</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 0 2rem 2rem;">
+        <a href="website-common/index.html" class="btn-volt" style="width: 100%; justify-content: center;">
+          <span>Launch Common Website</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Super Admin HQ -->
+    <div class="portal-launch-card card-stagger-reveal delay-2">
+      <div>
+        <div class="portal-card-banner">
+          <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800&q=80" alt="Super Admin HQ">
+          <div style="position: absolute; top: 12px; left: 12px;">
+            <span class="athlo-badge badge-red">WEBSITE 2</span>
+          </div>
+          <div style="position: absolute; top: 12px; right: 12px;">
+            <span class="athlo-badge badge-volt">GATEKEEPER HQ</span>
+          </div>
+        </div>
+        <div style="padding: 2rem;">
+          <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Super Admin Gatekeeper</h2>
+          <p style="font-size: 0.875rem; color: var(--text-slate); margin-bottom: 1.25rem;">
+            Central moderation cockpit where video lift submissions are refereed in slow-motion, gym equipment weights are audited, and brand/vendor credentials are generated.
+          </p>
+          <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-slate); margin-bottom: 1.5rem;">
+            <div><i class="fa-solid fa-check text-volt"></i> Slow-mo Lift Video Refereeing</div>
+            <div><i class="fa-solid fa-check text-volt"></i> Gym Phase 1 &amp; 2 Audits</div>
+            <div><i class="fa-solid fa-check text-volt"></i> Brand &amp; Product Lab Testing</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 0 2rem 2rem;">
+        <a href="website-admin/index.html" class="btn-ghost" style="width: 100%; justify-content: center; border-color: var(--accent-red); color: var(--accent-red);">
+          <i class="fa-solid fa-shield-halved"></i> Access Super Admin HQ
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Native Android Studio App -->
+    <div class="portal-launch-card card-stagger-reveal delay-3" id="android-guide" style="border-color: rgba(212, 255, 0, 0.4);">
+      <div>
+        <div class="portal-card-banner">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80" alt="Android App">
+          <div style="position: absolute; top: 12px; left: 12px;">
+            <span class="athlo-badge badge-volt">NATIVE APP</span>
+          </div>
+          <div style="position: absolute; top: 12px; right: 12px;">
+            <span class="athlo-badge badge-verified">KOTLIN / GRADLE</span>
+          </div>
+        </div>
+        <div style="padding: 2rem;">
+          <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Athlete Android App</h2>
+          <p style="font-size: 0.875rem; color: var(--text-slate); margin-bottom: 1.25rem;">
+            Standalone Kotlin Android Studio project for athletes (Khiladi) featuring CameraX parallel squat depth recording HUD, digital SBD PR card, and personal leaderboards.
+          </p>
+          <div style="background: var(--bg-slate); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-slate); margin-bottom: 1.5rem;">
+            <div><i class="fa-solid fa-check text-volt"></i> CameraX Lift Recording HUD</div>
+            <div><i class="fa-solid fa-check text-volt"></i> Digital Verified PR Card</div>
+            <div><i class="fa-solid fa-check text-volt"></i> Ready to import in Android Studio</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding: 0 2rem 2rem;">
+        <button class="btn-volt" style="width: 100%; justify-content: center;" onclick="alert('Android Studio Import Location:\nOpen Android Studio -> File -> Open -> Select directory: `c:\\Users\\ANIKET SACHAN\\Codes\\Athloboard\\android-app`')">
+          <span>Android Studio Import Path</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Clean Footer -->
+  <footer style="background: var(--bg-slate); border-top: 1px solid var(--border-subtle); padding: 3.5rem 2rem; text-align: center;">
+    <a href="index.html" class="athlo-brand" style="justify-content: center; margin-bottom: 1rem;">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+    <p style="font-size: 0.85rem; color: var(--text-slate);">
+      Master Gateway • 2 Websites + 1 Native Android Studio App.
+    </p>
+  </footer>
+
+  <script src="shared/js/athlo-db.js"></script>
+  <script src="shared/js/athlo-animations.js"></script>
+</body>
+</html>

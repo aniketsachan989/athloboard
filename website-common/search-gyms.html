@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athloboard | Verified Gyms &amp; Strength Facilities</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../shared/css/athloboard-core.css">
+  <style>
+    .gym-explorer-layout {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 2.5rem;
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      min-height: 80vh;
+    }
+    
+    /* Left Rail */
+    .gym-rail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+      max-height: 85vh;
+    }
+    .gym-scroll-list {
+      overflow-y: auto;
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-right: 0.35rem;
+    }
+    .gym-rail-item {
+      background: var(--bg-slate);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .gym-rail-item:hover, .gym-rail-item.active {
+      border-color: var(--accent-volt);
+      background: rgba(212, 255, 0, 0.06);
+      transform: translateX(4px);
+    }
+    .gym-rail-item.active {
+      box-shadow: 0 0 20px rgba(212, 255, 0, 0.2);
+    }
+
+    /* Right Detailed Inspector */
+    .gym-detail-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .gallery-item {
+      height: 140px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #000;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    @media (max-width: 992px) {
+      .gym-explorer-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="athlo-header">
+    <a href="index.html" class="athlo-brand">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+
+    <ul class="athlo-nav-links">
+      <li><a href="index.html" class="athlo-nav-link">Home</a></li>
+      <li><a href="search-gyms.html" class="athlo-nav-link active">Verified Gyms</a></li>
+      <li><a href="marketplace.html" class="athlo-nav-link">Supplements</a></li>
+      <li><a href="leaderboard.html" class="athlo-nav-link">SBD Rankings</a></li>
+      <li><a href="competitions.html" class="athlo-nav-link">Championships</a></li>
+      <li><a href="city-map.html" class="athlo-nav-link">City Radar</a></li>
+    </ul>
+
+    <div class="athlo-nav-actions">
+      <a href="signup.html" class="btn-ghost">Partner Apply</a>
+      <a href="login.html" class="btn-volt">Business Login</a>
+    </div>
+  </header>
+
+  <!-- Banner Header -->
+  <div style="background: radial-gradient(circle at 50% 0%, rgba(212, 255, 0, 0.08) 0%, transparent 70%); padding: 3.5rem 2rem 1.5rem; text-align: center;">
+    <div class="section-tag"><i class="fa-solid fa-shield-halved text-volt"></i> 100% AUDITED EQUIPMENT &amp; KYC</div>
+    <h1 style="font-size: 2.6rem; margin-bottom: 0.5rem; letter-spacing: -0.03em;">VERIFIED GYM DIRECTORY</h1>
+    <p class="text-slate" style="max-width: 620px; margin: 0 auto; font-size: 0.95rem;">
+      Every facility has passed Super Admin verification for calibrated plate weights, total dumbbells, trainer counts, and genuine photos.
+    </p>
+  </div>
+
+  <!-- Main Split Explorer -->
+  <div class="gym-explorer-layout">
+    
+    <!-- Left Rail -->
+    <div class="gym-rail-card">
+      <div style="font-size: 0.85rem; font-weight: 800; text-transform: uppercase; color: var(--accent-volt); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+        <i class="fa-solid fa-filter"></i> Search &amp; Filter
+      </div>
+      <input type="text" id="gymSearchInput" class="form-control" placeholder="Search by name, area, city..." style="margin-bottom: 0.75rem;">
+
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+        <button class="btn-ghost active" style="padding: 0.4rem 1rem; font-size: 0.75rem;" onclick="filterType('ALL', this)">All</button>
+        <button class="btn-ghost" style="padding: 0.4rem 1rem; font-size: 0.75rem;" onclick="filterType('unisex', this)">Unisex</button>
+        <button class="btn-ghost" style="padding: 0.4rem 1rem; font-size: 0.75rem;" onclick="filterType('separate', this)">Separate</button>
+      </div>
+
+      <div class="gym-scroll-list" id="gymsRailContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Right Detailed Inspector -->
+    <div class="gym-detail-card" id="gymDetailContainer">
+      <!-- Rendered dynamically -->
+    </div>
+
+  </div>
+
+  <!-- Clean Footer -->
+  <footer style="background: var(--bg-slate); border-top: 1px solid var(--border-subtle); padding: 3.5rem 2rem; text-align: center;">
+    <a href="index.html" class="athlo-brand" style="justify-content: center; margin-bottom: 1rem;">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+    <p style="font-size: 0.85rem; color: var(--text-slate);">
+      Verified Gyms Directory • 100% Admin Audited Phase 1 &amp; Phase 2 Facility Data.
+    </p>
+  </footer>
+
+  <script src="../shared/js/athlo-db.js"></script>
+  <script src="../shared/js/athlo-animations.js"></script>
+  <script>
+    let allVerifiedGyms = [];
+    let selectedGymId = null;
+    let currentFilter = 'ALL';
+
+    function loadGyms() {
+      const db = AthloboardDB.get();
+      allVerifiedGyms = db.gyms.filter(g => g.status === 'APPROVED');
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramGymId = urlParams.get('gymId');
+      const searchQuery = urlParams.get('q');
+
+      if (searchQuery) {
+        document.getElementById('gymSearchInput').value = searchQuery;
+      }
+
+      selectedGymId = paramGymId || (allVerifiedGyms.length > 0 ? allVerifiedGyms[0].id : null);
+
+      renderRail();
+      renderDetails();
+    }
+
+    function filterType(type, btn) {
+      currentFilter = type;
+      document.querySelectorAll('.gym-rail-card .btn-ghost').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderRail();
+    }
+
+    function renderRail() {
+      const search = document.getElementById('gymSearchInput').value.toLowerCase();
+      const filtered = allVerifiedGyms.filter(g => {
+        const matchesSearch = g.gymName.toLowerCase().includes(search) || g.location.toLowerCase().includes(search);
+        const matchesType = currentFilter === 'ALL' || (g.gymType && g.gymType.toLowerCase() === currentFilter.toLowerCase());
+        return matchesSearch && matchesType;
+      });
+
+      const container = document.getElementById('gymsRailContainer');
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="color: var(--text-slate); text-align: center; padding: 2rem 0;">No verified gyms match your query.</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.map(g => `
+        <div class="gym-rail-item ${g.id === selectedGymId ? 'active' : ''}" onclick="selectGym('${g.id}')">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.25rem;">
+            <div style="font-weight: 800; color: #FFF; font-size: 1.05rem;">${g.gymName}</div>
+            <span class="athlo-badge badge-verified" style="font-size: 0.65rem;">VERIFIED</span>
+          </div>
+          <div style="font-size: 0.8rem; color: var(--text-slate); margin-bottom: 0.5rem;"><i class="fa-solid fa-location-dot text-volt"></i> ${g.location}</div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700;">
+            <span style="color: var(--accent-volt);">★ ${g.rating || '4.9'} (${g.reviewsCount || 48})</span>
+            <span style="color: #FFF;">${(g.plateWeightKg || 4500).toLocaleString()} kg Plates</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function selectGym(gymId) {
+      selectedGymId = gymId;
+      renderRail();
+      renderDetails();
+    }
+
+    function renderDetails() {
+      const gym = allVerifiedGyms.find(g => g.id === selectedGymId) || allVerifiedGyms[0];
+      const container = document.getElementById('gymDetailContainer');
+
+      if (!gym) {
+        container.innerHTML = '<div>No gym selected.</div>';
+        return;
+      }
+
+      container.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <div class="athlo-badge badge-verified" style="margin-bottom: 0.5rem;"><i class="fa-solid fa-shield-check"></i> 100% ADMIN VERIFIED FACILITY</div>
+            <h2 style="font-size: 2.8rem; margin-bottom: 0.25rem;">${gym.gymName}</h2>
+            <p style="font-size: 1rem; color: var(--text-slate);"><i class="fa-solid fa-location-dot text-volt"></i> ${gym.location} (Landmark: ${gym.landmark || 'Main Road'})</p>
+          </div>
+          <div style="text-align: right;">
+            <span class="athlo-badge badge-volt" style="font-size: 0.85rem; padding: 0.5rem 1rem;">★ ${gym.rating || '4.9'} / 5.0 Rating</span>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">${gym.reviewsCount || 48} community reviews</div>
+          </div>
+        </div>
+
+        <!-- Equipment Capacity Specifications (Phase 2 Data) -->
+        <div style="background: var(--bg-slate); padding: 1.75rem; border-radius: var(--radius-md); border-left: 4px solid var(--accent-volt); margin-bottom: 2rem;">
+          <div style="font-size: 0.85rem; font-weight: 800; color: var(--accent-volt); text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 1px;">
+            <i class="fa-solid fa-weight-hanging"></i> Audited Equipment Specifications (Phase 2)
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; text-align: center;">
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.75rem; color: var(--text-slate); text-transform: uppercase;">Total Calibrated Plates</div>
+              <div style="font-size: 2.2rem; font-weight: 900; color: var(--accent-volt); font-family: var(--font-display);">${(gym.plateWeightKg || 4500).toLocaleString()} KG</div>
+            </div>
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.75rem; color: var(--text-slate); text-transform: uppercase;">Total Dumbbell Pairs</div>
+              <div style="font-size: 2.2rem; font-weight: 900; color: #FFF; font-family: var(--font-display);">${(gym.dumbbellWeightKg || 1800).toLocaleString()} KG</div>
+            </div>
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: var(--radius-sm);">
+              <div style="font-size: 0.75rem; color: var(--text-slate); text-transform: uppercase;">Staff Trainers (Info)</div>
+              <div style="font-size: 2.2rem; font-weight: 900; color: #FFF; font-family: var(--font-display);">${gym.trainerMaleCount || 6}M / ${gym.trainerFemaleCount || 4}F</div>
+            </div>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem;">
+            * Verified on-site by Super Admin inspection. Note: Trainer count is informational gym facility data.
+          </div>
+        </div>
+
+        <!-- Schedule & Pricing Grid -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+          <div style="background: var(--bg-slate); padding: 1.5rem; border-radius: var(--radius-md);">
+            <div style="font-weight: 800; color: var(--accent-volt); margin-bottom: 0.5rem; text-transform: uppercase;">
+              <i class="fa-solid fa-clock"></i> Operating Schedule
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-slate); display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+              <span>Timings:</span> <strong style="color: #FFF;">${gym.openTime || '05:30 AM'} — ${gym.closeTime || '11:00 PM'}</strong>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-slate); display: flex; justify-content: space-between;">
+              <span>Open Days:</span> <strong style="color: #FFF;">${gym.daysOpenPerWeek || 7} Days / Week</strong>
+            </div>
+          </div>
+
+          <div style="background: var(--bg-slate); padding: 1.5rem; border-radius: var(--radius-md);">
+            <div style="font-weight: 800; color: var(--accent-volt); margin-bottom: 0.5rem; text-transform: uppercase;">
+              <i class="fa-solid fa-tag"></i> Membership Charges
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-slate); display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+              <span>Monthly:</span> <strong style="color: var(--accent-volt);">₹ ${(gym.chargesMonthly || 3500).toLocaleString()}</strong>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--text-slate); display: flex; justify-content: space-between;">
+              <span>Annual:</span> <strong style="color: #FFF;">₹ ${(gym.chargesYearly || 30000).toLocaleString()}</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photo Gallery -->
+        <div style="margin-bottom: 2rem;">
+          <div style="font-weight: 800; text-transform: uppercase; color: var(--text-slate); margin-bottom: 0.75rem;">
+            <i class="fa-solid fa-images"></i> Facility Photo Gallery
+          </div>
+          <div class="gallery-grid">
+            ${(gym.photos && gym.photos.length ? gym.photos : [
+              'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500&q=80',
+              'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=500&q=80',
+              'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=500&q=80'
+            ]).map(url => `
+              <div class="gallery-item">
+                <img src="${url}" alt="Gym Photo">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- Contact Actions -->
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="tel:${gym.gymContact || '+91 22 2847 9901'}" class="btn-volt">
+            <i class="fa-solid fa-phone"></i> Call Gym (${gym.gymContact || '+91 22 2847 9901'})
+          </a>
+          <a href="city-map.html?focus=${gym.id}" class="btn-ghost"><i class="fa-solid fa-location-crosshairs"></i> View on Radar Map</a>
+        </div>
+      `;
+    }
+
+    document.getElementById('gymSearchInput').addEventListener('input', renderRail);
+    document.addEventListener('DOMContentLoaded', loadGyms);
+    window.addEventListener('athlo-db-updated', loadGyms);
+  </script>
+</body>
+</html>

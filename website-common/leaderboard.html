@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official SBD Rankings &amp; Leaderboard | Athloboard Athletic Ecosystem</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../shared/css/athloboard-core.css">
+  <style>
+    .rankings-table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow-x: auto;
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="athlo-header">
+    <a href="index.html" class="athlo-brand">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+
+    <ul class="athlo-nav-links">
+      <li><a href="index.html" class="athlo-nav-link">Home</a></li>
+      <li><a href="search-gyms.html" class="athlo-nav-link">Verified Gyms</a></li>
+      <li><a href="marketplace.html" class="athlo-nav-link">Supplements</a></li>
+      <li><a href="leaderboard.html" class="athlo-nav-link active">SBD Rankings</a></li>
+      <li><a href="competitions.html" class="athlo-nav-link">Championships</a></li>
+      <li><a href="city-map.html" class="athlo-nav-link">City Radar</a></li>
+    </ul>
+
+    <div class="athlo-nav-actions">
+      <a href="signup.html" class="btn-ghost">Partner Apply</a>
+      <a href="login.html" class="btn-volt">Business Login</a>
+    </div>
+  </header>
+
+  <!-- Banner Header -->
+  <div style="background: radial-gradient(circle at 50% 0%, rgba(212, 255, 0, 0.08) 0%, transparent 70%); padding: 3.5rem 2rem 2rem; text-align: center;">
+    <div class="section-tag slide-up-reveal"><i class="fa-solid fa-shield-check text-volt"></i> 100% REFEREE VERIFIED LIFTS ONLY</div>
+    <h1 class="section-title slide-up-reveal delay-1" style="font-size: 2.8rem;">NATIONAL POWERLIFTING ROSTER</h1>
+    <p class="text-slate slide-up-reveal delay-2" style="max-width: 620px; margin: 0 auto 2rem; font-size: 0.95rem;">
+      Live strength rankings across Indian weight classes. Every PR is audited with calibrated plates and verified parallel depth.
+    </p>
+
+    <!-- Filters -->
+    <div style="display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap;">
+      <button class="btn-ghost active" onclick="filterWeight('ALL', this)">All Weights</button>
+      <button class="btn-ghost" onclick="filterWeight('63kg', this)">63 KG (Women)</button>
+      <button class="btn-ghost" onclick="filterWeight('74kg', this)">74 KG</button>
+      <button class="btn-ghost" onclick="filterWeight('83kg', this)">83 KG</button>
+      <button class="btn-ghost" onclick="filterWeight('93kg', this)">93 KG</button>
+      <button class="btn-ghost" onclick="filterWeight('105kg', this)">105+ KG</button>
+    </div>
+  </div>
+
+  <!-- Table Container -->
+  <div class="rankings-table-wrap">
+    <table class="athlo-table">
+      <thead>
+        <tr>
+          <th>RANK</th>
+          <th>ATHLETE</th>
+          <th>SQUAT</th>
+          <th>BENCH</th>
+          <th>DEADLIFT</th>
+          <th>SBD TOTAL</th>
+          <th>WEIGHT CLASS</th>
+          <th>VERIFIED CARD</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body">
+        <!-- Rendered by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Digital PR Modal -->
+  <div class="modal-overlay" id="pr-card-modal">
+    <div class="modal-content" style="max-width: 500px; text-align: center;">
+      <button class="modal-close" onclick="closePrModal()">&times;</button>
+      <div id="pr-card-body">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Clean Footer -->
+  <footer style="background: var(--bg-slate); border-top: 1px solid var(--border-subtle); padding: 3.5rem 2rem; text-align: center; margin-top: 5rem;">
+    <a href="index.html" class="athlo-brand" style="justify-content: center; margin-bottom: 1rem;">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+    <p style="font-size: 0.85rem; color: var(--text-slate);">
+      Official National Verified Leaderboard • All Rights Reserved.
+    </p>
+  </footer>
+
+  <script src="../shared/js/athlo-db.js"></script>
+  <script src="../shared/js/athlo-animations.js"></script>
+  <script>
+    let activeFilter = 'ALL';
+
+    function renderLeaderboard() {
+      const db = AthloboardDB.get();
+      let athletes = db.athletes;
+      if (activeFilter !== 'ALL') {
+        athletes = athletes.filter(a => a.weightClass.toLowerCase() === activeFilter.toLowerCase());
+      }
+
+      const tbody = document.getElementById('leaderboard-body');
+      tbody.innerHTML = athletes.map(a => `
+        <tr>
+          <td>
+            <span class="athlo-badge ${a.rank === 1 ? 'badge-gold' : (a.rank === 2 ? 'badge-cyan' : 'badge-volt')}" style="font-size: 0.9rem; font-weight: 900; font-family: var(--font-display);">
+              #${a.rank}
+            </span>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 0.85rem;">
+              <img src="${a.avatar}" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent-volt);">
+              <div>
+                <strong style="font-size: 1rem; color: #FFF;">${a.name}</strong>
+                <div style="font-size: 0.75rem; color: var(--text-slate);"><i class="fa-solid fa-id-badge text-volt"></i> ${a.id} • ${a.gym}</div>
+              </div>
+            </div>
+          </td>
+          <td style="font-weight: 700; color: #FFF;">${a.squat} kg</td>
+          <td style="font-weight: 700; color: #FFF;">${a.bench} kg</td>
+          <td style="font-weight: 700; color: #FFF;">${a.deadlift} kg</td>
+          <td>
+            <span style="font-size: 1.25rem; font-weight: 900; color: var(--accent-volt); font-family: var(--font-display);">
+              ${a.total} KG
+            </span>
+          </td>
+          <td>
+            <span class="athlo-badge badge-volt">${a.weightClass}</span>
+          </td>
+          <td>
+            <button class="btn-ghost btn-sm" onclick="openPrCard('${a.id}')">
+              <i class="fa-solid fa-qrcode text-volt"></i> View PR Card
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function filterWeight(cls, btn) {
+      activeFilter = cls;
+      document.querySelectorAll('.btn-ghost').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderLeaderboard();
+    }
+
+    function openPrCard(id) {
+      const db = AthloboardDB.get();
+      const a = db.athletes.find(x => x.id === id);
+      if (!a) return;
+
+      const body = document.getElementById('pr-card-body');
+      body.innerHTML = `
+        <div style="border: 2px solid var(--accent-volt); border-radius: var(--radius-md); padding: 2rem; background: var(--bg-slate); position: relative;">
+          <span class="athlo-badge badge-verified" style="margin-bottom: 1rem;"><i class="fa-solid fa-certificate"></i> OFFICIAL VERIFIED PR CARD</span>
+          <img src="${a.avatar}" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-volt); margin-bottom: 0.75rem;">
+          <h2 style="font-size: 1.6rem; margin-bottom: 0.2rem;">${a.name}</h2>
+          <div style="font-size: 0.85rem; color: var(--text-slate); margin-bottom: 1.5rem;">Athlete ID: ${a.id} • ${a.weightClass} Class</div>
+          
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; background: var(--bg-obsidian); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1.5rem;">
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-slate);">SQUAT</div>
+              <div style="font-size: 1.2rem; font-weight: 800; color: #FFF;">${a.squat}kg</div>
+            </div>
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-slate);">BENCH</div>
+              <div style="font-size: 1.2rem; font-weight: 800; color: #FFF;">${a.bench}kg</div>
+            </div>
+            <div>
+              <div style="font-size: 0.7rem; color: var(--text-slate);">DEADLIFT</div>
+              <div style="font-size: 1.2rem; font-weight: 800; color: #FFF;">${a.deadlift}kg</div>
+            </div>
+          </div>
+
+          <div style="font-size: 1.8rem; font-weight: 900; color: var(--accent-volt); margin-bottom: 0.25rem;">${a.total} KG TOTAL</div>
+          <div style="font-size: 0.75rem; color: var(--text-slate);">National Rank: #${a.rank} (${a.badge})</div>
+        </div>
+      `;
+      document.getElementById('pr-card-modal').classList.add('active');
+    }
+
+    function closePrModal() {
+      document.getElementById('pr-card-modal').classList.remove('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderLeaderboard);
+  </script>
+</body>
+</html>

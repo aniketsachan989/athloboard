@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanctioned Meets &amp; Championships | Athloboard Athletic Ecosystem</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../shared/css/athloboard-core.css">
+  <style>
+    .meets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .comp-card-bespoke {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all var(--transition-normal);
+    }
+    .comp-card-bespoke:hover {
+      border-color: var(--accent-volt);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+    }
+    .comp-banner {
+      height: 200px;
+      position: relative;
+      background: #000;
+      overflow: hidden;
+    }
+    .comp-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .comp-card-bespoke:hover .comp-banner img {
+      transform: scale(1.06);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="athlo-header">
+    <a href="index.html" class="athlo-brand">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+
+    <ul class="athlo-nav-links">
+      <li><a href="index.html" class="athlo-nav-link">Home</a></li>
+      <li><a href="search-gyms.html" class="athlo-nav-link">Verified Gyms</a></li>
+      <li><a href="marketplace.html" class="athlo-nav-link">Supplements</a></li>
+      <li><a href="leaderboard.html" class="athlo-nav-link">SBD Rankings</a></li>
+      <li><a href="competitions.html" class="athlo-nav-link active">Championships</a></li>
+      <li><a href="city-map.html" class="athlo-nav-link">City Radar</a></li>
+    </ul>
+
+    <div class="athlo-nav-actions">
+      <a href="signup.html" class="btn-ghost">Partner Apply</a>
+      <a href="login.html" class="btn-volt">Business Login</a>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section style="padding: 4rem 2rem 2rem; text-align: center; max-width: 900px; margin: 0 auto;">
+    <div class="section-tag slide-up-reveal"><i class="fa-solid fa-trophy text-gold"></i> OFFICIAL SANCTIONED POWERLIFTING MEETS</div>
+    <h1 class="section-title slide-up-reveal delay-1" style="font-size: 3rem;">CHAMPIONSHIP ARENA</h1>
+    <p class="slide-up-reveal delay-2" style="font-size: 1.05rem;">
+      Compete on calibrated Eleiko / Rogue barbell platforms. Every lift is officially recorded into the verified National Roster.
+    </p>
+  </section>
+
+  <!-- Competitions List -->
+  <div id="meets-container" class="meets-grid">
+    <!-- Rendered by JS -->
+  </div>
+
+  <!-- Clean Footer -->
+  <footer style="background: var(--bg-slate); border-top: 1px solid var(--border-subtle); padding: 3rem 2rem; text-align: center; margin-top: 5rem;">
+    <a href="index.html" class="athlo-brand" style="justify-content: center; margin-bottom: 0.5rem;">
+      <div class="athlo-brand-icon"><i class="fa-solid fa-bolt"></i></div>
+      ATHLO<span>BOARD</span>
+    </a>
+    <p style="font-size: 0.8rem; color: var(--text-slate);">
+      National Strength &amp; Fitness Infrastructure.
+    </p>
+  </footer>
+
+  <script src="../shared/js/athlo-db.js"></script>
+  <script src="../shared/js/athlo-animations.js"></script>
+  <script>
+    function renderMeets() {
+      const db = AthloboardDB.get();
+      const comps = db.competitions;
+      const container = document.getElementById('meets-container');
+
+      container.innerHTML = comps.map(c => `
+        <div class="comp-card-bespoke card-stagger-reveal">
+          <div>
+            <div class="comp-banner">
+              <img src="${c.banner}" alt="${c.title}">
+              <div style="position: absolute; top: 1rem; left: 1rem; display: flex; gap: 0.5rem;">
+                <span class="athlo-badge badge-gold"><i class="fa-solid fa-trophy"></i> SANCTIONED</span>
+                <span class="athlo-badge badge-cyan">${c.city}</span>
+              </div>
+            </div>
+            <div style="padding: 1.75rem;">
+              <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">${c.title}</h3>
+              <div style="font-size: 0.85rem; color: var(--text-slate); margin-bottom: 1rem;">
+                <div><i class="fa-solid fa-calendar text-volt"></i> ${c.date}</div>
+                <div><i class="fa-solid fa-location-dot text-volt"></i> ${c.venue}</div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Prize Pool</div>
+                  <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent-green);">${c.prizePool}</div>
+                </div>
+                <div>
+                  <div style="font-size: 0.75rem; color: var(--text-slate); font-weight: 700; text-transform: uppercase;">Entry Fee</div>
+                  <div style="font-size: 1.1rem; font-weight: 800; color: #FFF;">₹${c.entryFee}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding: 0 1.75rem 1.75rem;">
+            <a href="signup.html" class="btn-volt" style="width: 100%; justify-content: center;">
+              <span>Register via Athloboard App</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderMeets);
+  </script>
+</body>
+</html>
