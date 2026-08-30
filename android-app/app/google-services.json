@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "672643691598",
+    "project_id": "athloboard-fc213",
+    "storage_bucket": "athloboard-fc213.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672643691598:android:2dfa156cb27f3936dfbf1f",
+        "android_client_info": {
+          "package_name": "com.athloboard.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "672643691598-68e0l4b26l61aoqnl68i0eli4q87jq54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.athloboard.app",
+            "certificate_hash": "4f6ba81debeac9fd3dbd5eea7d92ac9442d2ef66"
+          }
+        },
+        {
+          "client_id": "672643691598-981b23mk0ai79jvv7sh3p9ujrh2kjdgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvXD4UwEUz2VW4fJdWyOhYBOVhO4aTTVk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "672643691598-981b23mk0ai79jvv7sh3p9ujrh2kjdgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
