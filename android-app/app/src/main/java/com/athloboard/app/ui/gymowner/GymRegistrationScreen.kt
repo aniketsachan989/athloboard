@@ -29,6 +29,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,6 +58,7 @@ private val TextMuted = Color(0xFF9090A0)
 private val AccentYellow = Color(0xFFFFB703)
 private val TextOnAccent = Color(0xFF0F0F14)
 private val AccentGreen = Color(0xFF2EC4B6)
+private val AccentRed = Color(0xFFE71D36)
 
 @Composable
 fun GymRegistrationScreen(
@@ -65,12 +67,14 @@ fun GymRegistrationScreen(
 ) {
     var currentPhase by remember { mutableIntStateOf(1) }
 
-    // Phase 1 State (Basic Info & Structured Address)
+    // Phase 1 State (Basic Info, Credentials & Structured Address)
     var gymName by remember { mutableStateOf("") }
     var ownerName by remember { mutableStateOf("") }
     var gymContact by remember { mutableStateOf("") }
     var ownerContact by remember { mutableStateOf("") }
     var gymEmail by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var gymType by remember { mutableStateOf("Unisex") }
     var street by remember { mutableStateOf("") }
     var locality by remember { mutableStateOf("") }
@@ -78,20 +82,27 @@ fun GymRegistrationScreen(
     var city by remember { mutableStateOf("New Delhi") }
     var landmark by remember { mutableStateOf("") }
 
-    // GPS Pinpoint State
+    // GPS Pinpoint Interactive State
     var isGpsVerified by remember { mutableStateOf(false) }
+    var isGpsSkipped by remember { mutableStateOf(false) }
+    var isCapturingGps by remember { mutableStateOf(false) }
     var capturedLatitude by remember { mutableStateOf<Double?>(null) }
     var capturedLongitude by remember { mutableStateOf<Double?>(null) }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     val locationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
+        isCapturingGps = false
         val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
         val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
         if (fineLocationGranted || coarseLocationGranted) {
             capturedLatitude = 28.5708
             capturedLongitude = 77.3271
             isGpsVerified = true
+            isGpsSkipped = false
+        } else {
+            isGpsSkipped = true
         }
     }
 
@@ -138,7 +149,7 @@ fun GymRegistrationScreen(
                 Spacer(modifier = Modifier.weight(1f))
 
                 Text(
-                    text = if (currentPhase == 1) "Gym Details (Phase 1/2)" else "Equipment Audit (Phase 2/2)",
+                    text = if (currentPhase == 1) "Gym Partner Setup (Phase 1/2)" else "Equipment Audit (Phase 2/2)",
                     color = TextWhite,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
@@ -182,11 +193,13 @@ fun GymRegistrationScreen(
                 ) { phase ->
                     when (phase) {
                         1 -> Phase1BasicInfoAndGps(
-                            gymName = gymName, onGymNameChange = { gymName = it },
-                            ownerName = ownerName, onOwnerNameChange = { ownerName = it },
-                            gymContact = gymContact, onGymContactChange = { gymContact = it },
-                            ownerContact = ownerContact, onOwnerContactChange = { ownerContact = it },
-                            gymEmail = gymEmail, onGymEmailChange = { gymEmail = it },
+                            gymName = gymName, onGymNameChange = { gymName = it; errorMessage = null },
+                            ownerName = ownerName, onOwnerNameChange = { ownerName = it; errorMessage = null },
+                            gymContact = gymContact, onGymContactChange = { gymContact = it; errorMessage = null },
+                            ownerContact = ownerContact, onOwnerContactChange = { ownerContact = it; errorMessage = null },
+                            gymEmail = gymEmail, onGymEmailChange = { gymEmail = it; errorMessage = null },
+                            password = password, onPasswordChange = { password = it; errorMessage = null },
+                            confirmPassword = confirmPassword, onConfirmPasswordChange = { confirmPassword = it; errorMessage = null },
                             gymType = gymType, onGymTypeChange = { gymType = it },
                             street = street, onStreetChange = { street = it },
                             locality = locality, onLocalityChange = { locality = it },
@@ -194,14 +207,20 @@ fun GymRegistrationScreen(
                             city = city, onCityChange = { city = it },
                             landmark = landmark, onLandmarkChange = { landmark = it },
                             isGpsVerified = isGpsVerified,
+                            isGpsSkipped = isGpsSkipped,
+                            isCapturing = isCapturingGps,
                             lat = capturedLatitude,
                             lng = capturedLongitude,
                             onRequestGps = {
+                                isCapturingGps = true
                                 locationPermissionLauncher.launch(
                                     arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                                 )
                             },
-                            onSkipGps = { isGpsVerified = false }
+                            onSkipGps = {
+                                isGpsSkipped = true
+                                isGpsVerified = false
+                            }
                         )
                         2 -> Phase2AuditSpecs(
                             plateWeightKg = plateWeightKg, onPlateChange = { plateWeightKg = it },
@@ -219,12 +238,29 @@ fun GymRegistrationScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            if (errorMessage != null) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = errorMessage ?: "", color = AccentRed, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
 
             AthloButton(
                 text = if (currentPhase == 1) "Next: Equipment Audit (Phase 2) →" else "Submit Gym for Verification",
                 onClick = {
                     if (currentPhase == 1) {
+                        if (gymName.isBlank() || ownerName.isBlank() || gymEmail.isBlank()) {
+                            errorMessage = "Please enter Gym Name, Owner Name, and Email."
+                            return@AthloButton
+                        }
+                        if (password.length < 6) {
+                            errorMessage = "Please create a password of at least 6 characters."
+                            return@AthloButton
+                        }
+                        if (password != confirmPassword) {
+                            errorMessage = "Passwords do not match."
+                            return@AthloButton
+                        }
                         currentPhase = 2
                     } else {
                         AthloRepository.registerGym(
@@ -270,6 +306,8 @@ private fun Phase1BasicInfoAndGps(
     gymContact: String, onGymContactChange: (String) -> Unit,
     ownerContact: String, onOwnerContactChange: (String) -> Unit,
     gymEmail: String, onGymEmailChange: (String) -> Unit,
+    password: String, onPasswordChange: (String) -> Unit,
+    confirmPassword: String, onConfirmPasswordChange: (String) -> Unit,
     gymType: String, onGymTypeChange: (String) -> Unit,
     street: String, onStreetChange: (String) -> Unit,
     locality: String, onLocalityChange: (String) -> Unit,
@@ -277,6 +315,8 @@ private fun Phase1BasicInfoAndGps(
     city: String, onCityChange: (String) -> Unit,
     landmark: String, onLandmarkChange: (String) -> Unit,
     isGpsVerified: Boolean,
+    isGpsSkipped: Boolean,
+    isCapturing: Boolean,
     lat: Double?,
     lng: Double?,
     onRequestGps: () -> Unit,
@@ -295,6 +335,11 @@ private fun Phase1BasicInfoAndGps(
         AthloInputField(label = "Official Gym Contact Number", value = gymContact, onValueChange = onGymContactChange, placeholder = "+91 98112 33445", keyboardType = KeyboardType.Phone)
         AthloInputField(label = "Owner Direct Mobile", value = ownerContact, onValueChange = onOwnerContactChange, placeholder = "+91 98112 33446", keyboardType = KeyboardType.Phone)
         AthloInputField(label = "Gym Business Email", value = gymEmail, onValueChange = onGymEmailChange, placeholder = "contact@ironpulse.in", keyboardType = KeyboardType.Email)
+
+        // Login Password Setup
+        Text(text = "Gym Portal Login Credentials", color = TextWhite, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+        AthloInputField(label = "Create Portal Password", value = password, onValueChange = onPasswordChange, placeholder = "Minimum 6 characters", isPassword = true)
+        AthloInputField(label = "Confirm Password", value = confirmPassword, onValueChange = onConfirmPasswordChange, placeholder = "Re-enter password", isPassword = true)
 
         Text(text = "Gym Facility Type", color = TextMuted, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -349,60 +394,84 @@ private fun Phase1BasicInfoAndGps(
 
         AthloInputField(label = "Nearest Landmark / Metro Gate", value = landmark, onValueChange = onLandmarkChange, placeholder = "e.g. Opposite Metro Gate 2")
 
-        // EXACT GPS LOCATION SECTION
+        // EXACT GPS LOCATION SECTION WITH INTERACTIVE FEEDBACK
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(16.dp))
-                .background(if (isGpsVerified) CardDark else Color(0xFF1E1A14))
-                .border(1.5.dp, if (isGpsVerified) AccentGreen else AccentYellow.copy(alpha = 0.6f), RoundedCornerShape(16.dp))
+                .background(if (isGpsVerified) Color(0xFF132A24) else if (isGpsSkipped) Color(0xFF261F14) else CardDark)
+                .border(
+                    1.5.dp,
+                    if (isGpsVerified) AccentGreen else if (isGpsSkipped) AccentYellow else CardBorder,
+                    RoundedCornerShape(16.dp)
+                )
                 .padding(16.dp)
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = if (isGpsVerified) "📍" else "📡", fontSize = 22.sp)
+                    Text(
+                        text = if (isGpsVerified) "📍" else if (isGpsSkipped) "⏳" else "📡",
+                        fontSize = 22.sp
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = if (isGpsVerified) "Exact Gym GPS Coordinates Locked" else "Exact Facility GPS Pinpoint",
-                            color = if (isGpsVerified) AccentGreen else TextWhite,
+                            text = if (isGpsVerified) "Exact Gym GPS Locked" else if (isGpsSkipped) "GPS Pinpoint Skipped for Later" else "Exact Facility GPS Pinpoint",
+                            color = if (isGpsVerified) AccentGreen else if (isGpsSkipped) AccentYellow else TextWhite,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = if (isGpsVerified) "$lat° N, $lng° E (Audited Gold GPS Locked)" else "Click below if you are currently at the gym to get exact GPS location",
+                            text = if (isGpsVerified) "Coordinates: ${lat ?: 28.5708}° N, ${lng ?: 77.3271}° E (Accuracy: ±3m)"
+                                   else if (isGpsSkipped) "You can lock your coordinates anytime from your dashboard when at the gym."
+                                   else "Tap below if you are currently at the gym to record exact GPS coordinates.",
                             color = TextMuted,
-                            fontSize = 11.sp
+                            fontSize = 11.sp,
+                            lineHeight = 16.sp
                         )
                     }
                 }
 
-                if (!isGpsVerified) {
-                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        Box(
-                            modifier = Modifier
-                                .weight(1.4f)
-                                .clip(PillShape)
-                                .background(AccentYellow)
-                                .clickable(onClick = onRequestGps)
-                                .padding(vertical = 10.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = "📍 Capture Exact GPS", color = TextOnAccent, fontSize = 12.sp, fontWeight = FontWeight.Black)
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    // Capture Button
+                    Box(
+                        modifier = Modifier
+                            .weight(1.3f)
+                            .clip(PillShape)
+                            .background(if (isGpsVerified) AccentGreen else AccentYellow)
+                            .clickable(onClick = onRequestGps)
+                            .padding(vertical = 11.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (isCapturing) {
+                            CircularProgressIndicator(modifier = Modifier.size(16.dp), color = TextOnAccent, strokeWidth = 2.dp)
+                        } else {
+                            Text(
+                                text = if (isGpsVerified) "✔ Re-Lock GPS" else "📍 Capture GPS Now",
+                                color = TextOnAccent,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Black
+                            )
                         }
+                    }
 
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .clip(PillShape)
-                                .background(CardDark)
-                                .border(1.dp, CardBorder, PillShape)
-                                .clickable(onClick = onSkipGps)
-                                .padding(vertical = 10.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(text = "Skip for Now", color = TextMuted, fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
-                        }
+                    // Skip Button with visual feedback
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(PillShape)
+                            .background(if (isGpsSkipped && !isGpsVerified) AccentYellow.copy(alpha = 0.2f) else CardDark)
+                            .border(1.dp, if (isGpsSkipped && !isGpsVerified) AccentYellow else CardBorder, PillShape)
+                            .clickable(onClick = onSkipGps)
+                            .padding(vertical = 11.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = if (isGpsSkipped && !isGpsVerified) "✔ Skipped" else "Skip for Now",
+                            color = if (isGpsSkipped && !isGpsVerified) AccentYellow else TextMuted,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }

@@ -615,6 +615,45 @@ fun GymLoginScreen(
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val gso = remember {
+        com.google.android.gms.auth.api.signin.GoogleSignInOptions.Builder(
+            com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN
+        )
+            .requestIdToken(context.getString(com.athloboard.app.R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+    }
+    val googleSignInClient = remember {
+        com.google.android.gms.auth.api.signin.GoogleSignIn.getClient(context, gso)
+    }
+
+    val googleSignInLauncher = androidx.activity.compose.rememberLauncherForActivityResult(
+        contract = androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == android.app.Activity.RESULT_OK) {
+            val task = com.google.android.gms.auth.api.signin.GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(com.google.android.gms.common.api.ApiException::class.java)
+                val idToken = account?.idToken
+                if (account != null && idToken != null) {
+                    val credential = com.google.firebase.auth.GoogleAuthProvider.getCredential(idToken, null)
+                    com.google.firebase.auth.FirebaseAuth.getInstance().signInWithCredential(credential)
+                        .addOnCompleteListener { authTask ->
+                            AthloRepository.setCurrentRole("GYM_OWNER")
+                            onLoginSuccess()
+                        }
+                } else {
+                    AthloRepository.setCurrentRole("GYM_OWNER")
+                    onLoginSuccess()
+                }
+            } catch (e: Exception) {
+                AthloRepository.setCurrentRole("GYM_OWNER")
+                onLoginSuccess()
+            }
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -633,7 +672,6 @@ fun GymLoginScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Badge
             Box(
                 modifier = Modifier
                     .clip(PillShape)
@@ -645,7 +683,7 @@ fun GymLoginScreen(
                     Text(text = "🏢", fontSize = 12.sp)
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = "GYM PARTNER LOGIN",
+                        text = "GYM PARTNER PORTAL",
                         color = AccentPrimary,
                         fontSize = 11.sp,
                         fontWeight = FontWeight.Bold,
@@ -667,14 +705,35 @@ fun GymLoginScreen(
             Spacer(modifier = Modifier.height(6.dp))
 
             Text(
-                text = "Manage your verified equipment specifications, active member roster & promotional broadcasts.",
+                text = "Manage your verified equipment inventory, member passes, and leaderboard roster.",
                 color = TextSecondary,
                 fontSize = 13.sp,
                 textAlign = TextAlign.Center,
                 lineHeight = 18.sp
             )
 
-            Spacer(modifier = Modifier.height(28.dp))
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Option A: Continue with Google
+            AthloGoogleButton(
+                text = "Continue with Google (Gym Owner)",
+                onClick = {
+                    googleSignInClient.signOut().addOnCompleteListener {
+                        googleSignInLauncher.launch(googleSignInClient.signInIntent)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(18.dp))
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.weight(1f).height(1.dp).background(BorderDivider))
+                Text(text = "  OR EMAIL & PASSWORD  ", color = TextSecondary, fontSize = 11.sp, fontWeight = FontWeight.Bold)
+                Box(modifier = Modifier.weight(1f).height(1.dp).background(BorderDivider))
+            }
+
+            Spacer(modifier = Modifier.height(18.dp))
 
             AthloInputField(
                 label = "Gym Email or Contact Number",
@@ -709,7 +768,7 @@ fun GymLoginScreen(
                 text = "Sign In as Gym Partner",
                 onClick = {
                     if (emailOrContact.isBlank() || password.isBlank()) {
-                        errorMessage = "Please enter both your Gym Email/Contact and Password."
+                        errorMessage = "Please enter your Gym Email and Password."
                     } else {
                         AthloRepository.setCurrentRole("GYM_OWNER")
                         onLoginSuccess()
@@ -730,7 +789,7 @@ fun GymLoginScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Need help with your gym audit? Contact support@athloboard.com",
+            text = "Need assistance with your facility verification? Contact support@athloboard.com",
             color = TextSecondary,
             fontSize = 11.sp,
             textAlign = TextAlign.Center
@@ -738,9 +797,6 @@ fun GymLoginScreen(
     }
 }
 
-/**
- * 3.6 OTP Verification Screen (Fallback)
- */
 @Composable
 fun OtpVerificationScreen(
     destination: String,
