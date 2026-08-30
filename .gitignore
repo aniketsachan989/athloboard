@@ -33,10 +33,11 @@ yarn-error.log*
 .env*.local
 .env
 
-# OS & IDE Files
-.DS_Store
-*.pem
-Thumbs.db
-.idea/
-*.iml
+# Non-website directories & schemas
+admin/
+android-app/
+backend/
+shared/
+athloboard_schema.sql
+
 

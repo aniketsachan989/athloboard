@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Athloboard</string>
-    <string name="title_profile">Athlete PR</string>
-    <string name="title_recorder">Lift Recorder</string>
-    <string name="title_leaderboard">Leaderboard</string>
-    <string name="title_competitions">Competitions</string>
-    <string name="title_gym">Gym Portal</string>
-</resources>

@@ -1,75 +1,60 @@
-# ⚡ ATHLOBOARD — Verified Fitness & Strength Ecosystem
+# ⚡ ATHLOBOARD — Official Web Platform
 
-Athloboard is India's verified-identity powerlifting, gym facility auditing, and sports nutrition ecosystem.
-
----
-
-## 🏛️ Ecosystem Architecture
-
-### 1. 🌐 Modern Web Platform (`/website`)
-- **Framework**: Next.js 14 (App Router), React 18, Tailwind CSS, Lucide Icons
-- **3D Hero Scene**: Procedural 3D Olympic Barbell with 450 GPU chalk particles & mouse parallax (Three.js / React Three Fiber)
-- **Pages**:
-  - `/` — Full-Screen 3D Hero, Ecosystem Metrics & 4-Pillar Overview
-  - `/gyms` — Audited Gym Directory with calibrated plate specs
-  - `/marketplace` — Lab-Tested Supplements & Verified Brands
-  - `/for-gyms` — Gym Partner Onboarding & Guidelines
-  - `/for-brands` — Sponsor Portal & Product Listings
-  - `/dashboard/gym` — Partner Cockpit with equipment inventory & member passes
-
-### 2. 👑 Super Admin HQ Console (`/admin`)
-- **Framework**: Next.js 14, Recharts Analytics, Tailwind CSS
-- **Workspaces**:
-  1. Verification Cockpit (Lifts, Gyms Phase 1 & 2, Brands KYC, Products)
-  2. 3-Judge Video Referee Studio (3-light system, slow-mo review, points award)
-  3. Athletes Roster (IPF division breakdown, verified totals)
-  4. Moderation & Dispute Queue
-  5. Revenue & GMV Analytics (Interactive area & bar charts)
-  6. Audit Trail Logs
-  7. Platform Governance & Anti-Cheating Settings
-
-### 3. 📱 Native Android App (`/android-app`)
-- **Framework**: Jetpack Compose, Kotlin, CameraX, Firebase Auth, Material 3
-- **Features**:
-  - Instagram-style 4-step athlete onboarding wizard with live `@handle` uniqueness check
-  - GUI DatePicker for Date of Birth with automated IPF category calculation
-  - Structured address breakdown with searchable Indian city autocomplete
-  - CameraX video audit recording for lifts
-  - Gym GPS exact location capture with fallback skip flow & persistent dashboard reminders
-  - SBD Total tracking and IPF competition weight classes
-
-### 4. ⚙️ Backend API & Database (`/backend` & `athloboard_schema.sql`)
-- **Backend**: NestJS, TypeScript, Swagger API Docs (`/api/docs`), Firebase Admin SDK
-- **Database**: PostgreSQL / Supabase schema for athletes, gyms, lifts, products, orders, and audit logs.
+Welcome to the official **Athloboard** web platform repository — India's verified powerlifting, gym facility auditing, and sports nutrition ecosystem.
 
 ---
 
-## 🚀 Quickstart
+## 🌟 Key Highlights & Features
 
-### Main Website:
+1. **🏋️ Full-Screen 3D Olympic Barbell Hero**:
+   - High-fidelity procedural 3D Olympic Barbell positioned in the background with 450 GPU-instanced floating chalk particles and real-time cursor parallax.
+   - Built using Three.js & React Three Fiber with zero layout overflow.
+
+2. **🏢 Audited Gym Radar & Directory (`/gyms`)**:
+   - Discover IPF & strength-certified gyms across India.
+   - Verified certified plate capacities (Bullrock / Eleiko), dumbbell ranges, trainer rosters, and pricing.
+
+3. **🧪 Lab-Tested Marketplace & Nutrition (`/marketplace`)**:
+   - 100% HPLC verified sports supplements, lifting gear, and exclusive brand discount codes.
+   - Verified brand partner store.
+
+4. **⚡ Partner & Gym Onboarding (`/for-gyms` & `/for-brands`)**:
+   - Phase 1 & 2 audit specification guides and partner enrollment portals.
+
+5. **📊 Partner Management Cockpit (`/dashboard/gym`)**:
+   - Live facility audit dashboard with inventory tracking and membership pass management.
+
+---
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 14 (App Router), React 18
+- **Styling**: Tailwind CSS, PostCSS, Autoprefixer
+- **3D Engine**: Three.js, @react-three/fiber, @react-three/drei
+- **Icons & Animation**: Lucide React, Framer Motion
+- **Analytics & Visuals**: Recharts
+
+---
+
+## 🛠️ Local Development
+
+### Prerequisites
+- Node.js (v18.17+ or v20+)
+- npm or yarn
+
+### 1. Install Dependencies
 ```bash
-cd website
 npm install
+```
+
+### 2. Run Local Development Server
+```bash
 npm run dev
-# Open http://localhost:3000
 ```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Admin Console:
+### 3. Production Build
 ```bash
-cd admin
-npm install
-npm run dev -- -p 3001
-# Open http://localhost:3001
+npm run build
+npm start
 ```
-
-### Backend API:
-```bash
-cd backend
-npm install
-npm run start:dev
-# API: http://localhost:4000 | Swagger Docs: http://localhost:4000/api/docs
-```
-
-### Android App:
-Open the `android-app` folder in Android Studio and run on emulator or physical device.
-
