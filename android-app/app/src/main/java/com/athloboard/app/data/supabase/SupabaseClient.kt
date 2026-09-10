@@ -60,32 +60,32 @@ object SupabaseClient {
             var existing: SupabaseAthleteDto? = null
             httpClient.newCall(searchReq).execute().use { response ->
                 val body = response.body?.string() ?: ""
-                if (responseSuccess) {
+                if (response.isSuccessful) {
                     val listType = object : TypeToken<List<SupabaseAthleteDto>>() {}.type
                     val dtos: List<SupabaseAthleteDto> = gson.fromJson(body, listType)
                     existing = dtos.firstOrNull()
                 }
             }
 
-                if (existing != null) {
-                    val athlete = Athlete(
-                        id = existing.uniqueAthleteId ?: firebaseUid,
-                        name = existing.fullName ?: displayName,
-                        email = email,
-                        gender = existing.gender ?: "Male",
-                        weightClass = existing.weightClass ?: "83kg",
-                        rank = existing.nationalRank ?: 1,
-                        badge = existing.badgeTitle ?: "VERIFIED ATHLETE",
-                        gymName = existing.gymName ?: "Titan Iron Club",
-                        prSquat = (existing.prSquatKg ?: 0.0).toInt(),
-                        prBench = (existing.prBenchKg ?: 0.0).toInt(),
-                        prDeadlift = (existing.prDeadliftKg ?: 0.0).toInt(),
-                        total = (existing.totalSbdKg ?: 0.0).toInt(),
-                        kycStatus = "VERIFIED",
-                        avatarUrl = existing.avatarUrl ?: photoUrl
-                    )
-                    return@withContext Result.success(athlete)
-                }
+            val athleteDto = existing
+            if (athleteDto != null) {
+                val athlete = Athlete(
+                    id = athleteDto.uniqueAthleteId ?: firebaseUid,
+                    name = athleteDto.fullName ?: displayName,
+                    email = email,
+                    gender = athleteDto.gender ?: "Male",
+                    weightClass = athleteDto.weightClass ?: "83kg",
+                    rank = athleteDto.nationalRank ?: 1,
+                    badge = athleteDto.badgeTitle ?: "VERIFIED ATHLETE",
+                    gymName = athleteDto.gymName ?: "Titan Iron Club",
+                    prSquat = (athleteDto.prSquatKg ?: 0.0).toInt(),
+                    prBench = (athleteDto.prBenchKg ?: 0.0).toInt(),
+                    prDeadlift = (athleteDto.prDeadliftKg ?: 0.0).toInt(),
+                    total = (athleteDto.totalSbdKg ?: 0.0).toInt(),
+                    kycStatus = "VERIFIED",
+                    avatarUrl = athleteDto.avatarUrl ?: photoUrl
+                )
+                return@withContext Result.success(athlete)
             }
 
             // 2. New User: Construct clean Athlete initialized with authenticated user's exact credentials
@@ -176,22 +176,23 @@ object SupabaseClient {
 
             if (responseSuccess) {
 
-                if (dto != null) {
+                val athleteDto = dto
+                if (athleteDto != null) {
                     val athlete = Athlete(
-                        id = dto.uniqueAthleteId ?: athleteCode,
-                        name = dto.fullName ?: "Athlete",
+                        id = athleteDto.uniqueAthleteId ?: athleteCode,
+                        name = athleteDto.fullName ?: "Athlete",
                         email = "",
-                        gender = dto.gender ?: "Male",
-                        weightClass = dto.weightClass ?: "83kg",
-                        rank = dto.nationalRank ?: 1,
-                        badge = dto.badgeTitle ?: "VERIFIED ATHLETE",
-                        gymName = dto.gymName ?: "Titan Iron Club",
-                        prSquat = (dto.prSquatKg ?: 0.0).toInt(),
-                        prBench = (dto.prBenchKg ?: 0.0).toInt(),
-                        prDeadlift = (dto.prDeadliftKg ?: 0.0).toInt(),
-                        total = (dto.totalSbdKg ?: 0.0).toInt(),
+                        gender = athleteDto.gender ?: "Male",
+                        weightClass = athleteDto.weightClass ?: "83kg",
+                        rank = athleteDto.nationalRank ?: 1,
+                        badge = athleteDto.badgeTitle ?: "VERIFIED ATHLETE",
+                        gymName = athleteDto.gymName ?: "Titan Iron Club",
+                        prSquat = (athleteDto.prSquatKg ?: 0.0).toInt(),
+                        prBench = (athleteDto.prBenchKg ?: 0.0).toInt(),
+                        prDeadlift = (athleteDto.prDeadliftKg ?: 0.0).toInt(),
+                        total = (athleteDto.totalSbdKg ?: 0.0).toInt(),
                         kycStatus = "VERIFIED",
-                        avatarUrl = dto.avatarUrl ?: ""
+                        avatarUrl = athleteDto.avatarUrl ?: ""
                     )
                     Result.success(athlete)
                 } else {
@@ -238,15 +239,17 @@ object SupabaseClient {
             val url = "${SupabaseConfig.REST_BASE_URL}/athlete_profiles?select=*&order=total_sbd_kg.desc&limit=50"
             val request = buildBaseRequest(url).get().build()
 
+            var body = ""
             var responseSuccess = false
             var responseCode = 0
             var errorBody = ""
 
             httpClient.newCall(request).execute().use { response ->
-                val body = response.body?.string() ?: ""
+                body = response.body?.string() ?: ""
                 responseSuccess = response.isSuccessful
                 responseCode = response.code
                 errorBody = body
+            }
 
             if (responseSuccess) {
                 val listType = object : TypeToken<List<SupabaseAthleteDto>>() {}.type
@@ -287,15 +290,17 @@ object SupabaseClient {
             val url = "${SupabaseConfig.REST_BASE_URL}/gyms?verification_status=eq.verified&select=*"
             val request = buildBaseRequest(url).get().build()
 
+            var body = ""
             var responseSuccess = false
             var responseCode = 0
             var errorBody = ""
 
             httpClient.newCall(request).execute().use { response ->
-                val body = response.body?.string() ?: ""
+                body = response.body?.string() ?: ""
                 responseSuccess = response.isSuccessful
                 responseCode = response.code
                 errorBody = body
+            }
 
             if (responseSuccess) {
                 val listType = object : TypeToken<List<SupabaseGymDto>>() {}.type
@@ -318,7 +323,7 @@ object SupabaseClient {
                         openTime = dto.openTime ?: "05:30 AM",
                         closeTime = dto.closeTime ?: "11:00 PM",
                         daysOpenPerWeek = 7,
-                        chargesMonthly = (dto.monthlyCharge ?: 3500.0).toInt(),
+                        chargesMonthly = (dto.monthlyCharge ?: 2499.0).toInt(),
                         rating = 4.9,
                         reviewsCount = 142
                     )
@@ -340,15 +345,17 @@ object SupabaseClient {
             val url = "${SupabaseConfig.REST_BASE_URL}/competitions?select=*&order=competition_date.asc"
             val request = buildBaseRequest(url).get().build()
 
+            var body = ""
             var responseSuccess = false
             var responseCode = 0
             var errorBody = ""
 
             httpClient.newCall(request).execute().use { response ->
-                val body = response.body?.string() ?: ""
+                body = response.body?.string() ?: ""
                 responseSuccess = response.isSuccessful
                 responseCode = response.code
                 errorBody = body
+            }
 
             if (responseSuccess) {
                 val listType = object : TypeToken<List<SupabaseCompetitionDto>>() {}.type
@@ -411,6 +418,7 @@ object SupabaseClient {
                 responseSuccess = response.isSuccessful
                 responseCode = response.code
                 errorBody = body
+            }
 
             if (responseSuccess) {
                 val sub = LiftSubmission(
@@ -451,8 +459,8 @@ object SupabaseClient {
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
-                if (response.isSuccessful) return@withContext Result.success(true)
-                else return@withContext Result.failure(Exception(\"HTTP error ${response.code}\"))
+                if (response.isSuccessful) Result.success(true)
+                else Result.failure(Exception("HTTP error ${response.code}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -478,8 +486,8 @@ object SupabaseClient {
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
-                if (response.isSuccessful) return@withContext Result.success(true)
-                else return@withContext Result.failure(Exception(\"HTTP error ${response.code}\"))
+                if (response.isSuccessful) Result.success(true)
+                else Result.failure(Exception("HTTP error ${response.code}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -501,8 +509,8 @@ object SupabaseClient {
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
-                if (response.isSuccessful) return@withContext Result.success(true)
-                else return@withContext Result.failure(Exception(\"HTTP error ${response.code}\"))
+                if (response.isSuccessful) Result.success(true)
+                else Result.failure(Exception("HTTP error ${response.code}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -528,8 +536,8 @@ object SupabaseClient {
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
-                if (response.isSuccessful) return@withContext Result.success(true)
-                else return@withContext Result.failure(Exception(\"HTTP error ${response.code}\"))
+                if (response.isSuccessful) Result.success(true)
+                else Result.failure(Exception("HTTP error ${response.code}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
@@ -547,8 +555,8 @@ object SupabaseClient {
                 .build()
 
             httpClient.newCall(request).execute().use { response ->
-                if (response.isSuccessful) return@withContext Result.success(true)
-                else return@withContext Result.failure(Exception(\"HTTP error ${response.code}\"))
+                if (response.isSuccessful) Result.success(true)
+                else Result.failure(Exception("HTTP error ${response.code}"))
             }
         } catch (e: Exception) {
             Result.failure(e)
