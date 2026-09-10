@@ -1,0 +1,20 @@
+[
+  {
+    "id": "LEDGER-316843",
+    "athlete_id": "ath_test_athlete_01",
+    "points": 100,
+    "source_type": "pr_upload",
+    "source_id": "LFT-1836",
+    "description": "+100 Points for Verified Lift (pr_upload)",
+    "created_at": "2026-08-31T02:10:01.010Z"
+  },
+  {
+    "id": "LEDGER-147665",
+    "athlete_id": "ath_test_athlete_01",
+    "points": 100,
+    "source_type": "pr_upload",
+    "source_id": "LFT-8566",
+    "description": "+100 Points for Verified Lift (pr_upload)",
+    "created_at": "2026-08-31T02:09:42.570Z"
+  }
+]

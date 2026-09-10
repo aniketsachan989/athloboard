@@ -1,4 +1,5 @@
-﻿import { Check, Dumbbell, ShieldCheck, Users, Calendar, ArrowRight, Zap } from 'lucide-react';
+import { Check } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ForGymsPage() {
   return (
@@ -100,16 +101,16 @@ export default function ForGymsPage() {
                   ))}
                 </ul>
               </div>
-              <a
+              <Link
                 href="/dashboard/gym"
-                className={`mt-8 w-full py-3.5 rounded-xl font-bold text-xs text-center transition-all ${
+                className={`mt-8 w-full py-3.5 rounded-xl font-bold text-xs flex justify-center items-center transition-all ${
                   tier.isPopular
                     ? 'bg-gold text-black hover:bg-gold-glow shadow-gold-glow'
                     : 'bg-surface hover:bg-surfaceHover text-white border border-white/10'
                 }`}
               >
                 Enroll Now
-              </a>
+              </Link>
             </div>
           ))}
         </div>

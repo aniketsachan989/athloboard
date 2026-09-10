@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_user"
+        android:title="Profile" />
+    <item
+        android:id="@+id/nav_leaderboard"
+        android:icon="@drawable/ic_trophy"
+        android:title="Rankings" />
+    <item
+        android:id="@+id/nav_recorder"
+        android:icon="@drawable/ic_camera_record"
+        android:title="Record PR" />
+    <item
+        android:id="@+id/nav_competitions"
+        android:icon="@drawable/ic_medal"
+        android:title="Meets" />
+    <item
+        android:id="@+id/nav_gym"
+        android:icon="@drawable/ic_dumbbell"
+        android:title="Gym Hub" />
+</menu>

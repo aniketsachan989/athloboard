@@ -1,7 +1,7 @@
-﻿'use client';
+'use client';
 
 import React, { useState } from 'react';
-import { Dumbbell, Users, Calendar, Award, Plus, CheckCircle, TrendingUp } from 'lucide-react';
+import { Dumbbell, Users, Calendar, Plus, TrendingUp } from 'lucide-react';
 
 export default function GymDashboardPage() {
   const [activeTab, setActiveTab] = useState<'leads' | 'specs' | 'members'>('leads');
@@ -27,7 +27,10 @@ export default function GymDashboardPage() {
         </div>
 
         <div className="flex gap-3">
-          <button className="px-4 py-2 rounded-xl bg-gold text-black font-black text-xs flex items-center gap-1.5 shadow-gold-glow">
+          <button 
+            onClick={() => alert('Broadcast Promo form coming soon!')}
+            className="px-4 py-2 rounded-xl bg-gold text-black font-black text-xs flex items-center gap-1.5 shadow-gold-glow"
+          >
             <Plus className="w-4 h-4" /> Broadcast Promo
           </button>
         </div>
@@ -104,6 +107,37 @@ export default function GymDashboardPage() {
             <div className="p-4 rounded-xl bg-surface">Dumbbell Range: <strong className="text-white">2.5 kg to 65 kg pairs</strong></div>
             <div className="p-4 rounded-xl bg-surface">Trainers: <strong className="text-white">4 Certified Male, 2 Certified Female</strong></div>
             <div className="p-4 rounded-xl bg-surface">Powerlifting Combo Racks: <strong className="text-white">4 ER Combo Racks</strong></div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab 3: Member Roster */}
+      {activeTab === 'members' && (
+        <div className="glass-panel p-6 rounded-3xl border border-white/10 space-y-6">
+          <h2 className="text-xl font-bold text-white">Member Roster</h2>
+          <p className="text-xs text-muted">Member roster syncs from active memberships. Placeholder data below.</p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-surface border-b border-white/10 text-muted">
+                <tr>
+                  <th className="p-3 font-semibold">Name</th>
+                  <th className="p-3 font-semibold">Status</th>
+                  <th className="p-3 font-semibold">Joined</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                <tr>
+                  <td className="p-3 font-medium text-white">Aditya Sharma</td>
+                  <td className="p-3"><span className="text-green-400">Active</span></td>
+                  <td className="p-3 text-muted">Jan 12, 2026</td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-medium text-white">Meera Patel</td>
+                  <td className="p-3"><span className="text-green-400">Active</span></td>
+                  <td className="p-3 text-muted">Feb 04, 2026</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       )}

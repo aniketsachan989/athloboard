@@ -11,7 +11,8 @@ export interface PresignedUrlResponse {
   bucket: string;
 }
 
-const BACKEND_API_BASE = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000/api/media';
+const BACKEND_BASE = (process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000').replace(/\/+$/, '');
+const MEDIA_API_BASE = `${BACKEND_BASE}/api/media`;
 const R2_PUBLIC_BASE = 'https://media.athloboard.com';
 
 /**
@@ -24,7 +25,7 @@ export async function uploadToCloudflareR2(
   onProgress?: (progressPercent: number) => void
 ): Promise<string> {
   // 1. Request pre-signed PUT URL from backend
-  const presignRes = await fetch(`${BACKEND_API_BASE}/presigned-url`, {
+  const presignRes = await fetch(`${MEDIA_API_BASE}/presigned-url`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

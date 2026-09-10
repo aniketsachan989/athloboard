@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
-import { ArrowRight, ShieldCheck, Trophy, Dumbbell, Store, Award, Flame, Users } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, ShieldCheck, Trophy, Dumbbell, Award, Flame } from 'lucide-react';
 
 const BarbellHeroScene = dynamic(() => import('@/components/3d/BarbellHeroScene'), { ssr: false });
 
@@ -27,18 +28,18 @@ export default function HomePage() {
 
           {/* CTA Actions */}
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
-            <a
+            <Link
               href="/gyms"
               className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-base flex items-center justify-center gap-2 transition-all hover:scale-105"
             >
               Explore Verified Gyms <ArrowRight className="w-5 h-5" />
-            </a>
-            <a
+            </Link>
+            <Link
               href="/for-gyms"
               className="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white bg-surface/90 hover:bg-surfaceHover border border-white/20 text-base backdrop-blur-md transition-colors"
             >
               Enroll Your Gym
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -140,9 +141,9 @@ export default function HomePage() {
               Showcase verified plate weights, dumbbell tiers, and certified coaching rosters. Capture targeted lifter leads with real-time Kanban management and broadcast flash memberships.
             </p>
             <div className="mt-6">
-              <a href="/for-gyms" className="inline-flex items-center gap-2 text-gold font-bold hover:underline">
+              <Link href="/for-gyms" className="inline-flex items-center gap-2 text-gold font-bold hover:underline">
                 Explore Gym Partner Enrollment <ArrowRight className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -158,12 +159,12 @@ export default function HomePage() {
             Whether you are an athlete seeking verified rankings, a gym owner wanting verified members, or a brand seeking real strength ambassadors.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <a href="/for-gyms" className="px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-sm">
+            <Link href="/for-gyms" className="px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-sm">
               Enroll as Gym Partner
-            </a>
-            <a href="/for-brands" className="px-8 py-4 rounded-xl font-bold text-white bg-surface hover:bg-surfaceHover border border-white/10 text-sm">
+            </Link>
+            <Link href="/for-brands" className="px-8 py-4 rounded-xl font-bold text-white bg-surface hover:bg-surfaceHover border border-white/10 text-sm">
               Register Brand / Vendor
-            </a>
+            </Link>
           </div>
         </div>
       </section>
