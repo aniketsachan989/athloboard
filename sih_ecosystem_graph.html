@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athloboard Ecosystem Architecture - SIH Presentation</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+    
+    * {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      box-sizing: border-box;
+    }
+    
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Animated dash for data flows */
+    @keyframes flowAnimation {
+      from { stroke-dashoffset: 40; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    .flow-line {
+      stroke-dasharray: 8 6;
+      animation: flowAnimation 1.5s linear infinite;
+    }
+
+    .flow-fast {
+      animation-duration: 0.9s;
+    }
+
+    /* Glow pulse effects */
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.6; filter: drop-shadow(0 0 8px currentColor); }
+      50% { opacity: 1; filter: drop-shadow(0 0 16px currentColor); }
+    }
+
+    .glow-node {
+      transition: all 0.3s ease;
+    }
+    .glow-node:hover {
+      filter: drop-shadow(0 0 20px rgba(16, 185, 129, 0.4));
+      transform: translateY(-2px);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body class="bg-[#070A12] text-slate-100 min-h-screen p-4 md:p-6 antialiased flex flex-col items-center selection:bg-emerald-500 selection:text-black">
+
+  <!-- Top Action Toolbar for SIH Presenter -->
+  <div class="w-full max-w-[1920px] mb-4 flex flex-wrap items-center justify-between gap-4 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 backdrop-blur-xl shadow-2xl">
+    <div class="flex items-center gap-3">
+      <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-emerald-500/20 font-black text-black text-xl">
+        A
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded border border-emerald-800">
+            SIH Presentation Master Asset
+          </span>
+          <span class="text-xs text-slate-400">16:9 HD Ready (1920 x 1080)</span>
+        </div>
+        <h1 class="text-lg md:text-xl font-extrabold text-white tracking-tight">
+          Athloboard Ecosystem: Complete Architecture & Data Flow
+        </h1>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Flow Filter Buttons -->
+      <div class="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs font-semibold">
+        <button onclick="setFilter('all')" id="btn-all" class="px-3 py-1.5 rounded-lg bg-emerald-500 text-black font-bold transition">All Flows</button>
+        <button onclick="setFilter('ai-verification')" id="btn-ai-verification" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">AI Video Pipeline</button>
+        <button onclick="setFilter('points-ledger')" id="btn-points-ledger" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Points Ledger</button>
+        <button onclick="setFilter('referee-studio')" id="btn-referee-studio" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">3-Judge Referee</button>
+        <button onclick="setFilter('marketplace-gyms')" id="btn-marketplace-gyms" class="px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition">Web & Marketplace</button>
+      </div>
+
+      <!-- Export Buttons -->
+      <button onclick="exportPNG(1920, 1080)" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition transform active:scale-95">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        Download PPT Slide (1920x1080 PNG)
+      </button>
+
+      <button onclick="exportSVG()" class="flex items-center gap-2 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl border border-slate-700 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+        Vector SVG
+      </button>
+    </div>
+  </div>
+
+  <!-- SVG Diagram Canvas Container (Widescreen 16:9 Presentation Format) -->
+  <div id="diagram-wrapper" class="w-full max-w-[1920px] aspect-[16/9] relative rounded-3xl overflow-hidden border border-slate-800/90 shadow-2xl bg-[#080C16] shadow-black/80">
+    <svg id="sih-svg" viewBox="0 0 1920 1080" class="w-full h-full block" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Background Grid Pattern -->
+        <pattern id="dot-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <circle cx="20" cy="20" r="1" fill="#1E293B" opacity="0.6"/>
+        </pattern>
+        <pattern id="lines-grid" width="120" height="120" patternUnits="userSpaceOnUse">
+          <path d="M 120 0 L 0 0 0 120" fill="none" stroke="#131C31" stroke-width="1" stroke-opacity="0.4"/>
+        </pattern>
+
+        <!-- Glow Filters -->
+        <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#10B981" flood-opacity="0.45"/>
+        </filter>
+        <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#06B6D4" flood-opacity="0.45"/>
+        </filter>
+        <filter id="glow-blue" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#3B82F6" flood-opacity="0.45"/>
+        </filter>
+        <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#F59E0B" flood-opacity="0.45"/>
+        </filter>
+        <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#A855F7" flood-opacity="0.45"/>
+        </filter>
+
+        <!-- Arrow Markers -->
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#10B981"/>
+        </marker>
+        <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#06B6D4"/>
+        </marker>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#3B82F6"/>
+        </marker>
+        <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#F59E0B"/>
+        </marker>
+        <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#A855F7"/>
+        </marker>
+        <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 10 5 L 0 9 z" fill="#F97316"/>
+        </marker>
+
+        <!-- Linear Gradients for Connectors -->
+        <linearGradient id="grad-green-orange" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10B981"/>
+          <stop offset="100%" stop-color="#F97316"/>
+        </linearGradient>
+        <linearGradient id="grad-green-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10B981"/>
+          <stop offset="100%" stop-color="#3B82F6"/>
+        </linearGradient>
+        <linearGradient id="grad-blue-cyan" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#3B82F6"/>
+          <stop offset="100%" stop-color="#06B6D4"/>
+        </linearGradient>
+        <linearGradient id="grad-cyan-orange" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#06B6D4"/>
+          <stop offset="100%" stop-color="#F97316"/>
+        </linearGradient>
+        <linearGradient id="grad-amber-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#F59E0B"/>
+          <stop offset="100%" stop-color="#3B82F6"/>
+        </linearGradient>
+        <linearGradient id="grad-purple-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#3B82F6"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Background Canvas -->
+      <rect width="1920" height="1080" fill="#080C16"/>
+      <rect width="1920" height="1080" fill="url(#dot-grid)"/>
+      <rect width="1920" height="1080" fill="url(#lines-grid)"/>
+
+      <!-- Ambient Glow Pods -->
+      <circle cx="280" cy="280" r="220" fill="#10B981" opacity="0.04" filter="blur(60px)"/>
+      <circle cx="820" cy="380" r="260" fill="#3B82F6" opacity="0.05" filter="blur(70px)"/>
+      <circle cx="820" cy="800" r="260" fill="#06B6D4" opacity="0.04" filter="blur(70px)"/>
+      <circle cx="1400" cy="280" r="220" fill="#F97316" opacity="0.04" filter="blur(60px)"/>
+      <circle cx="1400" cy="580" r="220" fill="#38BDF8" opacity="0.04" filter="blur(60px)"/>
+
+      <!-- ========================================================================= -->
+      <!-- TOP SLIDE HEADER (SIH EVALUATION READY) -->
+      <!-- ========================================================================= -->
+      <g transform="translate(80, 50)">
+        <rect x="0" y="0" width="1760" height="74" rx="16" fill="#0F172A" stroke="#1E293B" stroke-width="1.5"/>
+        
+        <!-- Logo & Title -->
+        <rect x="16" y="14" width="46" height="46" rx="12" fill="#10B981"/>
+        <text x="39" y="44" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" font-size="24" fill="#000000" text-anchor="middle">A</text>
+        
+        <text x="76" y="36" font-family="'Plus Jakarta Sans', sans-serif" font-weight="800" font-size="20" fill="#FFFFFF" letter-spacing="-0.5">
+          ATHLOBOARD <tspan fill="#10B981">ECOSYSTEM</tspan>
+        </text>
+        <text x="76" y="54" font-family="'Plus Jakarta Sans', sans-serif" font-weight="500" font-size="12" fill="#94A3B8">
+          SMART INDIA HACKATHON 2024 • COMPLETE 5-SURFACE FEDERATED ARCHITECTURE & DATA PIPELINE
+        </text>
+
+        <!-- Highlights Badges -->
+        <g transform="translate(1120, 18)">
+          <rect x="0" y="0" width="180" height="38" rx="8" fill="#132338" stroke="#0284C7" stroke-width="1"/>
+          <circle cx="16" cy="19" r="4" fill="#38BDF8"/>
+          <text x="28" y="24" font-size="11" font-weight="700" fill="#E0F2FE">CV Biomechanics :8000</text>
+
+          <rect x="195" y="0" width="190" height="38" rx="8" fill="#132722" stroke="#059669" stroke-width="1"/>
+          <circle cx="211" cy="19" r="4" fill="#10B981"/>
+          <text x="223" y="24" font-size="11" font-weight="700" fill="#D1FAE5">SigV4 Zero-Egress Storage</text>
+
+          <rect x="400" y="0" width="220" height="38" rx="8" fill="#241B35" stroke="#7C3AED" stroke-width="1"/>
+          <circle cx="416" cy="19" r="4" fill="#A855F7"/>
+          <text x="428" y="24" font-size="11" font-weight="700" fill="#EDE9FE">ACID Verified Points Ledger</text>
+        </g>
+      </g>
+
+      <!-- ========================================================================= -->
+      <!-- DATA FLOW CONNECTING LINES (Rendered below nodes) -->
+      <!-- ========================================================================= -->
+      <g id="flow-layer">
+        <!-- 1. VIDEO UPLOAD STREAM: Android -> Cloudflare R2 -->
+        <!-- Starts at Android (right edge 470, 240) -> R2 (left edge 1290, 240) -->
+        <g id="flow-group-ai-verification" class="flow-element">
+          <path d="M 470 240 C 720 120, 1040 120, 1290 240" fill="none" stroke="url(#grad-green-orange)" stroke-width="3.5" class="flow-line flow-fast" marker-end="url(#arrow-orange)"/>
+          <rect x="800" y="115" width="280" height="28" rx="14" fill="#090E17" stroke="#F97316" stroke-width="1.5"/>
+          <text x="940" y="133" font-size="11" font-weight="700" fill="#FED7AA" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            1. SigV4 Chunked Stream PUT (0% Egress)
+          </text>
+        </g>
+
+        <!-- 2. SUBMIT VIDEO METADATA: Android -> NestJS Gateway -->
+        <!-- Android (470, 310) -> NestJS (700, 310) -->
+        <g id="flow-group-points-ledger-1" class="flow-element">
+          <path d="M 470 310 L 700 310" fill="none" stroke="url(#grad-green-blue)" stroke-width="3" class="flow-line" marker-end="url(#arrow-blue)"/>
+          <rect x="495" y="285" width="180" height="24" rx="6" fill="#090E17" stroke="#3B82F6" stroke-width="1"/>
+          <text x="585" y="301" font-size="10" font-weight="700" fill="#93C5FD" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            2. POST /api/lifts/submit
+          </text>
+        </g>
+
+        <!-- 3. TRIGGER AI VERIFY: NestJS -> AI Service -->
+        <!-- NestJS (910, 480) -> AI Service (910, 620) -->
+        <g id="flow-group-ai-verification-2" class="flow-element">
+          <path d="M 910 480 L 910 620" fill="none" stroke="url(#grad-blue-cyan)" stroke-width="3.5" class="flow-line" marker-end="url(#arrow-cyan)"/>
+          <rect x="790" y="535" width="240" height="26" rx="6" fill="#090E17" stroke="#06B6D4" stroke-width="1.2"/>
+          <text x="910" y="552" font-size="10.5" font-weight="700" fill="#67E8F9" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            3. POST /verify-lift (Async Hook)
+          </text>
+        </g>
+
+        <!-- 4. FETCH VIDEO: AI Service -> Cloudflare R2 -->
+        <!-- AI Service (1120, 710) -> Cloudflare R2 (1320, 370) -->
+        <g id="flow-group-ai-verification-3" class="flow-element">
+          <path d="M 1120 710 C 1220 710, 1260 520, 1320 370" fill="none" stroke="url(#grad-cyan-orange)" stroke-width="3" class="flow-line" marker-end="url(#arrow-orange)"/>
+          <rect x="1170" y="530" width="220" height="26" rx="6" fill="#090E17" stroke="#F97316" stroke-width="1.2"/>
+          <text x="1280" y="547" font-size="10" font-weight="700" fill="#FED7AA" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            4. Stream Video via SigV4 URL
+          </text>
+        </g>
+
+        <!-- 5. AI VERIFICATION RESPONSE: AI Service -> NestJS -->
+        <!-- AI Service (850, 620) -> NestJS (850, 480) -->
+        <g id="flow-group-ai-verification-4" class="flow-element">
+          <path d="M 850 620 L 850 480" fill="none" stroke="#10B981" stroke-width="3" class="flow-line" marker-end="url(#arrow-green)"/>
+          <rect x="690" y="535" width="210" height="26" rx="6" fill="#090E17" stroke="#10B981" stroke-width="1.2"/>
+          <text x="795" y="552" font-size="10" font-weight="700" fill="#A7F3D0" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            5. {pass, conf: 0.94, reps: 5}
+          </text>
+        </g>
+
+        <!-- 6. POINTS LEDGER TRANSACTION: NestJS -> PostgreSQL -->
+        <!-- NestJS (1120, 360) -> PostgreSQL (1290, 520) -->
+        <g id="flow-group-points-ledger-2" class="flow-element">
+          <path d="M 1120 360 C 1200 360, 1220 480, 1290 520" fill="none" stroke="#38BDF8" stroke-width="3" class="flow-line" marker-end="url(#arrow-blue)"/>
+          <rect x="1140" y="415" width="210" height="26" rx="6" fill="#090E17" stroke="#0284C7" stroke-width="1.2"/>
+          <text x="1245" y="432" font-size="10" font-weight="700" fill="#BAE6FD" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            6. ACID +100 Points & Lift State
+          </text>
+        </g>
+
+        <!-- 7. REFEREE STUDIO RULING: Admin Console -> NestJS -->
+        <!-- Admin Console (470, 830) -> NestJS (700, 420) -->
+        <g id="flow-group-referee-studio" class="flow-element">
+          <path d="M 470 830 C 580 830, 600 520, 700 420" fill="none" stroke="url(#grad-amber-blue)" stroke-width="3" class="flow-line" marker-end="url(#arrow-blue)"/>
+          <rect x="490" y="650" width="210" height="26" rx="6" fill="#090E17" stroke="#F59E0B" stroke-width="1.2"/>
+          <text x="595" y="667" font-size="10" font-weight="700" fill="#FDE68A" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            7. 3 White Lights / Red Reject
+          </text>
+        </g>
+
+        <!-- 8. WEB PORTAL QUERIES: 3D Web -> NestJS -->
+        <!-- Web Portal (470, 560) -> NestJS (700, 380) -->
+        <g id="flow-group-marketplace-gyms" class="flow-element">
+          <path d="M 470 560 C 550 560, 620 420, 700 380" fill="none" stroke="url(#grad-purple-blue)" stroke-width="2.5" class="flow-line" marker-end="url(#arrow-blue)"/>
+          <rect x="490" y="470" width="190" height="24" rx="6" fill="#090E17" stroke="#A855F7" stroke-width="1"/>
+          <text x="585" y="486" font-size="9.5" font-weight="700" fill="#E9D5FF" text-anchor="middle" font-family="'JetBrains Mono', monospace">
+            8. Gym Specs & Lab Catalog
+          </text>
+        </g>
+
+        <!-- 9. IDENTITY / SSO: NestJS -> Firebase -->
+        <!-- NestJS (1120, 270) -> Firebase (1290, 790) -->
+        <path d="M 1120 270 C 1220 270, 1220 740, 1290 790" fill="none" stroke="#EAB308" stroke-width="2" stroke-dasharray="5 5" opacity="0.4"/>
+      </g>
+
+      <!-- ========================================================================= -->
+      <!-- SURFACE CARDS & ARCHITECTURAL NODES -->
+      <!-- ========================================================================= -->
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- NODE 1: ANDROID ATHLETE APP (Kotlin/Jetpack Compose) -->
+      <!-- ------------------------------------------------------------------------- -->
+      <g id="node-android" class="glow-node" transform="translate(80, 160)">
+        <!-- Card Background -->
+        <rect width="390" height="250" rx="20" fill="#0D1520" stroke="#10B981" stroke-width="2" filter="url(#glow-green)"/>
+        
+        <!-- Header Ribbon -->
+        <rect x="0" y="0" width="390" height="52" rx="20" fill="#0A2E20"/>
+        <rect x="18" y="14" width="24" height="24" rx="6" fill="#10B981"/>
+        <path d="M 24 26 L 36 26 M 30 20 L 30 32" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+        <text x="52" y="32" font-size="15" font-weight="800" fill="#FFFFFF">1. ANDROID ATHLETE APP</text>
+        <rect x="290" y="14" width="82" height="24" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+        <text x="331" y="30" font-size="10" font-weight="700" fill="#6EE7B7" text-anchor="middle">Kotlin / Compose</text>
+
+        <!-- Body Features -->
+        <g transform="translate(20, 70)">
+          <!-- Feature 1 -->
+          <circle cx="8" cy="8" r="4" fill="#10B981"/>
+          <text x="22" y="12" font-size="12.5" font-weight="700" fill="#E2E8F0">Direct Cloudflare R2 Streaming</text>
+          <text x="22" y="28" font-size="11" fill="#94A3B8">Zero memory buffering (OOM safe disk stream)</text>
+
+          <!-- Feature 2 -->
+          <circle cx="8" cy="48" r="4" fill="#10B981"/>
+          <text x="22" y="52" font-size="12.5" font-weight="700" fill="#E2E8F0">CameraX Biomechanical HUD</text>
+          <text x="22" y="68" font-size="11" fill="#94A3B8">Live skeletal angle guides & pause indicators</text>
+
+          <!-- Feature 3 -->
+          <circle cx="8" cy="88" r="4" fill="#10B981"/>
+          <text x="22" y="92" font-size="12.5" font-weight="700" fill="#E2E8F0">Decentralized Points Balance</text>
+          <text x="22" y="108" font-size="11" fill="#94A3B8">Real-time ledger sync (+100 pts per verified PR)</text>
+
+          <!-- Metrics Footer Badge -->
+          <rect x="0" y="128" width="350" height="34" rx="8" fill="#081C15" stroke="#065F46" stroke-width="1"/>
+          <text x="14" y="150" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#34D399">
+            STATUS: APK Verified (16MB) • Gradle 8.2 • SDK 34
+          </text>
+        </g>
+      </g>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- NODE 2: 3D PUBLIC WEB PORTAL & STORE (Next.js 14 / Three.js) -->
+      <!-- ------------------------------------------------------------------------- -->
+      <g id="node-web" class="glow-node" transform="translate(80, 440)">
+        <rect width="390" height="240" rx="20" fill="#110E1D" stroke="#A855F7" stroke-width="2" filter="url(#glow-purple)"/>
+        
+        <rect x="0" y="0" width="390" height="52" rx="20" fill="#28143D"/>
+        <rect x="18" y="14" width="24" height="24" rx="6" fill="#A855F7"/>
+        <path d="M 23 26 L 37 26 M 30 20 L 35 26 L 30 32" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+        <text x="52" y="32" font-size="15" font-weight="800" fill="#FFFFFF">2. 3D WEB PORTAL & STORE</text>
+        <rect x="290" y="14" width="82" height="24" rx="6" fill="#3B0764" stroke="#A855F7" stroke-width="1"/>
+        <text x="331" y="30" font-size="10" font-weight="700" fill="#D8B4FE" text-anchor="middle">Next.js / 3D</text>
+
+        <g transform="translate(20, 70)">
+          <circle cx="8" cy="8" r="4" fill="#A855F7"/>
+          <text x="22" y="12" font-size="12.5" font-weight="700" fill="#E2E8F0">Interactive 3D Olympic Barbell</text>
+          <text x="22" y="28" font-size="11" fill="#94A3B8">Three.js / React Three Fiber animated loadout</text>
+
+          <circle cx="8" cy="48" r="4" fill="#A855F7"/>
+          <text x="22" y="52" font-size="12.5" font-weight="700" fill="#E2E8F0">Audited Gym Radar</text>
+          <text x="22" y="68" font-size="11" fill="#94A3B8">IPF spec equipment, calibrated plates & rack check</text>
+
+          <circle cx="8" cy="88" r="4" fill="#A855F7"/>
+          <text x="22" y="92" font-size="12.5" font-weight="700" fill="#E2E8F0">Lab-Tested Nutrition Marketplace</text>
+          <text x="22" y="108" font-size="11" fill="#94A3B8">FSSAI & Third-Party Lab Certificate audits</text>
+
+          <rect x="0" y="124" width="350" height="32" rx="8" fill="#1C0A35" stroke="#581C87" stroke-width="1"/>
+          <text x="14" y="144" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="#C084FC">
+            STATUS: Production Build • App Router • SEO Ready
+          </text>
+        </g>
+      </g>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- NODE 3: ADMIN COCKPIT & 3-JUDGE REFEREE STUDIO (Next.js 14) -->
+      <!-- ------------------------------------------------------------------------- -->
+      <g id="node-admin" class="glow-node" transform="translate(80, 710)">
+        <rect width="390" height="270" rx="20" fill="#1A140B" stroke="#F59E0B" stroke-width="2" filter="url(#glow-amber)"/>
+        
+        <rect x="0" y="0" width="390" height="52" rx="20" fill="#3D2908"/>
+        <rect x="18" y="14" width="24" height="24" rx="6" fill="#F59E0B"/>
+        <circle cx="30" cy="26" r="6" stroke="#000" stroke-width="2" fill="none"/>
+        <text x="52" y="32" font-size="15" font-weight="800" fill="#FFFFFF">3. 3-JUDGE REFEREE STUDIO</text>
+        <rect x="290" y="14" width="82" height="24" rx="6" fill="#451A03" stroke="#F59E0B" stroke-width="1"/>
+        <text x="331" y="30" font-size="10" font-weight="700" fill="#FCD34D" text-anchor="middle">Admin :3001</text>
+
+        <g transform="translate(20, 70)">
+          <circle cx="8" cy="8" r="4" fill="#F59E0B"/>
+          <text x="22" y="12" font-size="12.5" font-weight="700" fill="#E2E8F0">3-Judge Powerlifting Lights System</text>
+          <text x="22" y="28" font-size="11" fill="#94A3B8">Interactive White (Pass) / Red (Fail) majority vote</text>
+
+          <circle cx="8" cy="48" r="4" fill="#F59E0B"/>
+          <text x="22" y="52" font-size="12.5" font-weight="700" fill="#E2E8F0">Synchronized High-Speed Scrubbing</text>
+          <text x="22" y="68" font-size="11" fill="#94A3B8">0.25x - 2.0x playback for depth & lockout review</text>
+
+          <circle cx="8" cy="88" r="4" fill="#F59E0B"/>
+          <text x="22" y="92" font-size="12.5" font-weight="700" fill="#E2E8F0">Multi-Entity Audit Dashboard</text>
+          <text x="22" y="108" font-size="11" fill="#94A3B8">GSTIN KYC, gym facility verification, lab COA</text>
+
+          <!-- 3 Referee Lights Mockup -->
+          <g transform="translate(0, 126)">
+            <rect width="350" height="42" rx="8" fill="#291804" stroke="#78350F" stroke-width="1"/>
+            <text x="14" y="26" font-size="11" font-weight="700" fill="#FDE68A">REFEREE RULING:</text>
+            <circle cx="160" cy="21" r="10" fill="#22C55E" stroke="#FFF" stroke-width="2" filter="url(#glow-green)"/>
+            <circle cx="195" cy="21" r="10" fill="#22C55E" stroke="#FFF" stroke-width="2" filter="url(#glow-green)"/>
+            <circle cx="230" cy="21" r="10" fill="#EF4444" stroke="#FFF" stroke-width="2"/>
+            <text x="255" y="25" font-size="11" font-weight="800" fill="#22C55E">2-1 GOOD LIFT</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- NODE 4: CENTRAL API GATEWAY & POINTS LEDGER (NestJS :4000) -->
+      <!-- ------------------------------------------------------------------------- -->
+      <g id="node-backend" class="glow-node" transform="translate(700, 200)">
+        <rect width="420" height="280" rx="20" fill="#0B132B" stroke="#3B82F6" stroke-width="2.5" filter="url(#glow-blue)"/>
+        
+        <rect x="0" y="0" width="420" height="54" rx="20" fill="#122554"/>
+        <rect x="18" y="15" width="24" height="24" rx="6" fill="#3B82F6"/>
+        <circle cx="30" cy="27" r="5" fill="#FFF"/>
+        <text x="52" y="34" font-size="16" font-weight="800" fill="#FFFFFF">4. NESTJS BACKEND GATEWAY</text>
+        <rect x="310" y="15" width="92" height="24" rx="6" fill="#1E3A8A" stroke="#3B82F6" stroke-width="1"/>
+        <text x="356" y="31" font-size="10" font-weight="700" fill="#93C5FD" text-anchor="middle">API Core :4000</text>
+
+        <g transform="translate(24, 75)">
+          <circle cx="8" cy="8" r="4" fill="#3B82F6"/>
+          <text x="22" y="12" font-size="13" font-weight="700" fill="#FFFFFF">Decentralized Auth & RBAC</text>
+          <text x="22" y="28" font-size="11" fill="#94A3B8">Firebase JWT verification & automated role syncing</text>
+
+          <circle cx="8" cy="50" r="4" fill="#3B82F6"/>
+          <text x="22" y="54" font-size="13" font-weight="700" fill="#FFFFFF">Biomechanical Microservice Dispatcher</text>
+          <text x="22" y="70" font-size="11" fill="#94A3B8">Non-blocking background HTTP call to Python worker</text>
+
+          <circle cx="8" cy="92" r="4" fill="#3B82F6"/>
+          <text x="22" y="96" font-size="13" font-weight="700" fill="#FFFFFF">Immutable Points Ledger Engine</text>
+          <text x="22" y="112" font-size="11" fill="#94A3B8">ACID transaction logic (+100 pts on auto/referee pass)</text>
+
+          <circle cx="8" cy="134" r="4" fill="#3B82F6"/>
+          <text x="22" y="138" font-size="13" font-weight="700" fill="#FFFFFF">High-Availability Demo Fallback</text>
+          <text x="22" y="154" font-size="11" fill="#94A3B8">Zero-failure offline mock tier ensures 100% demo uptime</text>
+
+          <!-- Module Pill Badges -->
+          <g transform="translate(0, 172)">
+            <rect x="0" y="0" width="85" height="22" rx="6" fill="#172554" stroke="#1D4ED8" stroke-width="1"/>
+            <text x="42" y="15" font-size="9.5" font-weight="700" fill="#93C5FD" text-anchor="middle">LiftsModule</text>
+
+            <rect x="93" y="0" width="88" height="22" rx="6" fill="#172554" stroke="#1D4ED8" stroke-width="1"/>
+            <text x="137" y="15" font-size="9.5" font-weight="700" fill="#93C5FD" text-anchor="middle">AdminModule</text>
+
+            <rect x="189" y="0" width="88" height="22" rx="6" fill="#172554" stroke="#1D4ED8" stroke-width="1"/>
+            <text x="233" y="15" font-size="9.5" font-weight="700" fill="#93C5FD" text-anchor="middle">R2Module</text>
+
+            <rect x="285" y="0" width="88" height="22" rx="6" fill="#172554" stroke="#1D4ED8" stroke-width="1"/>
+            <text x="329" y="15" font-size="9.5" font-weight="700" fill="#93C5FD" text-anchor="middle">StoreModule</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- NODE 5: AI BIOMECHANICAL VISION SERVICE (FastAPI / OpenCV :8000) -->
+      <!-- ------------------------------------------------------------------------- -->
+      <g id="node-ai" class="glow-node" transform="translate(700, 620)">
+        <rect width="420" height="360" rx="20" fill="#081820" stroke="#06B6D4" stroke-width="2.5" filter="url(#glow-cyan)"/>
+        
+        <rect x="0" y="0" width="420" height="54" rx="20" fill="#0E3642"/>
+        <rect x="18" y="15" width="24" height="24" rx="6" fill="#06B6D4"/>
+        <path d="M 22 27 L 27 32 L 38 21" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <text x="52" y="34" font-size="16" font-weight="800" fill="#FFFFFF">5. AI BIOMECHANICAL VISION</text>
+        <rect x="300" y="15" width="102" height="24" rx="6" fill="#164E63" stroke="#06B6D4" stroke-width="1"/>
+        <text x="351" y="31" font-size="10" font-weight="700" fill="#A5F3FC" text-anchor="middle">FastAPI :8000</text>
+
+        <g transform="translate(24, 75)">
+          <circle cx="8" cy="8" r="4" fill="#06B6D4"/>
+          <text x="22" y="12" font-size="13" font-weight="700" fill="#FFFFFF">OpenCV Kinematic & Depth Engine</text>
+          <text x="22" y="28" font-size="11" fill="#94A3B8">Measures hip crease relative to knee apex on Squat (&ge;90&deg;)</text>
+
+          <circle cx="8" cy="50" r="4" fill="#06B6D4"/>
+          <text x="22" y="54" font-size="13" font-weight="700" fill="#FFFFFF">Chest Pause & Lockout Verification</text>
+          <text x="22" y="70" font-size="11" fill="#94A3B8">Detects 1s bar quiescence on Bench & full hip extension on Deadlift</text>
+
+          <circle cx="8" cy="92" r="4" fill="#06B6D4"/>
+          <text x="22" y="96" font-size="13" font-weight="700" fill="#FFFFFF">Motion Energy Variance Curve</text>
+          <text x="22" y="112" font-size="11" fill="#94A3B8">Filters out static/fake clips and video tampering</text>
+
+          <!-- Decision Engine Visual -->
+          <g transform="translate(0, 136)">
+            <rect width="370" height="80" rx="10" fill="#052028" stroke="#0891B2" stroke-width="1"/>
+            <text x="14" y="24" font-size="11" font-weight="800" fill="#67E8F9">AUTONOMOUS AUDIT THRESHOLD:</text>
+            
+            <rect x="14" y="36" width="160" height="32" rx="6" fill="#064E3B" stroke="#10B981" stroke-width="1"/>
+            <text x="94" y="50" font-size="10" font-weight="700" fill="#34D399" text-anchor="middle">Confidence &ge; 75% & Pass</text>
+            <text x="94" y="62" font-size="8.5" fill="#A7F3D0" text-anchor="middle">&rarr; Instant Auto-Approve</text>
+
+            <rect x="190" y="36" width="165" height="32" rx="6" fill="#451A03" stroke="#F59E0B" stroke-width="1"/>
+            <text x="272" y="50" font-size="10" font-weight="700" fill="#FBBF24" text-anchor="middle">Conf &lt; 75% or Ambiguous</text>
+            <text x="272" y="62" font-size="8.5" fill="#FDE68A" text-anchor="middle">&rarr; Flag for 3-Judge Studio</text>
+          </g>
+
+          <!-- Tech Stack Tags -->
+          <g transform="translate(0, 232)">
+            <rect x="0" y="0" width="80" height="20" rx="5" fill="#0E2E3B"/>
+            <text x="40" y="14" font-size="9" font-weight="600" fill="#67E8F9" text-anchor="middle">Python 3.11</text>
+
+            <rect x="88" y="0" width="80" height="20" rx="5" fill="#0E2E3B"/>
+            <text x="128" y="14" font-size="9" font-weight="600" fill="#67E8F9" text-anchor="middle">OpenCV 4.9</text>
+
+            <rect x="176" y="0" width="85" height="20" rx="5" fill="#0E2E3B"/>
+            <text x="218" y="14" font-size="9" font-weight="600" fill="#67E8F9" text-anchor="middle">NumPy Vector</text>
+
+            <rect x="269" y="0" width="100" height="20" rx="5" fill="#0E2E3B"/>
+            <text x="319" y="14" font-size="9" font-weight="600" fill="#67E8F9" text-anchor="middle">SigV4 Client</text>
+          </g>
+        </g>
+      </g>
+
+      <!-- ------------------------------------------------------------------------- -->
+      <!-- DATA & CLOUD STORAGE BACKBONE (Right Column) -->
+      <!-- ------------------------------------------------------------------------- -->
+
+      <!-- NODE 6: CLOUDFLARE R2 STORAGE -->
+      <g id="node-r2" class="glow-node" transform="translate(1290, 160)">
+        <rect width="380" height="220" rx="20" fill="#1C110A" stroke="#F97316" stroke-width="2" filter="url(#glow-amber)"/>
+        
+        <rect x="0" y="0" width="380" height="50" rx="20" fill="#3D1D08"/>
+        <rect x="18" y="13" width="24" height="24" rx="6" fill="#F97316"/>
+        <text x="50" y="31" font-size="14" font-weight="800" fill="#FFFFFF">CLOUDFLARE R2 OBJECT STORAGE</text>
+        <rect x="295" y="13" width="70" height="24" rx="6" fill="#431407" stroke="#F97316" stroke-width="1"/>
+        <text x="330" y="29" font-size="9.5" font-weight="700" fill="#FDBA74" text-anchor="middle">0% Egress</text>
+
+        <g transform="translate(20, 68)">
+          <circle cx="8" cy="8" r="4" fill="#F97316"/>
+          <text x="22" y="12" font-size="12" font-weight="700" fill="#E2E8F0">AWS SigV4 Presigned Uploads</text>
+          <text x="22" y="26" font-size="10.5" fill="#94A3B8">Direct client-to-storage stream; zero API server load</text>
+
+          <circle cx="8" cy="46" r="4" fill="#F97316"/>
+          <text x="22" y="50" font-size="12" font-weight="700" fill="#E2E8F0">Bucket: athloboard-media</text>
+          <text x="22" y="64" font-size="10.5" fill="#94A3B8">Stores 4K lift videos, gym audits & lab reports</text>
+
+          <circle cx="8" cy="84" r="4" fill="#F97316"/>
+          <text x="22" y="88" font-size="12" font-weight="700" fill="#E2E8F0">Global Edge CDN Acceleration</text>
+          <text x="22" y="102" font-size="10.5" fill="#94A3B8">Sub-50ms video scrubbing for referee judge replay</text>
+
+          <rect x="0" y="120" width="340" height="26" rx="6" fill="#2B1005" stroke="#7C2D12" stroke-width="1"/>
+          <text x="14" y="137" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="600" fill="#FB923C">
+            S3-COMPATIBLE • STRICT ZERO-EGRESS FEES
+          </text>
+        </g>
+      </g>
+
+      <!-- NODE 7: POSTGRESQL DATABASE -->
+      <g id="node-db" class="glow-node" transform="translate(1290, 420)">
+        <rect width="380" height="250" rx="20" fill="#0A1524" stroke="#0284C7" stroke-width="2" filter="url(#glow-blue)"/>
+        
+        <rect x="0" y="0" width="380" height="50" rx="20" fill="#0B2A4A"/>
+        <rect x="18" y="13" width="24" height="24" rx="6" fill="#0284C7"/>
+        <text x="50" y="31" font-size="14" font-weight="800" fill="#FFFFFF">POSTGRESQL DATABASE</text>
+        <rect x="275" y="13" width="90" height="24" rx="6" fill="#082F49" stroke="#0284C7" stroke-width="1"/>
+        <text x="320" y="29" font-size="9.5" font-weight="700" fill="#7DD3FC" text-anchor="middle">19 Tables</text>
+
+        <g transform="translate(20, 68)">
+          <circle cx="8" cy="8" r="4" fill="#0284C7"/>
+          <text x="22" y="12" font-size="12" font-weight="700" fill="#E2E8F0">Append-Only Points Ledger</text>
+          <text x="22" y="26" font-size="10.5" fill="#94A3B8">Strict transaction history (`lift_points_ledger`)</text>
+
+          <circle cx="8" cy="46" r="4" fill="#0284C7"/>
+          <text x="22" y="50" font-size="12" font-weight="700" fill="#E2E8F0">Lift Sets & Session Logs</text>
+          <text x="22" y="64" font-size="10.5" fill="#94A3B8">Biomechanical angle cache & validation status</text>
+
+          <circle cx="8" cy="84" r="4" fill="#0284C7"/>
+          <text x="22" y="88" font-size="12" font-weight="700" fill="#E2E8F0">Federated Sports Governance</text>
+          <text x="22" y="102" font-size="10.5" fill="#94A3B8">Gyms, Brands, GSTIN KYC, Lab Reports, Audit Trail</text>
+
+          <rect x="0" y="126" width="340" height="42" rx="8" fill="#072038" stroke="#0369A1" stroke-width="1"/>
+          <text x="14" y="144" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="600" fill="#38BDF8">
+            SCHEMA: UUID PKs • Foreign Keys • Indexes
+          </text>
+          <text x="14" y="158" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94A3B8">
+            Audit logs: admin_audit_log with IP & timestamp
+          </text>
+        </g>
+      </g>
+
+      <!-- NODE 8: FIREBASE AUTHENTICATION -->
+      <g id="node-auth" class="glow-node" transform="translate(1290, 710)">
+        <rect width="380" height="230" rx="20" fill="#1C1808" stroke="#EAB308" stroke-width="2" filter="url(#glow-amber)"/>
+        
+        <rect x="0" y="0" width="380" height="50" rx="20" fill="#3D3208"/>
+        <rect x="18" y="13" width="24" height="24" rx="6" fill="#EAB308"/>
+        <text x="50" y="31" font-size="14" font-weight="800" fill="#FFFFFF">FIREBASE IDENTITY & AUTH</text>
+        <rect x="290" y="13" width="75" height="24" rx="6" fill="#422006" stroke="#EAB308" stroke-width="1"/>
+        <text x="327" y="29" font-size="9.5" font-weight="700" fill="#FDE047" text-anchor="middle">OAuth / JWT</text>
+
+        <g transform="translate(20, 68)">
+          <circle cx="8" cy="8" r="4" fill="#EAB308"/>
+          <text x="22" y="12" font-size="12" font-weight="700" fill="#E2E8F0">Athlete Phone OTP & Google SSO</text>
+          <text x="22" y="26" font-size="10.5" fill="#94A3B8">Low-friction mobile onboarding for athletes</text>
+
+          <circle cx="8" cy="46" r="4" fill="#EAB308"/>
+          <text x="22" y="50" font-size="12" font-weight="700" fill="#E2E8F0">Gym Owner & Referee RBAC</text>
+          <text x="22" y="64" font-size="10.5" fill="#94A3B8">Role claims enforced via backend FirebaseAuthGuard</text>
+
+          <circle cx="8" cy="84" r="4" fill="#EAB308"/>
+          <text x="22" y="88" font-size="12" font-weight="700" fill="#E2E8F0">Zero Credentials Stored Locally</text>
+          <text x="22" y="102" font-size="10.5" fill="#94A3B8">Token rotation & secure user synchronization</text>
+
+          <rect x="0" y="122" width="340" height="26" rx="6" fill="#2E2405" stroke="#854D0E" stroke-width="1"/>
+          <text x="14" y="139" font-family="'JetBrains Mono', monospace" font-size="9.5" font-weight="600" fill="#FACC15">
+            JWT VALIDATION IN NESTJS GUARD
+          </text>
+        </g>
+      </g>
+
+      <!-- ========================================================================= -->
+      <!-- BOTTOM SIH KEY DIFFERENTIATOR PILLARS -->
+      <!-- ========================================================================= -->
+      <g transform="translate(80, 1000)">
+        <rect width="1760" height="52" rx="14" fill="#0C1220" stroke="#1E293B" stroke-width="1.2"/>
+
+        <g transform="translate(24, 16)">
+          <!-- Pillar 1 -->
+          <circle cx="10" cy="10" r="5" fill="#10B981"/>
+          <text x="24" y="14" font-size="12" font-weight="800" fill="#FFFFFF">1. ZERO-EGRESS COST:</text>
+          <text x="175" y="14" font-size="11.5" fill="#94A3B8">Direct SigV4 chunked mobile uploads to Cloudflare R2 bypass backend bandwidth limits.</text>
+
+          <!-- Pillar 2 -->
+          <circle cx="700" cy="10" r="5" fill="#06B6D4"/>
+          <text x="714" y="14" font-size="12" font-weight="800" fill="#FFFFFF">2. BIOMECHANICAL AI AUDIT:</text>
+          <text x="895" y="14" font-size="11.5" fill="#94A3B8">Computer vision verifies hip-crease depth (&ge;90&deg;) and bar pause under 2 seconds.</text>
+
+          <!-- Pillar 3 -->
+          <circle cx="1340" cy="10" r="5" fill="#F59E0B"/>
+          <text x="1354" y="14" font-size="12" font-weight="800" fill="#FFFFFF">3. OLYMPIC 3-JUDGE CONSENSUS:</text>
+          <text x="1565" y="14" font-size="11.5" fill="#94A3B8">Ambiguous lifts routed to human referee studio.</text>
+        </g>
+      </g>
+
+    </svg>
+  </div>
+
+  <!-- Interactive Detail Cards Below Diagram for Presentation Talking Points -->
+  <div class="w-full max-w-[1920px] mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Card 1 -->
+    <div class="bg-slate-900/90 border border-emerald-500/30 rounded-2xl p-5 shadow-xl">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+          01
+        </div>
+        <h3 class="font-extrabold text-white text-base">Biomechanical AI Pipeline</h3>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed">
+        When an athlete records a lift in the Kotlin app, the video streams via AWS SigV4 directly into Cloudflare R2. The NestJS backend invokes our FastAPI computer vision service, calculating squat depth, bench chest pause, and deadlift lockout without human latency.
+      </p>
+      <div class="mt-3 inline-flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-800/60">
+        <span>Threshold: &ge; 0.75 confidence & pass &rarr; Auto-Approved</span>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="bg-slate-900/90 border border-blue-500/30 rounded-2xl p-5 shadow-xl">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">
+          02
+        </div>
+        <h3 class="font-extrabold text-white text-base">ACID Points Ledger Engine</h3>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed">
+        Every approved lift creates an immutable ledger entry in <code class="text-blue-300 font-mono">lift_points_ledger</code>, crediting +100 verified lift points to the athlete profile. The engine features an automatic demo fallback, ensuring a zero-failure presentation during jury evaluation.
+      </p>
+      <div class="mt-3 inline-flex items-center gap-2 text-xs font-mono text-blue-400 bg-blue-950/60 px-3 py-1.5 rounded-lg border border-blue-800/60">
+        <span>PostgreSQL ACID • Foreign Key Integrity • 19 Tables</span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="bg-slate-900/90 border border-amber-500/30 rounded-2xl p-5 shadow-xl">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm">
+          03
+        </div>
+        <h3 class="font-extrabold text-white text-base">3-Judge Olympic Studio & KYC</h3>
+      </div>
+      <p class="text-sm text-slate-300 leading-relaxed">
+        Any lift flagged with low confidence or form anomaly is escalated to the Admin Console's 3-Judge Referee Studio. Referees review high-speed scrubbed video (0.25x - 2x) and cast White/Red lights to ratify or reject national athletic records.
+      </p>
+      <div class="mt-3 inline-flex items-center gap-2 text-xs font-mono text-amber-400 bg-amber-950/60 px-3 py-1.5 rounded-lg border border-amber-800/60">
+        <span>IPF Majority Rule (2 White Lights = Approved)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript for Interactive Filters & High-Resolution Slide Export -->
+  <script>
+    // Interactive Flow Filter
+    function setFilter(filterType) {
+      const flowElements = document.querySelectorAll('.flow-element');
+      const buttons = ['all', 'ai-verification', 'points-ledger', 'referee-studio', 'marketplace-gyms'];
+      
+      buttons.forEach(id => {
+        const btn = document.getElementById('btn-' + id);
+        if (id === filterType) {
+          btn.className = 'px-3 py-1.5 rounded-lg bg-emerald-500 text-black font-bold transition';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-slate-400 hover:text-white transition';
+        }
+      });
+
+      flowElements.forEach(el => {
+        if (filterType === 'all') {
+          el.style.opacity = '1';
+        } else if (el.id.includes(filterType)) {
+          el.style.opacity = '1';
+        } else {
+          el.style.opacity = '0.12';
+        }
+      });
+    }
+
+    // Export Vector SVG for PowerPoint
+    function exportSVG() {
+      const svg = document.getElementById('sih-svg');
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+      
+      if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+        source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+      }
+      if (!source.match(/^<svg[^>]+xmlns\:xlink="http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+        source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+      }
+
+      const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Athloboard_SIH_Ecosystem_Architecture.svg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    // Export High-Resolution 1920x1080 (or 4K) PNG for PPT Slide
+    function exportPNG(width = 1920, height = 1080) {
+      const svg = document.getElementById('sih-svg');
+      const serializer = new XMLSerializer();
+      let source = serializer.serializeToString(svg);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      const svgBlob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = function() {
+        ctx.fillStyle = '#080C16';
+        ctx.fillRect(0, 0, width, height);
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+
+        canvas.toBlob(function(blob) {
+          const pngUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = pngUrl;
+          link.download = 'Athloboard_SIH_Slide_1920x1080.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(pngUrl);
+        }, 'image/png');
+      };
+
+      img.src = url;
+    }
+  </script>
+</body>
+</html>
