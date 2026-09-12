@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Trophy, Dumbbell, Award, Flame } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Trophy, Dumbbell, Award, Flame, Download, Smartphone } from 'lucide-react';
 
 const BarbellHeroScene = dynamic(() => import('@/components/3d/BarbellHeroScene'), { ssr: false });
 
@@ -27,7 +27,16 @@ export default function HomePage() {
           </p>
 
           {/* CTA Actions */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 flex-wrap justify-center">
+            <a
+              href="/downloads/athloboard-app.apk"
+              download="Athloboard-v1.0.apk"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-black bg-emerald-400 hover:bg-emerald-300 shadow-[0_0_25px_rgba(16,185,129,0.35)] text-base flex items-center justify-center gap-2.5 transition-all hover:scale-105"
+            >
+              <Smartphone className="w-5 h-5 text-black" />
+              Download Android App
+              <span className="text-[11px] bg-black/15 text-black font-extrabold px-2 py-0.5 rounded-full uppercase">APK</span>
+            </a>
             <Link
               href="/gyms"
               className="w-full sm:w-auto px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-base flex items-center justify-center gap-2 transition-all hover:scale-105"
@@ -85,6 +94,17 @@ export default function HomePage() {
                 <Award className="w-4 h-4 text-gold" /> Earn Lift Points redeemable for authenticated gear
               </li>
             </ul>
+
+            <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <a
+                href="/downloads/athloboard-app.apk"
+                download="Athloboard-v1.0.apk"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-black text-black bg-emerald-400 hover:bg-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] text-sm transition-all hover:scale-105"
+              >
+                <Download className="w-4 h-4" /> Download Athlete App (APK)
+              </a>
+              <span className="text-xs text-muted font-mono">v1.0 • 16 MB • Android 8.0+</span>
+            </div>
           </div>
           <div className="glass-panel p-8 rounded-3xl border border-gold/20 shadow-card-dark">
             <div className="bg-background rounded-2xl p-6 border border-white/5">
@@ -159,6 +179,13 @@ export default function HomePage() {
             Whether you are an athlete seeking verified rankings, a gym owner wanting verified members, or a brand seeking real strength ambassadors.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <a
+              href="/downloads/athloboard-app.apk"
+              download="Athloboard-v1.0.apk"
+              className="px-8 py-4 rounded-xl font-black text-black bg-emerald-400 hover:bg-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] text-sm flex items-center gap-2 transition-all hover:scale-105"
+            >
+              <Smartphone className="w-4 h-4" /> Download Athlete App (APK)
+            </a>
             <Link href="/for-gyms" className="px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-sm">
               Enroll as Gym Partner
             </Link>

@@ -29,7 +29,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="font-bold text-white tracking-wider">ATHLOBOARD ECOSYSTEM</span>
             </div>
             <p className="text-xs">© 2026 Athloboard Technologies India Pvt Ltd. All rights reserved.</p>
-            <div className="flex gap-6 text-xs font-semibold">
+            <div className="flex flex-wrap items-center gap-6 text-xs font-semibold">
+              <a
+                href="/downloads/athloboard-app.apk"
+                download="Athloboard-v1.0.apk"
+                className="text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 transition-colors"
+                title="Download Android APK (16MB)"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                Download Android APK
+              </a>
               <Link href="/for-gyms" className="hover:text-gold">Gym Partners</Link>
               <Link href="/for-brands" className="hover:text-gold">Brand Partners</Link>
               <a href={process.env.NEXT_PUBLIC_API_DOCS_URL || '#'} target="_blank" rel="noopener noreferrer" className="hover:text-gold">API Docs</a>
