@@ -8,9 +8,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.ui.res.painterResource
+import com.athloboard.app.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -90,13 +93,17 @@ fun SplashScreen(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .background(AccentPrimary.copy(alpha = 0.15f))
-                    .border(2.dp, AccentPrimary, CircleShape),
+                    .size(96.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Color(0xFF141824))
+                    .border(2.dp, AccentPrimary.copy(alpha = 0.5f), RoundedCornerShape(24.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = "⚡", fontSize = 40.sp)
+                Image(
+                    painter = painterResource(id = R.drawable.ic_athlo_logo),
+                    contentDescription = "Athloboard Logo",
+                    modifier = Modifier.size(68.dp)
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -242,6 +249,23 @@ fun RoleSelectionScreen(
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Box(
+                modifier = Modifier
+                    .size(76.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color(0xFF141824))
+                    .border(1.5.dp, AccentPrimary.copy(alpha = 0.5f), RoundedCornerShape(20.dp)),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_athlo_logo),
+                    contentDescription = "Athloboard Logo",
+                    modifier = Modifier.size(52.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Text(
                 text = "Welcome to Athloboard",
                 color = TextPrimary,
@@ -478,7 +502,11 @@ fun LoginScreen(
                     .padding(horizontal = 14.dp, vertical = 6.dp)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "⚡", fontSize = 12.sp)
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_athlo_logo),
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp)
+                    )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = "NATIONAL STRENGTH LEADERBOARD",

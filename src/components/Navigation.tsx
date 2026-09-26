@@ -10,8 +10,8 @@ export default function Navigation() {
     <header className="sticky top-0 z-50 w-full glass-panel border-b border-white/5 flex flex-col">
       <div className="px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-9 h-9 rounded-lg bg-gold flex items-center justify-center font-black text-black text-xl shadow-gold-glow group-hover:scale-105 transition-transform">
-            A
+          <div className="w-9 h-9 rounded-lg bg-gold p-1 flex items-center justify-center shadow-gold-glow group-hover:scale-105 transition-transform overflow-hidden">
+            <img src="/logo.png" alt="Athloboard" className="w-full h-full object-contain" />
           </div>
           <div>
             <span className="font-black text-lg tracking-wider text-white">ATHLOBOARD</span>

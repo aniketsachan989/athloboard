@@ -25,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="bg-elevated border-t border-white/5 px-6 py-12 text-sm text-muted">
           <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-gold flex items-center justify-center font-black text-black text-sm">A</div>
+              <div className="w-7 h-7 rounded bg-gold p-0.5 flex items-center justify-center overflow-hidden">
+                <img src="/logo.png" alt="Athloboard" className="w-full h-full object-contain" />
+              </div>
               <span className="font-bold text-white tracking-wider">ATHLOBOARD ECOSYSTEM</span>
             </div>
             <p className="text-xs">© 2026 Athloboard Technologies India Pvt Ltd. All rights reserved.</p>

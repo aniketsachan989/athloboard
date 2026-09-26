@@ -234,8 +234,8 @@ export default function AdminConsole() {
       <aside className="w-64 border-r border-surfaceBorder bg-surface/70 p-6 flex flex-col justify-between hidden md:flex">
         <div className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gold text-black font-black flex items-center justify-center text-lg shadow-gold-glow">
-              A
+            <div className="w-9 h-9 rounded-xl bg-gold p-1 flex items-center justify-center shadow-gold-glow overflow-hidden">
+              <img src="/logo.png" alt="Athloboard" className="w-full h-full object-contain" />
             </div>
             <div>
               <div className="font-black text-sm tracking-wider text-white">ATHLOBOARD</div>
