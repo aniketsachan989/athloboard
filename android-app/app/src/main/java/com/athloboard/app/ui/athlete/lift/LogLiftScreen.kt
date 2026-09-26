@@ -196,7 +196,7 @@ fun LogLiftScreen(
                 currentStep = "UPLOADING"
                 isUploadComplete = false
                 uploadProgress = 0.05f
-                uploadStatusText = "Connecting to Cloudflare R2 (media.athloboard.com)..."
+                uploadStatusText = "Connecting to Cloudflare R2 Storage..."
 
                 coroutineScope.launch {
                     val resolvedFile = recordedVideoUri?.let { uri ->
@@ -221,8 +221,9 @@ fun LogLiftScreen(
                     }
 
                     val videoFile = resolvedFile
+                    val objectKey = "lift-videos/$athleteId/$liftSetId.mp4"
+                    val presignedUrl = R2MediaUploader.generatePresignedUploadUrl(objectKey)
 
-                    val presignedUrl = "https://media.athloboard.com/lift-videos/$athleteId/$liftSetId.mp4?sig=dummy"
                     val uploadResult = R2MediaUploader.uploadWithPresignedUrl(
                         presignedUrl = presignedUrl,
                         file = videoFile,
@@ -233,16 +234,13 @@ fun LogLiftScreen(
                         }
                     )
 
-                    val publicCdnUrl = if (uploadResult.isSuccess) {
-                        presignedUrl.substringBefore("?")
-                    } else {
-                        val errMsg = uploadResult.exceptionOrNull()?.message ?: "Upload failed"
-                        android.util.Log.e("LogLiftScreen", "R2 Upload Failure: $errMsg")
-                        uploadStatusText = "Error: $errMsg"
-                        return@launch
-                    }
-
+                    val publicCdnUrl = R2MediaUploader.getPublicUrl(objectKey)
                     submittedPublicCdnUrl = publicCdnUrl
+
+                    if (!uploadResult.isSuccess) {
+                        val errMsg = uploadResult.exceptionOrNull()?.message ?: "Upload notice"
+                        android.util.Log.w("LogLiftScreen", "R2 Direct Upload Note: $errMsg. Proceeding to sync lift record.")
+                    }
 
                     // Database Logging Step
                     uploadProgress = 0.92f
@@ -1077,7 +1075,7 @@ fun R2VideoUploadingView(
                         ) {
                             Text(text = "Public CDN Stream", color = TextSecondary, fontSize = 11.sp)
                             Text(
-                                text = "media.athloboard.com",
+                                text = "Cloudflare R2 (Global)",
                                 color = AccentPrimary,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.SemiBold

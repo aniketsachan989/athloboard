@@ -8,6 +8,11 @@ const nextConfig = {
         hostname: 'media.athloboard.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: '*.r2.cloudflarestorage.com',
+        pathname: '/**',
+      },
     ],
   },
   transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
