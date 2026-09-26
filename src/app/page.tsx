@@ -7,12 +7,9 @@ const BarbellHeroScene = dynamic(() => import('@/components/3d/BarbellHeroScene'
 export default function HomePage() {
   return (
     <div className="relative w-full overflow-hidden">
-      {/* 1. HERO SECTION WITH 3D FULL-SCREEN BACKGROUND */}
       <section className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-6 overflow-hidden">
-        {/* Full-Screen 3D Barbell Background Scene */}
         <BarbellHeroScene />
 
-        {/* Foreground Content floating above 3D Scene */}
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center pt-8 pb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel border-gold/40 text-gold text-xs font-black tracking-widest uppercase mb-6 shadow-gold-glow animate-pulse">
             <Flame className="w-3.5 h-3.5" /> India’s Federated Strength Ecosystem
@@ -26,7 +23,6 @@ export default function HomePage() {
             The verified-identity strength network. Prove your lifts with IPF-refereed video, discover audited powerlifting gyms, and compete on national leaderboards.
           </p>
 
-          {/* CTA Actions */}
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 flex-wrap justify-center">
             <a
               href="/downloads/athloboard-app.apk"
@@ -53,7 +49,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. STATS PLATE COUNTER (Physical Metal Plate Aesthetic) */}
       <section className="border-y border-white/5 bg-elevated py-12 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
@@ -71,9 +66,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 3. FOUR PILLARS STORYTELLING */}
       <section className="py-24 px-6 max-w-7xl mx-auto space-y-24">
-        {/* Pillar 1: Athletes */}
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <span className="text-xs font-black text-gold uppercase tracking-widest">For Serious Lifters</span>
@@ -133,7 +126,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Pillar 2: Gyms */}
         <div className="grid md:grid-cols-2 gap-12 items-center md:flex-row-reverse">
           <div className="glass-panel p-8 rounded-3xl border border-white/10 shadow-card-dark order-2 md:order-1">
             <div className="space-y-4">
@@ -169,7 +161,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. FINAL JOIN CTA */}
       <section className="bg-gradient-to-b from-elevated to-background py-20 px-6 border-t border-white/5 text-center">
         <div className="max-w-4xl mx-auto glass-panel p-12 rounded-3xl border-gold/30 shadow-gold-glow">
           <h2 className="text-3xl sm:text-5xl font-black text-white leading-tight">

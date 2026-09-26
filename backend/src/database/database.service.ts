@@ -53,12 +53,10 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private getFallbackResult<T extends QueryResultRow>(text: string, params: any[]): QueryResult<T> {
     const q = text.toLowerCase();
 
-    // Health check
     if (q.includes('select 1')) {
       return { rows: [{ '?column?': 1 } as unknown as T], command: 'SELECT', rowCount: 1, oid: 0, fields: [] };
     }
 
-    // Gyms list & pending
     if (q.includes('from gyms')) {
       const mockGyms = [
         {
@@ -123,7 +121,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockGyms as unknown as T[], command: 'SELECT', rowCount: mockGyms.length, oid: 0, fields: [] };
     }
 
-    // Products list & pending
     if (q.includes('from products')) {
       const mockProducts = [
         {
@@ -179,7 +176,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockProducts as unknown as T[], command: 'SELECT', rowCount: mockProducts.length, oid: 0, fields: [] };
     }
 
-    // Pending Lifts
     if (q.includes('from lift_sets')) {
       const mockPendingLifts = [
         {
@@ -217,7 +213,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockPendingLifts as unknown as T[], command: 'SELECT', rowCount: mockPendingLifts.length, oid: 0, fields: [] };
     }
 
-    // Brands
     if (q.includes('from brands')) {
       const mockBrands = [
         {
@@ -233,7 +228,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockBrands as unknown as T[], command: 'SELECT', rowCount: mockBrands.length, oid: 0, fields: [] };
     }
 
-    // Vendors
     if (q.includes('from vendors')) {
       const mockVendors = [
         {
@@ -249,7 +243,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockVendors as unknown as T[], command: 'SELECT', rowCount: mockVendors.length, oid: 0, fields: [] };
     }
 
-    // Admin Audit Logs
     if (q.includes('from admin_audit_log')) {
       const mockLogs = [
         {
@@ -274,7 +267,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockLogs as unknown as T[], command: 'SELECT', rowCount: mockLogs.length, oid: 0, fields: [] };
     }
 
-    // Users / Athletes
     if (q.includes('from users')) {
       const mockUsers = [
         {
@@ -291,7 +283,6 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       return { rows: mockUsers as unknown as T[], command: 'SELECT', rowCount: mockUsers.length, oid: 0, fields: [] };
     }
 
-    // Insert or update mutations
     if (q.includes('insert into') || q.includes('update')) {
       const returningObj = {
         id: params[params.length - 1] || 'simulated-uuid-2026',

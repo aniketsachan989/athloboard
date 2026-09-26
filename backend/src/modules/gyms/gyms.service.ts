@@ -1,4 +1,4 @@
-﻿import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { AuthenticatedUser } from '../../auth/current-user.decorator';
 
@@ -56,7 +56,6 @@ export class GymsService {
       ]
     );
 
-    // Update owner user role to gym_owner
     await this.db.query(`UPDATE users SET role = 'gym_owner' WHERE id = $1`, [owner.id]);
     return res.rows[0];
   }
@@ -69,7 +68,6 @@ export class GymsService {
        RETURNING *`,
       [gymId, athlete.id, rating, comment]
     );
-    // Recalculate gym average rating
     await this.db.query(
       `UPDATE gyms
        SET avg_rating = (SELECT ROUND(AVG(rating)::numeric, 2) FROM gym_reviews WHERE gym_id = $1),

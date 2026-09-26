@@ -58,16 +58,13 @@ def download_video(url_or_key: str, dest_path: str):
     """
     Downloads video from web URL, or directly from Cloudflare R2 bucket.
     """
-    # Reject local file paths and ensure it's a URL or R2 key
-    
     is_r2 = False
     if "media.athloboard.com" in url_or_key or "cloudflarestorage.com" in url_or_key:
         is_r2 = True
     elif not url_or_key.startswith("http"):
-        is_r2 = True # Raw key
+        is_r2 = True
 
     if url_or_key.startswith("http") and not is_r2:
-        # Generic URL
         with httpx.Client(timeout=httpx.Timeout(120.0, connect=10.0)) as client:
             with client.stream("GET", url_or_key) as response:
                 response.raise_for_status()
@@ -76,7 +73,6 @@ def download_video(url_or_key: str, dest_path: str):
                         f.write(chunk)
         return
 
-    # 2. Extract S3 key from media.athloboard.com URL or relative key
     key = url_or_key
     if "media.athloboard.com/" in url_or_key:
         key = url_or_key.split("media.athloboard.com/")[1]
@@ -84,13 +80,8 @@ def download_video(url_or_key: str, dest_path: str):
         parts = url_or_key.split("cloudflarestorage.com/")[1]
         key = parts.split("/", 1)[1] if "/" in parts else parts
 
-    # Strip query parameters from key
-    key = key.split("?")[0]
-    
-    # Clean key
-    key = key.lstrip("/")
+    key = key.split("?")[0].lstrip("/")
 
-    # 3. Direct Signed GET from Cloudflare R2
     host = f"{BUCKET}.{ACCOUNT_ID}.r2.cloudflarestorage.com"
     path = f"/{key}"
     now = datetime.datetime.now(datetime.timezone.utc)

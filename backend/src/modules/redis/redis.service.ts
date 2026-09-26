@@ -32,7 +32,6 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     ).trim();
 
     if (upstashUrl.startsWith('https://') && upstashToken) {
-      // 1. Upstash Native REST Client
       try {
         this.upstashClient = new UpstashRedis({
           url: upstashUrl,
@@ -45,7 +44,6 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
         this.logger.error(`Failed to initialize Upstash REST Client: ${err.message}`);
       }
     } else if (tcpRedisUrl) {
-      // 2. Standard Redis / Upstash TCP Client via ioredis
       try {
         this.ioRedisClient = new IORedis(tcpRedisUrl, {
           lazyConnect: true,
@@ -146,7 +144,6 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
       const testKey = `athloboard:health:test:${Date.now()}`;
       const testVal = 'ping_upstash_verified';
 
-      // Real live operations against Upstash
       await this.set(testKey, testVal, 10);
       const readBack = await this.get(testKey);
       await this.del(testKey);

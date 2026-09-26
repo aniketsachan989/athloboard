@@ -37,7 +37,6 @@ export class ProductsService {
   }
 
   async addProduct(owner: AuthenticatedUser, data: any) {
-    // Check if user is a verified vendor or verified brand
     const vendor = await this.db.query('SELECT * FROM vendors WHERE owner_user_id = $1', [owner.id]);
     const brand = await this.db.query('SELECT * FROM brands WHERE owner_user_id = $1', [owner.id]);
 

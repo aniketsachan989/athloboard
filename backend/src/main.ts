@@ -16,10 +16,8 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type, Accept, Authorization',
   });
 
-  // Global Validation Pipe
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  // Swagger OpenAPI Documentation
   const config = new DocumentBuilder()
     .setTitle('Athloboard Unified Backend API')
     .setDescription("India's Federated Athletic Strength & Verification Ecosystem API")

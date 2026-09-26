@@ -47,7 +47,6 @@ export default function ProductDetailPage() {
         </div>
       )}
 
-      {/* Breadcrumb */}
       <nav className="flex items-center gap-2 text-xs text-muted flex-wrap">
         <Link href="/marketplace" className="hover:text-gold flex items-center gap-1">
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Verified Marketplace
@@ -58,15 +57,9 @@ export default function ProductDetailPage() {
         <span className="text-slate-300 font-semibold truncate max-w-xs">{product.name}</span>
       </nav>
 
-      {/* Main Amazon 3-Column Product Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
-        {/* =============================================================== */}
-        {/* COLUMN 1: PRODUCT IMAGES (4 cols on lg)                        */}
-        {/* =============================================================== */}
         <div className="lg:col-span-5 space-y-4 sticky top-24">
           <div className="glass-panel p-4 rounded-3xl border border-white/10 relative overflow-hidden bg-slate-900/60 aspect-square flex items-center justify-center">
-            {/* Badges */}
             <div className="absolute top-4 left-4 z-10 flex flex-col gap-1.5">
               {product.isBestSeller && (
                 <span className="px-2.5 py-1 rounded bg-[#E47911] text-black font-extrabold text-[10px] uppercase tracking-wider shadow">
@@ -85,7 +78,6 @@ export default function ProductDetailPage() {
             />
           </div>
 
-          {/* Thumbnail Strip */}
           <div className="flex gap-3">
             {product.images.map((img, idx) => (
               <button
@@ -100,7 +92,6 @@ export default function ProductDetailPage() {
             ))}
           </div>
 
-          {/* Official Laboratory Certificate Banner */}
           <div className="glass-panel p-4 rounded-2xl border border-emerald-500/30 bg-emerald-950/20 text-xs space-y-2">
             <div className="flex items-center justify-between">
               <span className="font-extrabold text-emerald-300 flex items-center gap-1.5">
@@ -114,12 +105,7 @@ export default function ProductDetailPage() {
           </div>
         </div>
 
-        {/* =============================================================== */}
-        {/* COLUMN 2: PRODUCT DETAILS & SPECIFICATIONS (4 cols on lg)      */}
-        {/* =============================================================== */}
         <div className="lg:col-span-4 space-y-6">
-          
-          {/* Brand & Store */}
           <div>
             <Link href={product.brandStoreUrl || '#'} className="text-xs text-gold font-bold hover:underline">
               Visit the {product.brand} Store &rarr;
@@ -142,7 +128,6 @@ export default function ProductDetailPage() {
             <span className="text-emerald-400 font-semibold font-mono">{product.boughtPastMonth}</span>
           </div>
 
-          {/* Amazon-style Price Block */}
           <div className="space-y-1">
             <div className="flex items-baseline gap-3">
               <span className="text-3xl font-black text-rose-500">-{product.discountPercent}%</span>
@@ -156,7 +141,6 @@ export default function ProductDetailPage() {
             </p>
           </div>
 
-          {/* Offers Carousel / Cards */}
           <div className="grid grid-cols-2 gap-3 text-xs">
             <div className="p-3 rounded-xl bg-surface border border-white/10 space-y-1">
               <strong className="text-gold block font-bold">Bank Offer</strong>
@@ -168,7 +152,6 @@ export default function ProductDetailPage() {
             </div>
           </div>
 
-          {/* Flavor Variant Selector */}
           {product.flavors && product.flavors.length > 0 && (
             <div className="space-y-2 border-t border-white/10 pt-4">
               <label className="text-xs font-bold text-slate-300 block">
@@ -192,7 +175,6 @@ export default function ProductDetailPage() {
             </div>
           )}
 
-          {/* Size Variant Selector */}
           {product.sizes && product.sizes.length > 0 && (
             <div className="space-y-2">
               <label className="text-xs font-bold text-slate-300 block">
@@ -216,7 +198,6 @@ export default function ProductDetailPage() {
             </div>
           )}
 
-          {/* About this item (Amazon Style) */}
           <div className="space-y-3 border-t border-white/10 pt-4">
             <h3 className="font-extrabold text-sm uppercase tracking-wider text-slate-300">About this item</h3>
             <ul className="space-y-2 text-xs text-slate-300 leading-relaxed">
@@ -229,20 +210,14 @@ export default function ProductDetailPage() {
             </ul>
           </div>
 
-          {/* Description */}
           <div className="border-t border-white/10 pt-4 text-xs text-slate-400 leading-relaxed">
             <p>{product.description}</p>
           </div>
 
         </div>
 
-        {/* =============================================================== */}
-        {/* COLUMN 3: THE AMAZON BUY BOX (3 cols on lg)                    */}
-        {/* =============================================================== */}
         <div className="lg:col-span-3">
           <div className="glass-panel p-6 rounded-3xl border border-white/15 bg-slate-900/90 shadow-2xl space-y-5 sticky top-24">
-            
-            {/* Price in Buy Box */}
             <div>
               <div className="text-2xl font-black text-white">
                 ₹ {currentPrice.toLocaleString()}
@@ -255,7 +230,6 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            {/* Delivery Pincode */}
             <div className="text-xs space-y-1.5 pt-2 border-t border-white/10">
               <div className="flex items-center gap-1 text-slate-300">
                 <MapPin className="w-3.5 h-3.5 text-gold shrink-0" />
@@ -266,7 +240,6 @@ export default function ProductDetailPage() {
               </span>
             </div>
 
-            {/* Stock Availability */}
             <div className="text-sm font-black">
               {product.stockNumber > 10 ? (
                 <span className="text-emerald-400">In Stock</span>
@@ -275,7 +248,6 @@ export default function ProductDetailPage() {
               )}
             </div>
 
-            {/* Quantity Selector */}
             <div className="flex items-center justify-between text-xs bg-background p-2.5 rounded-xl border border-white/10">
               <span className="text-slate-300 font-semibold">Quantity:</span>
               <div className="flex items-center gap-3">
@@ -295,7 +267,6 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
-            {/* Athloboard Lift Points Loyalty Discount */}
             <div className="p-3 rounded-xl bg-gold/10 border border-gold/30 text-xs space-y-1.5">
               <div className="flex items-center justify-between font-bold text-gold">
                 <span className="flex items-center gap-1"><Award className="w-3.5 h-3.5" /> Athloboard Lift Points</span>
@@ -312,9 +283,7 @@ export default function ProductDetailPage() {
               </label>
             </div>
 
-            {/* Amazon Buy Box Action Buttons */}
             <div className="space-y-3 pt-2">
-              {/* Add to Cart Button (Amazon Yellow) */}
               <button
                 onClick={handleAddToCart}
                 className="w-full py-3.5 px-4 rounded-xl font-bold text-black bg-[#FFD814] hover:bg-[#F7CA00] shadow-sm text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
@@ -323,7 +292,6 @@ export default function ProductDetailPage() {
                 Add to Cart
               </button>
 
-              {/* Buy Now Button (Amazon Orange) */}
               <button
                 onClick={() => setIsBuyModalOpen(true)}
                 className="w-full py-3.5 px-4 rounded-xl font-black text-black bg-[#FFA41C] hover:bg-[#FA8900] shadow-[0_0_20px_rgba(255,164,28,0.35)] text-sm flex items-center justify-center gap-2 transition-all hover:scale-[1.02] active:scale-95"
@@ -333,7 +301,6 @@ export default function ProductDetailPage() {
               </button>
             </div>
 
-            {/* Safety Badges */}
             <div className="pt-3 border-t border-white/10 text-[11px] text-muted space-y-1.5">
               <div className="flex justify-between">
                 <span>Ships from</span>
@@ -357,7 +324,6 @@ export default function ProductDetailPage() {
 
       </div>
 
-      {/* Embedded Amazon Buy Modal / Checkout Flow */}
       <AmazonBuyModal 
         product={product}
         isOpen={isBuyModalOpen}

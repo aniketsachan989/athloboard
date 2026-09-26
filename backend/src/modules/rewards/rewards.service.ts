@@ -1,4 +1,4 @@
-﻿import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from '../../database/database.service';
 import { AuthenticatedUser } from '../../auth/current-user.decorator';
 
@@ -41,13 +41,11 @@ export class RewardsService {
       throw new BadRequestException(`Insufficient Lift Points. Required: ${reward.points_cost}, Current: ${currentPoints}`);
     }
 
-    // Deduct points from profile
     await this.db.query(
       'UPDATE athlete_profiles SET total_lift_points = total_lift_points - $1 WHERE user_id = $2',
       [reward.points_cost, athlete.id]
     );
 
-    // Create ledger entry
     const ledgerRes = await this.db.query(
       `INSERT INTO lift_points_ledger (athlete_id, points, source_type, description)
        VALUES ($1, $2, 'redemption', $3)
@@ -55,7 +53,6 @@ export class RewardsService {
       [athlete.id, -reward.points_cost, `Redeemed: ${reward.name}`]
     );
 
-    // Create redemption record
     const redemptionRes = await this.db.query(
       `INSERT INTO reward_redemptions (athlete_id, reward_id, ledger_entry_id)
        VALUES ($1, $2, $3)

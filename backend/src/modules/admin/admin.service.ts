@@ -112,7 +112,6 @@ export class AdminService {
   }
 
   async getPendingLifts() {
-    // 1. Check LiftsService live submissions
     const liveSubs = await this.liftsService.getPendingLifts();
     if (liveSubs.length > 0) {
       return liveSubs;
