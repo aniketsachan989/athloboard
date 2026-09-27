@@ -159,6 +159,119 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        {/* 6-Pillar Core Features Grid */}
+        <div className="pt-12 space-y-8">
+          <div className="text-center max-w-2xl mx-auto">
+            <span className="text-xs font-black text-gold uppercase tracking-widest">Platform Core Modules</span>
+            <h2 className="text-3xl sm:text-5xl font-black mt-2 leading-tight">
+              Explore the <span className="text-gold">Full Ecosystem</span>
+            </h2>
+            <p className="text-muted text-sm sm:text-base mt-2">
+              Every feature of Athloboard is interconnected across mobile, computer vision, web, and decentralized ledger.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {/* Card 1: Leaderboard */}
+            <Link href="/leaderboard" className="glass-panel p-6 rounded-3xl border border-white/10 hover:border-gold/50 transition-all group flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-gold/10 border border-gold/30 text-gold flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Trophy className="w-5 h-5 text-gold" />
+                </div>
+                <h3 className="text-xl font-black text-white group-hover:text-gold transition-colors">National Leaderboard</h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  Official IPF dynamic rankings. Track SBD totals, Wilks/DOTS points, weight classes, and inspect video proof.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-bold text-gold gap-1">
+                <span>View All Rankings</span> <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Card 2: AI Referee Studio */}
+            <Link href="/verify" className="glass-panel p-6 rounded-3xl border border-gold/30 bg-gold/5 hover:border-gold transition-all group flex flex-col justify-between shadow-gold-glow">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-gold text-black flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-5 h-5 text-black" />
+                </div>
+                <h3 className="text-xl font-black text-white group-hover:text-gold transition-colors">AI Biomechanical Referee</h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  Live computer vision testing. Evaluates hip crease depth ($\ge 90^\circ$), motionless chest pause, and lockout.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-bold text-gold gap-1">
+                <span>Launch AI Studio</span> <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Card 3: Audited Gym Radar */}
+            <Link href="/gyms" className="glass-panel p-6 rounded-3xl border border-white/10 hover:border-gold/50 transition-all group flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-surface border border-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Dumbbell className="w-5 h-5 text-gold" />
+                </div>
+                <h3 className="text-xl font-black text-white group-hover:text-gold transition-colors">Audited Gym Radar</h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  Search certified gyms with calibrated plate inventories (Bullrock/Eleiko), ER combo racks, and book day passes.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-bold text-gold gap-1">
+                <span>Inspect Facilities</span> <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Card 4: Lab-Tested Store */}
+            <Link href="/marketplace" className="glass-panel p-6 rounded-3xl border border-white/10 hover:border-gold/50 transition-all group flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-surface border border-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Award className="w-5 h-5 text-emerald-400" />
+                </div>
+                <h3 className="text-xl font-black text-white group-hover:text-gold transition-colors">Verified Marketplace</h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  100% HPLC lab tested supplements and certified lifting gear. Amazon-style 1-click buy box and points redemption.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-bold text-gold gap-1">
+                <span>Shop Verified</span> <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Card 5: Sanctioned Meets */}
+            <Link href="/competitions" className="glass-panel p-6 rounded-3xl border border-white/10 hover:border-gold/50 transition-all group flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-surface border border-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Flame className="w-5 h-5 text-gold" />
+                </div>
+                <h3 className="text-xl font-black text-white group-hover:text-gold transition-colors">State & National Meets</h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  View upcoming sanctioned powerlifting meets, register your weight class, and track real-time meet results.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-bold text-gold gap-1">
+                <span>Explore Meets</span> <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Card 6: Ecosystem Architecture */}
+            <Link href="/ecosystem" className="glass-panel p-6 rounded-3xl border border-white/10 hover:border-gold/50 transition-all group flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="w-10 h-10 rounded-xl bg-surface border border-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <ShieldCheck className="w-5 h-5 text-blue-400" />
+                </div>
+                <h3 className="text-xl font-black text-white group-hover:text-gold transition-colors">Ecosystem & Swagger API</h3>
+                <p className="text-xs text-muted leading-relaxed">
+                  Inspect the 5 decoupled layers: NestJS Gateway (:4000), FastAPI (:8000), 3-Judge Cockpit (:3001), and DB Ledger.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-white/5 flex items-center text-xs font-bold text-gold gap-1">
+                <span>Inspect Architecture</span> <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+          </div>
+        </div>
       </section>
 
       <section className="bg-gradient-to-b from-elevated to-background py-20 px-6 border-t border-white/5 text-center">

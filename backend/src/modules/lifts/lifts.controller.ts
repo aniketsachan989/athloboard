@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Query, Param, HttpCode, HttpStatus, UseGua
 import { LiftsService } from './lifts.service';
 import { FirebaseAuthGuard } from '../../auth/firebase-auth.guard';
 
-@UseGuards(FirebaseAuthGuard)
 @Controller('api/lifts')
 export class LiftsController {
   constructor(private readonly liftsService: LiftsService) {}
@@ -16,6 +15,7 @@ export class LiftsController {
     return this.liftsService.getLeaderboard(exercise, weightClass ? parseFloat(weightClass) : undefined, city);
   }
 
+  @UseGuards(FirebaseAuthGuard)
   @Post('submit-video')
   @HttpCode(HttpStatus.CREATED)
   async submitLiftVideo(

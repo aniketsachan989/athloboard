@@ -23,27 +23,43 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Global Footer */}
         <footer className="bg-elevated border-t border-white/5 px-6 py-12 text-sm text-muted">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-7 h-7 rounded bg-gold p-0.5 flex items-center justify-center overflow-hidden">
-                <img src="/logo.png" alt="Athloboard" className="w-full h-full object-contain" />
+          <div className="max-w-7xl mx-auto space-y-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gold p-1 flex items-center justify-center overflow-hidden shadow-gold-glow">
+                  <img src="/logo.png" alt="Athloboard" className="w-full h-full object-contain" />
+                </div>
+                <div>
+                  <span className="font-black text-white tracking-wider block">ATHLOBOARD ECOSYSTEM</span>
+                  <span className="text-[10px] text-gold font-bold uppercase tracking-widest">SIH National Grand Finale Submission</span>
+                </div>
               </div>
-              <span className="font-bold text-white tracking-wider">ATHLOBOARD ECOSYSTEM</span>
+
+              <div className="flex flex-wrap items-center gap-5 text-xs font-bold text-slate-300">
+                <Link href="/leaderboard" className="hover:text-gold transition-colors">National Leaderboard</Link>
+                <Link href="/verify" className="hover:text-gold transition-colors">AI Referee Studio</Link>
+                <Link href="/competitions" className="hover:text-gold transition-colors">Competitions</Link>
+                <Link href="/gyms" className="hover:text-gold transition-colors">Audited Gyms</Link>
+                <Link href="/marketplace" className="hover:text-gold transition-colors">Verified Store</Link>
+                <Link href="/ecosystem" className="hover:text-gold transition-colors">Ecosystem Hub</Link>
+                <a href="http://localhost:4000/api/docs" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">Swagger API</a>
+              </div>
             </div>
-            <p className="text-xs">© 2026 Athloboard Technologies India Pvt Ltd. All rights reserved.</p>
-            <div className="flex flex-wrap items-center gap-6 text-xs font-semibold">
-              <a
-                href="/downloads/athloboard-app.apk"
-                download="Athloboard-v1.0.apk"
-                className="text-emerald-400 hover:text-emerald-300 flex items-center gap-1.5 transition-colors"
-                title="Download Android APK (16MB)"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Download Android APK
-              </a>
-              <Link href="/for-gyms" className="hover:text-gold">Gym Partners</Link>
-              <Link href="/for-brands" className="hover:text-gold">Brand Partners</Link>
-              <a href={process.env.NEXT_PUBLIC_API_DOCS_URL || '#'} target="_blank" rel="noopener noreferrer" className="hover:text-gold">API Docs</a>
+
+            <div className="pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-muted">
+              <p>© 2026 Athloboard Technologies India Pvt Ltd. All rights reserved.</p>
+              <div className="flex items-center gap-4">
+                <a
+                  href="/downloads/athloboard-app.apk"
+                  download="Athloboard-v1.0.apk"
+                  className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1.5 transition-colors"
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Download Android APK (16MB)
+                </a>
+                <Link href="/for-gyms" className="hover:text-white">Facility Audit</Link>
+                <Link href="/for-brands" className="hover:text-white">Brand KYC</Link>
+              </div>
             </div>
           </div>
         </footer>
