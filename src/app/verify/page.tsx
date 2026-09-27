@@ -145,18 +145,18 @@ export default function VerifyStudioPage() {
     : selectedLift.expectedResult === 'pass';
 
   return (
-    <div className="py-12 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 text-white">
+    <div className="py-12 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 text-gray-900">
       
       {/* Studio Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold border border-gold/30 mb-2">
-            <Cpu className="w-3.5 h-3.5 text-gold" /> OpenCV & MediaPipe Kinematics Microservice (:8000)
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 text-fitRed text-xs font-bold border border-red-200 mb-2">
+            <Cpu className="w-3.5 h-3.5 text-fitRed" /> OpenCV &amp; MediaPipe Kinematics Microservice (:8000)
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            AI Biomechanical <span className="text-gold">Referee Studio</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-gray-950 tracking-tight">
+            AI Biomechanical <span className="text-fitRed">Referee Studio</span>
           </h1>
-          <p className="text-muted text-sm sm:text-base mt-2 max-w-2xl">
+          <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-2xl">
             Test our automated computer vision engine. Calculates joint trajectories, hip crease angle relative to knee joint ($\ge 90^\circ$), chest pause duration, and lockout under IPF powerlifting rules.
           </p>
         </div>
@@ -164,7 +164,7 @@ export default function VerifyStudioPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/leaderboard"
-            className="px-5 py-3 rounded-xl bg-surface hover:bg-surfaceHover border border-white/10 text-white font-bold text-xs flex items-center gap-2 transition-colors"
+            className="px-5 py-3 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-gray-800 font-bold text-xs flex items-center gap-2 transition-colors shadow-sm"
           >
             View Leaderboard
           </Link>
@@ -172,7 +172,7 @@ export default function VerifyStudioPage() {
             href="http://localhost:3001"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-5 py-3 rounded-xl bg-gold text-black font-black text-xs flex items-center gap-2 shadow-gold-glow hover:scale-105 transition-transform"
+            className="px-5 py-3 rounded-xl bg-fitRed hover:bg-fitRed-hover text-white font-extrabold text-xs flex items-center gap-2 shadow-md transition-all hover:scale-105 uppercase tracking-wider"
           >
             Open 3-Judge Console (:3001) <ChevronRight className="w-4 h-4" />
           </a>
@@ -188,14 +188,14 @@ export default function VerifyStudioPage() {
               setSelectedLift(lift);
               setApiResponse(null);
             }}
-            className={`px-4 py-3 rounded-2xl text-xs font-bold text-left transition-all border whitespace-nowrap ${
+            className={`px-4 py-3 rounded-2xl text-xs font-bold text-left transition-all border whitespace-nowrap shadow-sm ${
               selectedLift.id === lift.id
-                ? 'bg-gold/15 border-gold text-gold shadow-gold-glow'
-                : 'bg-surface hover:bg-surfaceHover border-white/5 text-muted'
+                ? 'bg-red-50 border-2 border-fitRed text-fitRed'
+                : 'bg-white hover:bg-gray-50 border-gray-200 text-gray-600'
             }`}
           >
-            <div className="font-extrabold text-white">{lift.name}</div>
-            <div className="text-[10px] text-muted mt-0.5">{lift.athlete} • {lift.expectedResult.toUpperCase()}</div>
+            <div className={`font-black ${selectedLift.id === lift.id ? 'text-gray-950' : 'text-gray-800'}`}>{lift.name}</div>
+            <div className="text-[10px] text-gray-500 mt-0.5">{lift.athlete} • {lift.expectedResult.toUpperCase()}</div>
           </button>
         ))}
       </div>

@@ -206,18 +206,18 @@ export default function LeaderboardPage() {
     .map((ath, idx) => ({ ...ath, rank: idx + 1 }));
 
   return (
-    <div className="py-12 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 text-white">
+    <div className="py-12 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 text-gray-900">
       
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold border border-gold/30 mb-2">
-            <Trophy className="w-3.5 h-3.5 text-gold" /> IPF Sanctioned Dynamic Rankings
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 text-fitRed text-xs font-bold border border-red-200 mb-2">
+            <Trophy className="w-3.5 h-3.5 text-fitRed" /> IPF Sanctioned Dynamic Rankings
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            National Strength <span className="text-gold">Leaderboard</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-gray-950 tracking-tight">
+            National Strength <span className="text-fitRed">Leaderboard</span>
           </h1>
-          <p className="text-muted text-sm sm:text-base mt-2 max-w-2xl">
+          <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-2xl">
             Official federated powerlifting rankings. Every single lift recorded in the database is verified by our FastAPI AI Biomechanical referee and ratified with 3 Olympic White Lights.
           </p>
         </div>
@@ -225,13 +225,13 @@ export default function LeaderboardPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/verify"
-            className="px-5 py-3 rounded-xl bg-gold text-black font-black text-xs flex items-center gap-2 shadow-gold-glow hover:scale-105 transition-transform"
+            className="px-5 py-3 rounded-xl bg-fitRed hover:bg-fitRed-hover text-white font-extrabold text-xs flex items-center gap-2 shadow-md transition-all hover:scale-105 uppercase tracking-wider"
           >
             <ShieldCheck className="w-4 h-4" /> AI Lift Verifier
           </Link>
           <a
             href="/downloads/athloboard-app.apk"
-            className="px-5 py-3 rounded-xl bg-surface hover:bg-surfaceHover border border-white/10 text-white font-bold text-xs flex items-center gap-2 transition-colors"
+            className="px-5 py-3 rounded-xl bg-white hover:bg-gray-50 border border-gray-300 text-gray-800 font-bold text-xs flex items-center gap-2 transition-colors shadow-sm"
           >
             Submit My PR
           </a>
@@ -242,65 +242,63 @@ export default function LeaderboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
         {filtered.slice(0, 3).map((athlete, idx) => {
           const podiumBg = idx === 0 
-            ? 'border-gold bg-gradient-to-b from-gold/15 to-surface shadow-[0_0_30px_rgba(212,175,55,0.15)]' 
-            : idx === 1 
-            ? 'border-slate-300/40 bg-gradient-to-b from-slate-400/10 to-surface' 
-            : 'border-amber-700/40 bg-gradient-to-b from-amber-700/10 to-surface';
+            ? 'border-2 border-fitRed shadow-lg shadow-red-500/10' 
+            : 'border border-gray-200 shadow-sm';
           
-          const medalColor = idx === 0 ? 'text-gold fill-gold' : idx === 1 ? 'text-slate-300 fill-slate-300' : 'text-amber-600 fill-amber-600';
+          const medalColor = idx === 0 ? 'text-amber-500 fill-amber-500' : idx === 1 ? 'text-slate-400 fill-slate-400' : 'text-amber-700 fill-amber-700';
           const medalLabel = idx === 0 ? 'National #1 Record' : idx === 1 ? 'Rank #2 Contender' : 'Rank #3 Podium';
 
           return (
-            <div key={athlete.id} className={`glass-panel p-6 rounded-3xl border ${podiumBg} relative flex flex-col justify-between`}>
+            <div key={athlete.id} className={`bg-white p-6 rounded-3xl ${podiumBg} relative flex flex-col justify-between`}>
               <div className="flex justify-between items-start">
-                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/40 border border-white/10 ${idx === 0 ? 'text-gold' : 'text-slate-300'}`}>
+                <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${idx === 0 ? 'bg-red-50 text-fitRed border border-red-200' : 'bg-gray-100 text-gray-700 border border-gray-200'}`}>
                   {medalLabel}
                 </span>
                 <Medal className={`w-7 h-7 ${medalColor}`} />
               </div>
 
               <div className="flex items-center gap-4 mt-6">
-                <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-gold/40 shadow-md">
+                <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-gray-200 shadow-sm">
                   <img src={athlete.avatar} alt={athlete.name} className="w-full h-full object-cover" />
                 </div>
                 <div>
-                  <h3 className="font-black text-lg text-white">{athlete.name}</h3>
-                  <p className="text-xs text-muted">{athlete.city} • <span className="text-gold font-bold">{athlete.weightClass}</span></p>
-                  <p className="text-[11px] text-slate-400 truncate max-w-[180px]">{athlete.gym}</p>
+                  <h3 className="font-black text-lg text-gray-950">{athlete.name}</h3>
+                  <p className="text-xs text-gray-500">{athlete.city} • <span className="text-fitRed font-bold">{athlete.weightClass}</span></p>
+                  <p className="text-[11px] text-gray-600 truncate max-w-[180px]">{athlete.gym}</p>
                 </div>
               </div>
 
               {/* Big Stats */}
-              <div className="grid grid-cols-3 gap-2 mt-6 p-3 rounded-2xl bg-black/30 border border-white/5 text-center">
+              <div className="grid grid-cols-3 gap-2 mt-6 p-3 rounded-2xl bg-gray-50 border border-gray-200 text-center">
                 <div>
-                  <div className="text-[10px] text-muted uppercase font-bold">Squat</div>
-                  <div className="text-base font-black text-white">{athlete.squat} <span className="text-[10px] text-gold">kg</span></div>
+                  <div className="text-[10px] text-gray-500 uppercase font-bold">Squat</div>
+                  <div className="text-base font-black text-gray-950">{athlete.squat} <span className="text-[10px] text-fitRed">kg</span></div>
                 </div>
                 <div>
-                  <div className="text-[10px] text-muted uppercase font-bold">Bench</div>
-                  <div className="text-base font-black text-white">{athlete.bench} <span className="text-[10px] text-gold">kg</span></div>
+                  <div className="text-[10px] text-gray-500 uppercase font-bold">Bench</div>
+                  <div className="text-base font-black text-gray-950">{athlete.bench} <span className="text-[10px] text-fitRed">kg</span></div>
                 </div>
                 <div>
-                  <div className="text-[10px] text-muted uppercase font-bold">Deadlift</div>
-                  <div className="text-base font-black text-white">{athlete.deadlift} <span className="text-[10px] text-gold">kg</span></div>
+                  <div className="text-[10px] text-gray-500 uppercase font-bold">Deadlift</div>
+                  <div className="text-base font-black text-gray-950">{athlete.deadlift} <span className="text-[10px] text-fitRed">kg</span></div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+              <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-muted uppercase font-bold">Total SBD</span>
-                  <div className="text-2xl font-black text-white">{athlete.total} <span className="text-xs text-gold">kg</span></div>
+                  <span className="text-[10px] text-gray-500 uppercase font-bold">Total SBD</span>
+                  <div className="text-2xl font-black text-gray-950">{athlete.total} <span className="text-xs text-fitRed">kg</span></div>
                 </div>
                 <div className="text-right">
-                  <span className="text-[10px] text-muted uppercase font-bold">Wilks Score</span>
-                  <div className="text-sm font-bold text-emerald-400">{athlete.wilks} pts</div>
+                  <span className="text-[10px] text-gray-500 uppercase font-bold">Wilks Score</span>
+                  <div className="text-sm font-bold text-emerald-600">{athlete.wilks} pts</div>
                 </div>
               </div>
 
               {athlete.verifiedVideoUrl && (
                 <button
                   onClick={() => setActiveVideoModal(athlete)}
-                  className="mt-4 w-full py-2 rounded-xl bg-gold/10 hover:bg-gold text-gold hover:text-black font-bold text-xs flex items-center justify-center gap-1.5 transition-all"
+                  className="mt-4 w-full py-2.5 rounded-xl bg-red-50 hover:bg-fitRed hover:text-white text-fitRed font-bold text-xs flex items-center justify-center gap-1.5 transition-all border border-red-200"
                 >
                   <Play className="w-3.5 h-3.5 fill-current" /> Watch Verified Attempt
                 </button>
@@ -311,19 +309,19 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Filter and Search Controls */}
-      <div className="glass-panel p-6 rounded-3xl border border-white/10 space-y-4">
+      <div className="bg-white p-6 rounded-3xl border border-gray-200 shadow-sm space-y-4">
         <div className="flex flex-col lg:flex-row justify-between gap-4 items-center">
           
           {/* Discipline Selector */}
-          <div className="flex items-center gap-2 bg-surface p-1.5 rounded-2xl border border-white/5 w-full sm:w-auto overflow-x-auto">
+          <div className="flex items-center gap-2 bg-gray-100 p-1.5 rounded-2xl border border-gray-200 w-full sm:w-auto overflow-x-auto">
             {(['total', 'squat', 'bench', 'deadlift'] as const).map((disc) => (
               <button
                 key={disc}
                 onClick={() => setSelectedDiscipline(disc)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap ${
                   selectedDiscipline === disc 
-                    ? 'bg-gold text-black shadow-gold-glow' 
-                    : 'text-muted hover:text-white'
+                    ? 'bg-fitRed text-white shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
                 {disc === 'total' ? 'SBD Total' : disc}
@@ -333,20 +331,20 @@ export default function LeaderboardPage() {
 
           {/* Search Box */}
           <div className="relative w-full lg:w-80">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search athlete, city, or gym..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface border border-white/10 text-white text-xs outline-none focus:border-gold placeholder:text-slate-500"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-xs outline-none focus:border-fitRed focus:bg-white placeholder:text-gray-400 transition-all"
             />
           </div>
         </div>
 
         {/* Weight Class Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pt-2 scrollbar-none">
-          <span className="text-xs font-bold text-muted flex items-center gap-1 whitespace-nowrap mr-2">
+          <span className="text-xs font-bold text-gray-500 flex items-center gap-1 whitespace-nowrap mr-2">
             <Filter className="w-3.5 h-3.5" /> Weight Class:
           </span>
           {weightClasses.map((wc) => (
@@ -355,8 +353,8 @@ export default function LeaderboardPage() {
               onClick={() => setSelectedWeightClass(wc)}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
                 selectedWeightClass === wc 
-                  ? 'bg-white text-black font-bold' 
-                  : 'bg-surface hover:bg-surfaceHover text-muted border border-white/5'
+                  ? 'bg-gray-900 text-white font-bold' 
+                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-200'
               }`}
             >
               {wc}
@@ -366,10 +364,10 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Main Table */}
-      <div className="glass-panel rounded-3xl border border-white/10 overflow-hidden">
+      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-surface/80 border-b border-white/10 text-muted uppercase font-bold text-[11px] tracking-wider">
+            <thead className="bg-gray-50 border-b border-gray-200 text-gray-600 uppercase font-bold text-[11px] tracking-wider">
               <tr>
                 <th className="p-4 w-14 text-center">Rank</th>
                 <th className="p-4">Athlete</th>
@@ -377,50 +375,50 @@ export default function LeaderboardPage() {
                 <th className="p-4 text-right">Squat</th>
                 <th className="p-4 text-right">Bench</th>
                 <th className="p-4 text-right">Deadlift</th>
-                <th className="p-4 text-right font-black text-white">Total</th>
+                <th className="p-4 text-right font-black text-gray-950">Total</th>
                 <th className="p-4 text-right">Wilks</th>
                 <th className="p-4 text-center">Status</th>
                 <th className="p-4 text-center">Proof</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-gray-100">
               {filtered.map((ath) => (
-                <tr key={ath.id} className="hover:bg-white/[0.02] transition-colors">
+                <tr key={ath.id} className="hover:bg-gray-50 transition-colors">
                   <td className="p-4 text-center font-black">
                     {ath.rank === 1 ? (
-                      <span className="w-7 h-7 rounded-full bg-gold text-black inline-flex items-center justify-center font-black text-xs shadow-gold-glow">1</span>
+                      <span className="w-7 h-7 rounded-full bg-fitRed text-white inline-flex items-center justify-center font-black text-xs shadow-sm">1</span>
                     ) : ath.rank === 2 ? (
-                      <span className="w-7 h-7 rounded-full bg-slate-300 text-black inline-flex items-center justify-center font-black text-xs">2</span>
+                      <span className="w-7 h-7 rounded-full bg-gray-200 text-gray-900 inline-flex items-center justify-center font-black text-xs">2</span>
                     ) : ath.rank === 3 ? (
-                      <span className="w-7 h-7 rounded-full bg-amber-700 text-white inline-flex items-center justify-center font-black text-xs">3</span>
+                      <span className="w-7 h-7 rounded-full bg-amber-100 text-amber-900 inline-flex items-center justify-center font-black text-xs">3</span>
                     ) : (
-                      <span className="text-muted font-mono">{ath.rank}</span>
+                      <span className="text-gray-500 font-mono">{ath.rank}</span>
                     )}
                   </td>
                   <td className="p-4">
                     <div className="flex items-center gap-3">
-                      <img src={ath.avatar} alt={ath.name} className="w-9 h-9 rounded-xl object-cover border border-white/10" />
+                      <img src={ath.avatar} alt={ath.name} className="w-9 h-9 rounded-xl object-cover border border-gray-200" />
                       <div>
-                        <div className="font-bold text-white text-sm">{ath.name}</div>
-                        <div className="text-[11px] text-muted">{ath.city} • {ath.gym}</div>
+                        <div className="font-bold text-gray-950 text-sm">{ath.name}</div>
+                        <div className="text-[11px] text-gray-500">{ath.city} • {ath.gym}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="p-4 font-mono font-bold text-gold">{ath.weightClass}</td>
-                  <td className="p-4 text-right font-mono text-slate-200">{ath.squat} kg</td>
-                  <td className="p-4 text-right font-mono text-slate-200">{ath.bench} kg</td>
-                  <td className="p-4 text-right font-mono text-slate-200">{ath.deadlift} kg</td>
-                  <td className="p-4 text-right font-mono font-black text-base text-gold">{ath.total} kg</td>
-                  <td className="p-4 text-right font-mono text-emerald-400 font-bold">{ath.wilks}</td>
+                  <td className="p-4 font-mono font-bold text-fitRed">{ath.weightClass}</td>
+                  <td className="p-4 text-right font-mono text-gray-700">{ath.squat} kg</td>
+                  <td className="p-4 text-right font-mono text-gray-700">{ath.bench} kg</td>
+                  <td className="p-4 text-right font-mono text-gray-700">{ath.deadlift} kg</td>
+                  <td className="p-4 text-right font-mono font-black text-base text-gray-950">{ath.total} kg</td>
+                  <td className="p-4 text-right font-mono text-emerald-600 font-bold">{ath.wilks}</td>
                   <td className="p-4 text-center">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold">
-                      <CheckCircle2 className="w-3 h-3" /> 3 White Lights
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" /> 3 White Lights
                     </span>
                   </td>
                   <td className="p-4 text-center">
                     <button
                       onClick={() => setActiveVideoModal(ath)}
-                      className="p-2 rounded-lg bg-surface hover:bg-gold hover:text-black text-muted transition-colors"
+                      className="p-2 rounded-lg bg-gray-100 hover:bg-fitRed hover:text-white text-gray-600 transition-colors"
                       title="Inspect Video Audit"
                     >
                       <Eye className="w-4 h-4" />

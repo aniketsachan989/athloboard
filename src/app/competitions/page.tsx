@@ -119,36 +119,36 @@ export default function CompetitionsPage() {
   );
 
   return (
-    <div className="py-12 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 text-white">
+    <div className="py-12 px-4 sm:px-6 max-w-7xl mx-auto space-y-10 text-gray-900">
       
       {/* Toast Notification */}
       {regSuccess && (
-        <div className="fixed top-20 right-6 z-50 bg-emerald-500 text-black px-6 py-4 rounded-2xl font-bold shadow-2xl flex items-center gap-2 animate-bounce">
-          <CheckCircle2 className="w-5 h-5 text-black" />
+        <div className="fixed top-20 right-6 z-50 bg-emerald-600 text-white px-6 py-4 rounded-2xl font-bold shadow-2xl flex items-center gap-2 animate-bounce">
+          <CheckCircle2 className="w-5 h-5 text-white" />
           <span>Registered successfully for {selectedCompForReg?.title}! Confirmation sent to your athlete profile.</span>
         </div>
       )}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold/10 text-gold text-xs font-bold border border-gold/30 mb-2">
-            <Trophy className="w-3.5 h-3.5 text-gold" /> Sanctioned National & State Championships
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 text-fitRed text-xs font-bold border border-red-200 mb-2">
+            <Trophy className="w-3.5 h-3.5 text-fitRed" /> Sanctioned National &amp; State Championships
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-            Strength Sports <span className="text-gold">Competitions</span>
+          <h1 className="text-3xl sm:text-5xl font-black text-gray-950 tracking-tight">
+            Strength Sports <span className="text-fitRed">Competitions</span>
           </h1>
-          <p className="text-muted text-sm sm:text-base mt-2 max-w-2xl">
+          <p className="text-gray-600 text-sm sm:text-base mt-2 max-w-2xl">
             Official meets hosted at audited powerlifting facilities. Certified 3-judge Olympic refereeing, calibrated plates, and electronic leaderboards synced to Athloboard.
           </p>
         </div>
 
         {/* Tab Toggle */}
-        <div className="flex items-center gap-2 bg-surface p-1.5 rounded-2xl border border-white/10">
+        <div className="flex items-center gap-2 bg-gray-100 p-1.5 rounded-2xl border border-gray-200">
           <button
             onClick={() => setActiveTab('upcoming')}
             className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'upcoming' ? 'bg-gold text-black shadow-gold-glow' : 'text-muted hover:text-white'
+              activeTab === 'upcoming' ? 'bg-fitRed text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             Upcoming Meets (3)
@@ -156,7 +156,7 @@ export default function CompetitionsPage() {
           <button
             onClick={() => setActiveTab('completed')}
             className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'completed' ? 'bg-gold text-black shadow-gold-glow' : 'text-muted hover:text-white'
+              activeTab === 'completed' ? 'bg-fitRed text-white shadow-sm' : 'text-gray-600 hover:text-gray-900'
             }`}
           >
             Past Results
@@ -167,67 +167,67 @@ export default function CompetitionsPage() {
       {/* Meets Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {filtered.map((comp) => (
-          <div key={comp.id} className="glass-panel p-6 sm:p-8 rounded-3xl border border-white/10 flex flex-col justify-between hover:border-gold/40 transition-all">
+          <div key={comp.id} className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-all">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
-                <span className="px-3 py-1 rounded-full bg-gold/10 text-gold border border-gold/30 font-bold text-xs uppercase tracking-wider">
+                <span className="px-3 py-1 rounded-full bg-red-50 text-fitRed border border-red-200 font-bold text-xs uppercase tracking-wider">
                   {comp.sanctioningBody}
                 </span>
-                <span className="font-mono text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                <span className="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">
                   Prize: {comp.prizePool}
                 </span>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-black text-white">{comp.title}</h2>
-              <p className="text-xs text-muted leading-relaxed">{comp.description}</p>
+              <h2 className="text-xl sm:text-2xl font-black text-gray-950">{comp.title}</h2>
+              <p className="text-xs text-gray-600 leading-relaxed">{comp.description}</p>
 
               {/* Specs Pill Grid */}
-              <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-surface border border-white/5 text-xs">
+              <div className="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-gray-50 border border-gray-200 text-xs">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-gold flex-shrink-0" />
+                  <Calendar className="w-4 h-4 text-fitRed flex-shrink-0" />
                   <div>
-                    <div className="text-[10px] text-muted">Date</div>
-                    <div className="font-bold text-white">{comp.eventDate}</div>
+                    <div className="text-[10px] text-gray-500 font-bold uppercase">Date</div>
+                    <div className="font-bold text-gray-950">{comp.eventDate}</div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-gold flex-shrink-0" />
+                  <MapPin className="w-4 h-4 text-fitRed flex-shrink-0" />
                   <div>
-                    <div className="text-[10px] text-muted">Venue</div>
-                    <Link href={`/gyms/${comp.venueGymId}`} className="font-bold text-white hover:text-gold truncate block max-w-[140px]">
+                    <div className="text-[10px] text-gray-500 font-bold uppercase">Venue</div>
+                    <Link href={`/gyms/${comp.venueGymId}`} className="font-bold text-gray-950 hover:text-fitRed truncate block max-w-[140px]">
                       {comp.venue}
                     </Link>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Users className="w-4 h-4 text-gold flex-shrink-0" />
+                  <Users className="w-4 h-4 text-fitRed flex-shrink-0" />
                   <div>
-                    <div className="text-[10px] text-muted">Registered Lifters</div>
-                    <div className="font-bold text-white">{comp.registeredCount} / {comp.maxSlots} Slots</div>
+                    <div className="text-[10px] text-gray-500 font-bold uppercase">Registered Lifters</div>
+                    <div className="font-bold text-gray-950">{comp.registeredCount} / {comp.maxSlots} Slots</div>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-gold flex-shrink-0" />
+                  <Award className="w-4 h-4 text-fitRed flex-shrink-0" />
                   <div>
-                    <div className="text-[10px] text-muted">Entry Fee</div>
-                    <div className="font-bold text-gold">{comp.entryFee}</div>
+                    <div className="text-[10px] text-gray-500 font-bold uppercase">Entry Fee</div>
+                    <div className="font-bold text-fitRed font-mono">{comp.entryFee}</div>
                   </div>
                 </div>
               </div>
 
               {/* Completed Results Podium */}
               {comp.podium && (
-                <div className="pt-2 border-t border-white/10 space-y-2">
-                  <div className="text-xs font-bold text-gold uppercase tracking-wider">Meet Champions</div>
+                <div className="pt-2 border-t border-gray-100 space-y-2">
+                  <div className="text-xs font-bold text-fitRed uppercase tracking-wider">Meet Champions</div>
                   <div className="space-y-1.5">
                     {comp.podium.map((champ) => (
-                      <div key={champ.rank} className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex justify-between items-center text-xs">
-                        <span className="font-bold text-white">#{champ.rank} {champ.name}</span>
-                        <div className="font-mono text-muted">
-                          Total: <strong className="text-gold">{champ.total} kg</strong> • Wilks: <strong className="text-emerald-400">{champ.wilks}</strong>
+                      <div key={champ.rank} className="p-2.5 rounded-xl bg-gray-50 border border-gray-200 flex justify-between items-center text-xs">
+                        <span className="font-bold text-gray-950">#{champ.rank} {champ.name}</span>
+                        <div className="font-mono text-gray-600">
+                          Total: <strong className="text-fitRed">{champ.total} kg</strong> • Wilks: <strong className="text-emerald-700">{champ.wilks}</strong>
                         </div>
                       </div>
                     ))}
@@ -237,10 +237,10 @@ export default function CompetitionsPage() {
             </div>
 
             {/* Action Bar */}
-            <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between">
+            <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
               <Link
                 href={`/gyms/${comp.venueGymId}`}
-                className="text-xs font-bold text-muted hover:text-gold flex items-center gap-1"
+                className="text-xs font-bold text-gray-600 hover:text-fitRed flex items-center gap-1"
               >
                 Inspect Venue Specs <ExternalLink className="w-3.5 h-3.5" />
               </Link>
@@ -248,7 +248,7 @@ export default function CompetitionsPage() {
               {comp.status === 'upcoming' && (
                 <button
                   onClick={() => setSelectedCompForReg(comp)}
-                  className="px-6 py-2.5 rounded-xl bg-gold hover:bg-gold-glow text-black font-black text-xs shadow-gold-glow transition-all hover:scale-105"
+                  className="px-6 py-2.5 rounded-xl bg-fitRed hover:bg-fitRed-hover text-white font-extrabold text-xs shadow-md shadow-red-500/20 transition-all hover:scale-105 uppercase tracking-wider"
                 >
                   Register as Athlete
                 </button>
@@ -260,16 +260,16 @@ export default function CompetitionsPage() {
 
       {/* Registration Modal */}
       {selectedCompForReg && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-gold/40 max-w-lg w-full space-y-6">
-            <div className="flex justify-between items-start pb-4 border-b border-white/10">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-gray-200 shadow-2xl max-w-lg w-full space-y-6 text-gray-900">
+            <div className="flex justify-between items-start pb-4 border-b border-gray-200">
               <div>
-                <h3 className="text-xl font-black text-white">Register for Championship</h3>
-                <p className="text-xs text-muted mt-1">{selectedCompForReg.title}</p>
+                <h3 className="text-xl font-black text-gray-950">Register for Championship</h3>
+                <p className="text-xs text-gray-500 mt-1">{selectedCompForReg.title}</p>
               </div>
               <button
                 onClick={() => setSelectedCompForReg(null)}
-                className="w-8 h-8 rounded-full bg-surface text-white flex items-center justify-center hover:bg-white/10"
+                className="w-8 h-8 rounded-full bg-gray-100 text-gray-700 flex items-center justify-center hover:bg-gray-200 font-bold"
               >
                 ✕
               </button>
@@ -277,23 +277,23 @@ export default function CompetitionsPage() {
 
             <form onSubmit={handleRegister} className="space-y-4">
               <div>
-                <label className="block text-[11px] text-muted uppercase font-bold mb-1">Athlete Full Name</label>
+                <label className="block text-[11px] text-gray-700 uppercase font-bold mb-1">Athlete Full Name</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Vikramaditya Rathore"
                   value={athleteName}
                   onChange={(e) => setAthleteName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-white/10 text-white text-xs outline-none focus:border-gold"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-xs outline-none focus:bg-white focus:border-fitRed transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] text-muted uppercase font-bold mb-1">Weight Category</label>
+                <label className="block text-[11px] text-gray-700 uppercase font-bold mb-1">Weight Category</label>
                 <select
                   value={selectedClass}
                   onChange={(e) => setSelectedClass(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-surface border border-white/10 text-white text-xs outline-none focus:border-gold"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-gray-50 border border-gray-300 text-gray-900 text-xs outline-none focus:bg-white focus:border-fitRed transition-all"
                 >
                   <option value="66kg">66 kg Class</option>
                   <option value="74kg">74 kg Class</option>
@@ -305,24 +305,24 @@ export default function CompetitionsPage() {
                 </select>
               </div>
 
-              <div className="p-4 rounded-xl bg-surface border border-white/5 space-y-2 text-xs">
+              <div className="p-4 rounded-xl bg-gray-50 border border-gray-200 space-y-2 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-muted">Sanctioning Body:</span>
-                  <span className="font-bold text-white">{selectedCompForReg.sanctioningBody}</span>
+                  <span className="text-gray-500">Sanctioning Body:</span>
+                  <span className="font-bold text-gray-950">{selectedCompForReg.sanctioningBody}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted">Registration Fee:</span>
-                  <span className="font-bold text-gold font-mono">{selectedCompForReg.entryFee}</span>
+                  <span className="text-gray-500">Registration Fee:</span>
+                  <span className="font-bold text-fitRed font-mono">{selectedCompForReg.entryFee}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted">Verification Requirement:</span>
-                  <span className="font-bold text-emerald-400">Athloboard ID Verified</span>
+                  <span className="text-gray-500">Verification Requirement:</span>
+                  <span className="font-bold text-emerald-600">Athloboard ID Verified</span>
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl bg-gold hover:bg-gold-glow text-black font-black text-xs shadow-gold-glow transition-all hover:scale-105"
+                className="w-full py-3.5 rounded-xl bg-fitRed hover:bg-fitRed-hover text-white font-extrabold text-xs shadow-md shadow-red-500/20 transition-all hover:scale-105 uppercase tracking-wider"
               >
                 Confirm Athlete Registration
               </button>

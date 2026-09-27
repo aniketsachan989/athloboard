@@ -310,69 +310,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 5. FROM OUR STRENGTH JOURNAL (Exact Fitpass Style with Red Line) */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 space-y-8">
-        <div>
-          <h2 className="text-2xl sm:text-4xl font-black text-gray-950">
-            From our <span className="text-fitRed">Strength Journal</span>
-          </h2>
-          <p className="text-xs sm:text-base text-gray-600 mt-2 font-medium">
-            Evidence-based powerlifting science, biomechanics breakdowns, and lab testing insights to support your strength journey.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: 'IPF Rule 3.2.1: The Biomechanics of Breaking Parallel Squat Depth',
-              desc: 'Why hip crease alignment relative to the knee joint protects ligaments while creating valid world records.',
-              image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600',
-              link: '/verify',
-            },
-            {
-              title: '70% Counterfeit Supplements in India: How to Audit HPLC Lab Reports',
-              desc: 'Understanding nitrogen spiking, heavy metal contamination, and third-party Eurofins verification.',
-              image: 'https://images.unsplash.com/photo-1579758629938-03607ccdbaba?w=600',
-              link: '/marketplace',
-            },
-            {
-              title: 'Calibrated Steel Plates vs Cast Iron: Why the ±10g Tolerance Matters',
-              desc: 'How uncalibrated gym weights can introduce a 15kg error margin during maximum effort attempts.',
-              image: 'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=600',
-              link: '/gyms',
-            },
-            {
-              title: 'Motionless Chest Pause: Why Computer Vision Eliminates Referee Bias',
-              desc: 'How motion energy stabilization verifies motionless contact during bench press competitions.',
-              image: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600',
-              link: '/verify',
-            },
-          ].map((article, aIdx) => (
-            <Link key={aIdx} href={article.link} className="group space-y-3">
-              <div className="aspect-[16/10] rounded-xl overflow-hidden bg-gray-100 shadow-sm group-hover:shadow-md transition-shadow">
-                <img
-                  src={article.image}
-                  alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-              <h3 className="text-sm font-bold text-gray-950 group-hover:text-fitRed transition-colors line-clamp-2">
-                {article.title}
-              </h3>
-              <p className="text-xs text-gray-600 line-clamp-2">
-                {article.desc}
-              </p>
-            </Link>
-          ))}
-        </div>
-
-        {/* Fitpass Red Indicator Line */}
-        <div className="w-full h-1 bg-gray-200 relative rounded-full overflow-hidden mt-6">
-          <div className="w-36 h-full bg-fitRed rounded-full"></div>
-        </div>
-      </div>
-
-      {/* 6. AS COVERED IN MEDIA & FEDERATIONS (Exact Fitpass Media Strip) */}
+      {/* 5. AS COVERED IN MEDIA & FEDERATIONS (Exact Fitpass Media Strip) */}
       <div className="w-full bg-black py-12 px-4 sm:px-6 text-center text-white space-y-8">
         <h2 className="text-xl sm:text-3xl font-extrabold uppercase tracking-wide">
           Recognized by National Media & Federations
@@ -387,7 +325,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 7. RATINGS & SOCIAL PROOF STRIP (Exact Fitpass Banner) */}
+      {/* 6. RATINGS & SOCIAL PROOF STRIP (Exact Fitpass Banner) */}
       <div 
         className="w-full py-12 px-6 sm:px-12 bg-cover bg-center text-white relative"
         style={{ backgroundImage: `url('https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1600')` }}
@@ -417,9 +355,9 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 8. GET ATHLOBOARD & GET LIFTING! APP DOWNLOAD (Exact Fitpass Style) */}
+      {/* 7. GET ATHLOBOARD & GET LIFTING! APP DOWNLOAD (Exact Fitpass Style) */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-        <div className="glass-panel bg-white border border-gray-200 rounded-3xl p-6 sm:p-12 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div className="bg-white border border-gray-200 rounded-3xl p-6 sm:p-12 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-10">
           
           {/* Left Form */}
           <div className="max-w-xl space-y-6">
@@ -432,7 +370,7 @@ export default function HomePage() {
             </p>
 
             <form onSubmit={handleSendLink} className="space-y-4">
-              <div className="flex items-center gap-4 text-xs font-bold text-gray-700">
+              <div className="flex items-center gap-4 text-xs font-bold text-gray-800">
                 <label className="flex items-center gap-1.5 cursor-pointer">
                   <input type="radio" name="comm" defaultChecked className="accent-red-600" />
                   <span>Mobile WhatsApp Link</span>
@@ -450,7 +388,7 @@ export default function HomePage() {
                   placeholder="Enter Mobile No. (+91)"
                   value={mobileNumber}
                   onChange={(e) => setMobileNumber(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl border border-gray-300 text-xs sm:text-sm text-gray-900 outline-none focus:border-fitRed"
+                  className="flex-1 px-4 py-3 rounded-xl bg-gray-50 border border-gray-300 text-xs sm:text-sm text-gray-900 outline-none focus:border-fitRed focus:bg-white transition-all placeholder:text-gray-400"
                 />
                 <button
                   type="submit"
