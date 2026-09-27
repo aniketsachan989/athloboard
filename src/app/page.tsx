@@ -40,7 +40,7 @@ export default function HomePage() {
               Explore Verified Gyms <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
-              href="/for-gyms"
+              href="/for-gyms#enrollment-form-section"
               className="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white bg-surface/90 hover:bg-surfaceHover border border-white/20 text-base backdrop-blur-md transition-colors"
             >
               Enroll Your Gym
@@ -290,7 +290,7 @@ export default function HomePage() {
             >
               <Smartphone className="w-4 h-4" /> Download Athlete App (APK)
             </a>
-            <Link href="/for-gyms" className="px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-sm">
+            <Link href="/for-gyms#enrollment-form-section" className="px-8 py-4 rounded-xl font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow text-sm">
               Enroll as Gym Partner
             </Link>
             <Link href="/for-brands" className="px-8 py-4 rounded-xl font-bold text-white bg-surface hover:bg-surfaceHover border border-white/10 text-sm">

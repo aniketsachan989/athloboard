@@ -77,7 +77,7 @@ export default function Navigation() {
           </Link>
 
           <Link 
-            href="/for-gyms" 
+            href="/for-gyms#enrollment-form-section" 
             className="hidden sm:inline-flex px-3.5 py-1.5 rounded-lg text-xs font-black text-black bg-gold hover:bg-gold-glow shadow-gold-glow transition-all hover:scale-105"
           >
             Enroll Business
@@ -170,7 +170,7 @@ export default function Navigation() {
               Download Android App (APK 16MB)
             </a>
             <Link 
-              href="/for-gyms" 
+              href="/for-gyms#enrollment-form-section" 
               className="inline-flex px-4 py-3 rounded-xl text-xs font-black text-black bg-gold text-center w-full justify-center shadow-gold-glow" 
               onClick={() => setMobileMenuOpen(false)}
             >
