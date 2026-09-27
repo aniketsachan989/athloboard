@@ -39,7 +39,7 @@ export default function HomePage() {
     },
     {
       id: 2,
-      badge: 'FITSHOP LAB-TESTED STORE',
+      badge: 'ATHLOSTORE LAB-TESTED',
       icon: ShoppingCart,
       bgColor: 'bg-fitTeal',
       title: "Connect with 100% Lab-Tested Sports Nutrition",
@@ -176,12 +176,12 @@ export default function HomePage() {
             </div>
           </Link>
 
-          {/* Card 3: FitShop Marketplace */}
+          {/* Card 3: AthloStore Marketplace */}
           <Link href="/marketplace" className="group flex flex-col items-center text-center p-3 rounded-2xl hover:bg-gray-50 transition-all">
             <div className="w-full aspect-[260/306] rounded-2xl overflow-hidden relative shadow-sm group-hover:shadow-md group-hover:scale-[1.02] transition-all">
               <img
                 src="https://images.unsplash.com/photo-1579758629938-03607ccdbaba?w=600"
-                alt="FitShop Lab Tested Nutrition"
+                alt="AthloStore Lab-Tested Nutrition"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
@@ -190,7 +190,7 @@ export default function HomePage() {
               </span>
             </div>
             <div className="text-base sm:text-lg font-bold text-gray-950 mt-3 group-hover:text-fitRed transition-colors">
-              VERIFIED FITSHOP
+              ATHLOSTORE VERIFIED
             </div>
             <div className="text-xs text-gray-600 mt-1 line-clamp-2">
               Eurofins lab-tested proteins, creatine, and powerlifting belts with zero counterfeit risk.

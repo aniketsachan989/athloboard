@@ -78,7 +78,7 @@ export default function Navigation() {
             <ShieldCheck className="w-3.5 h-3.5 text-fitRed" /> AI Coach
           </Link>
           <Link href="/marketplace" className="hover:text-fitRed transition-colors flex items-center gap-1">
-            <ShoppingCart className="w-3.5 h-3.5 text-fitRed" /> FitShop
+            <ShoppingCart className="w-3.5 h-3.5 text-fitRed" /> Store
           </Link>
           <Link href="/leaderboard" className="hover:text-fitRed transition-colors flex items-center gap-1">
             <Trophy className="w-3.5 h-3.5 text-fitRed" /> Leaderboard
@@ -162,7 +162,7 @@ export default function Navigation() {
             className="text-gray-800 hover:text-fitRed py-2 border-b border-gray-50 flex items-center justify-between font-medium" 
             onClick={() => setMobileMenuOpen(false)}
           >
-            <span className="flex items-center gap-2.5"><ShoppingCart className="w-4 h-4 text-fitRed" /> FitShop (Lab-Tested Nutrition)</span>
+            <span className="flex items-center gap-2.5"><ShoppingCart className="w-4 h-4 text-fitRed" /> AthloStore (Lab-Tested Nutrition)</span>
             <ArrowUpRight className="w-4 h-4 text-gray-400" />
           </Link>
 

@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ul className="space-y-2 text-xs">
                   <li><Link href="/gyms" className="hover:text-fitRed transition-colors">Athloboard OnePass</Link></li>
                   <li><Link href="/verify" className="hover:text-fitRed transition-colors">AI Referee Studio</Link></li>
-                  <li><Link href="/marketplace" className="hover:text-fitRed transition-colors">Verified FitShop Store</Link></li>
+                  <li><Link href="/marketplace" className="hover:text-fitRed transition-colors">AthloStore Verified</Link></li>
                   <li><Link href="/leaderboard" className="hover:text-fitRed transition-colors">National Leaderboard</Link></li>
                   <li><Link href="/competitions" className="hover:text-fitRed transition-colors">Sanctioned Meets</Link></li>
                   <li><Link href="/dashboard/gym" className="hover:text-fitRed transition-colors">Gym Dashboard</Link></li>
