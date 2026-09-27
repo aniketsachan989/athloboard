@@ -327,7 +327,9 @@ fun AthloNavHost(
                         popUpTo(Screen.AthleteHome.route) { inclusive = true }
                     }
                 },
-                onOpenProfile = { navController.navigate(Screen.Profile.route) }
+                onOpenProfile = { navController.navigate(Screen.Profile.route) },
+                onLogLiftClick = { navController.navigate(Screen.LogLift.route) },
+                onOpenStore = { navController.navigate(Screen.Store.route) }
             )
         }
 
@@ -448,8 +450,9 @@ fun AthloNavHost(
                         popUpTo(Screen.AthleteHome.route) { inclusive = true }
                     }
                 },
-                onOpenDiscover = { navController.navigate(Screen.Community.route) },
-                onOpenActivity = { navController.navigate(Screen.Leaderboard.route) }
+                onOpenLeaderboard = { navController.navigate(Screen.Leaderboard.route) },
+                onLogLiftClick = { navController.navigate(Screen.LogLift.route) },
+                onOpenStore = { navController.navigate(Screen.Store.route) }
             )
         }
 

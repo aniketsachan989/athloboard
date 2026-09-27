@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
@@ -60,8 +61,9 @@ fun AthleteProfileSettingsScreen(
     onEditProfile: () -> Unit = {},
     onLogout: () -> Unit,
     onOpenHome: () -> Unit = {},
-    onOpenDiscover: () -> Unit = {},
-    onOpenActivity: () -> Unit = {}
+    onOpenLeaderboard: () -> Unit = {},
+    onLogLiftClick: () -> Unit = {},
+    onOpenStore: () -> Unit = {}
 ) {
     val currentAthlete by AthloRepository.currentAthlete.collectAsState()
 
@@ -92,7 +94,12 @@ fun AthleteProfileSettingsScreen(
                         .clickable(onClick = onBackClick),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "‹", color = TextWhite, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = TextWhite,
+                        modifier = Modifier.size(18.dp)
+                    )
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -147,7 +154,7 @@ fun AthleteProfileSettingsScreen(
             ) {
                 ProfileStatPill(title = "Total SBD", value = "${currentAthlete.prSquat + currentAthlete.prBench + currentAthlete.prDeadlift} kg", modifier = Modifier.weight(1f))
                 ProfileStatPill(title = "Rank", value = "#${currentAthlete.rank}", modifier = Modifier.weight(1f))
-                ProfileStatPill(title = "Weight Class", value = currentAthlete.weightClass, modifier = Modifier.weight(1f))
+                ProfileStatPill(title = "Weight Class", value = currentAthlete.weightClass.ifBlank { "-83 kg" }, modifier = Modifier.weight(1f))
             }
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -167,9 +174,9 @@ fun AthleteProfileSettingsScreen(
             onTabSelected = { tab ->
                 when (tab) {
                     0 -> onOpenHome()
-                    1 -> onOpenActivity()
-                    2 -> onOpenHome()
-                    3 -> onOpenDiscover()
+                    1 -> onOpenLeaderboard()
+                    2 -> onLogLiftClick()
+                    3 -> onOpenStore()
                     4 -> { /* Profile */ }
                 }
             },

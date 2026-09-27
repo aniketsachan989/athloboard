@@ -1,5 +1,7 @@
 package com.athloboard.app.ui.athlete.gym
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,6 +57,7 @@ fun GymDetailScreen(
     onBookPlan: (String) -> Unit = {}
 ) {
     val currentGym = gym ?: Gym()
+    val context = LocalContext.current
     var selectedPlan by remember { mutableStateOf("Monthly") }
     var showBookingSuccess by remember { mutableStateOf(false) }
 
@@ -95,6 +99,57 @@ fun GymDetailScreen(
                         Column {
                             Text(text = "Official Audited Strength Facility", color = AccentGreen, fontSize = 14.sp, fontWeight = FontWeight.Black)
                             Text(text = "Calibrated Olympic plates, IPF spec power cages & certified coaches verified.", color = TextMuted, fontSize = 11.sp)
+                        }
+                    }
+                }
+
+                // Quick Action Buttons (Directions & Phone)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(14.dp))
+                            .background(CardDark)
+                            .border(1.dp, CardBorder, RoundedCornerShape(14.dp))
+                            .clickable {
+                                try {
+                                    val geoUri = Uri.parse("geo:0,0?q=" + Uri.encode("${currentGym.gymName}, ${currentGym.locality}, ${currentGym.city}"))
+                                    val mapIntent = Intent(Intent.ACTION_VIEW, geoUri)
+                                    context.startActivity(mapIntent)
+                                } catch (_: Exception) {}
+                            }
+                            .padding(vertical = 12.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(text = "📍", fontSize = 15.sp)
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(text = "Directions", color = TextWhite, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(14.dp))
+                            .background(CardDark)
+                            .border(1.dp, CardBorder, RoundedCornerShape(14.dp))
+                            .clickable {
+                                try {
+                                    val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+919876543210"))
+                                    context.startActivity(dialIntent)
+                                } catch (_: Exception) {}
+                            }
+                            .padding(vertical = 12.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(text = "📞", fontSize = 15.sp)
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(text = "Call Front Desk", color = TextWhite, fontSize = 13.sp, fontWeight = FontWeight.Bold)
                         }
                     }
                 }

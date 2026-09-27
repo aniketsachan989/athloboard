@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.athloboard.app.ui.shared.AthloButton
 import com.athloboard.app.ui.shared.AthloTopBar
 import com.athloboard.app.ui.theme.AccentPrimary
 import com.athloboard.app.ui.theme.BackgroundCard
@@ -278,6 +279,33 @@ fun LiftHistoryScreen(
                     }
                 }
             }
+
+            if (filteredRecords.isEmpty()) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 48.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(text = "🏋️", fontSize = 44.sp)
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Text(text = "No lifts in this category", color = TextPrimary, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = "Tap below to record a new verified set", color = TextSecondary, fontSize = 12.sp)
+                        }
+                    }
+                }
+            }
         }
+
+        Spacer(modifier = Modifier.height(14.dp))
+
+        AthloButton(
+            text = "+ Log New Verified Lift",
+            onClick = onLogNewLift,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

@@ -219,7 +219,9 @@ fun AthleteHomeScreen(
                             text = "⚡ Division ${currentAthlete.weightClass.ifBlank { "-83kg" }} • Rank #${currentAthlete.rank}",
                             color = AccentYellow,
                             fontSize = 11.sp,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
 
@@ -282,10 +284,10 @@ fun AthleteHomeScreen(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(text = "Quick Actions", color = TextWhite, fontSize = 17.sp, fontWeight = FontWeight.Bold)
-                ActionRowItem(icon = "⚡", title = "Record Verified Lift", subtitle = "CameraX referee video audit for national ranking", onClick = onLogLiftClick)
-                ActionRowItem(icon = "📈", title = "National Leaderboards", subtitle = "Explore top IPF lifters across weight classes", onClick = onOpenLeaderboard)
-                ActionRowItem(icon = "🏆", title = "Sanctioned Meets & Competitions", subtitle = "Register for upcoming state & national events", onClick = onOpenCompetitions)
-                ActionRowItem(icon = "🛍️", title = "Supplements & Brand Store", subtitle = "Redeem coupons and shop verified lifting gear", onClick = onOpenStore)
+                ActionRowItem(icon = "⚡", title = "Record Verified Lift", subtitle = "CameraX referee video audit for national ranking", buttonText = "Record ➔", onClick = onLogLiftClick)
+                ActionRowItem(icon = "📈", title = "National Leaderboards", subtitle = "Explore top IPF lifters across weight classes", buttonText = "Rankings ➔", onClick = onOpenLeaderboard)
+                ActionRowItem(icon = "🏆", title = "Sanctioned Meets & Competitions", subtitle = "Register for upcoming state & national events", buttonText = "Meets ➔", onClick = onOpenCompetitions)
+                ActionRowItem(icon = "🛍️", title = "Supplements & Brand Store", subtitle = "Redeem coupons and shop verified lifting gear", buttonText = "Shop ➔", onClick = onOpenStore)
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -405,6 +407,13 @@ private fun DisciplineCard(
     calories: String,
     onClick: () -> Unit
 ) {
+    val disciplineEmoji = when {
+        title.contains("Squat", ignoreCase = true) -> "🏋️"
+        title.contains("Bench", ignoreCase = true) -> "💪"
+        title.contains("Deadlift", ignoreCase = true) -> "⚡"
+        else -> "🔥"
+    }
+
     Box(
         modifier = Modifier
             .width(180.dp)
@@ -418,18 +427,31 @@ private fun DisciplineCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(95.dp)
-                    .background(Color(0xFF22222E)),
-                contentAlignment = Alignment.Center
+                    .background(Color(0xFF22222E))
             ) {
-                Text(text = "🏋️", fontSize = 32.sp)
+                // Centered Distinct Emoji
+                Text(
+                    text = disciplineEmoji,
+                    fontSize = 38.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+
+                // Dedicated Play / Record Badge docked in bottom right corner
                 Box(
                     modifier = Modifier
-                        .size(34.dp)
+                        .align(Alignment.BottomEnd)
+                        .padding(8.dp)
+                        .size(30.dp)
                         .clip(CircleShape)
                         .background(AccentYellow),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(imageVector = Icons.Default.PlayArrow, contentDescription = null, tint = TextOnAccent, modifier = Modifier.size(18.dp))
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = "Log $title",
+                        tint = TextOnAccent,
+                        modifier = Modifier.size(16.dp)
+                    )
                 }
             }
 
@@ -459,6 +481,7 @@ private fun ActionRowItem(
     icon: String,
     title: String,
     subtitle: String,
+    buttonText: String = "Start →",
     onClick: () -> Unit
 ) {
     Box(
@@ -497,13 +520,15 @@ private fun ActionRowItem(
                 }
             }
 
+            Spacer(modifier = Modifier.width(8.dp))
+
             Box(
                 modifier = Modifier
                     .clip(PillShape)
                     .background(AccentYellow)
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                    .padding(horizontal = 10.dp, vertical = 5.dp)
             ) {
-                Text(text = "Start →", color = TextOnAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                Text(text = buttonText, color = TextOnAccent, fontSize = 10.sp, fontWeight = FontWeight.Bold)
             }
         }
     }

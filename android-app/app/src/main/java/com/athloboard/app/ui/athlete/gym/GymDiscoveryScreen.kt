@@ -115,7 +115,17 @@ fun GymDiscoveryScreen(
                             onValueChange = { searchQuery = it },
                             textStyle = androidx.compose.ui.text.TextStyle(color = TextWhite, fontSize = 14.sp),
                             singleLine = true,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+                            decorationBox = { innerTextField ->
+                                if (searchQuery.isEmpty()) {
+                                    Text(
+                                        text = "Search by club name or city...",
+                                        color = TextMuted,
+                                        fontSize = 14.sp
+                                    )
+                                }
+                                innerTextField()
+                            }
                         )
                     }
                 }

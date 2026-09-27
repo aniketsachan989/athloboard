@@ -48,6 +48,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -274,6 +275,12 @@ fun LogLiftScreen(
             cdnUrl = submittedPublicCdnUrl,
             onContinue = {
                 currentStep = "SUBMITTED"
+            },
+            onRetry = {
+                currentStep = "PREVIEW"
+            },
+            onCancel = {
+                currentStep = "PREVIEW"
             }
         )
         return
@@ -313,7 +320,7 @@ fun LogLiftScreen(
                 modifier = Modifier.clickable(onClick = onBackClick)
             ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
                     tint = TextPrimary,
                     modifier = Modifier.size(20.dp)
@@ -850,9 +857,12 @@ fun R2VideoUploadingView(
     statusMessage: String,
     isComplete: Boolean,
     cdnUrl: String,
-    onContinue: () -> Unit
+    onContinue: () -> Unit,
+    onRetry: () -> Unit = {},
+    onCancel: () -> Unit = {}
 ) {
     val progressPercent = (progress.coerceIn(0f, 1f) * 100).toInt()
+    val isError = statusMessage.contains("Error", ignoreCase = true) || statusMessage.contains("Failed", ignoreCase = true)
 
     val infiniteTransition = rememberInfiniteTransition(label = "r2pulse")
     val glowAlpha by infiniteTransition.animateFloat(
@@ -878,17 +888,17 @@ fun R2VideoUploadingView(
                     .size(130.dp)
                     .clip(CircleShape)
                     .background(BackgroundCard)
-                    .border(2.5.dp, AccentPrimary.copy(alpha = glowAlpha), CircleShape)
+                    .border(2.5.dp, if (isError) Color(0xFFFF5252) else AccentPrimary.copy(alpha = glowAlpha), CircleShape)
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(text = "⚡", fontSize = 28.sp)
+                    Text(text = if (isError) "⚠️" else "⚡", fontSize = 28.sp)
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "$progressPercent%",
-                        color = AccentPrimary,
-                        fontSize = 20.sp,
+                        text = if (isError) "Error" else "$progressPercent%",
+                        color = if (isError) Color(0xFFFF5252) else AccentPrimary,
+                        fontSize = if (isError) 14.sp else 20.sp,
                         fontWeight = FontWeight.Black
                     )
                 }
@@ -897,7 +907,7 @@ fun R2VideoUploadingView(
             Spacer(modifier = Modifier.height(28.dp))
 
             Text(
-                text = "Uploading Lift to Cloudflare R2",
+                text = if (isError) "Upload Notice" else "Uploading Lift to Cloudflare R2",
                 color = TextPrimary,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -925,11 +935,11 @@ fun R2VideoUploadingView(
             ) {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth(progress.coerceIn(0.05f, 1f))
+                        .fillMaxWidth(if (isError) 1f else progress.coerceIn(0.05f, 1f))
                         .height(8.dp)
                         .clip(RoundedCornerShape(4.dp))
                         .background(
-                            Brush.horizontalGradient(
+                            if (isError) Brush.linearGradient(listOf(Color(0xFFFF5252), Color(0xFFFF1744))) else Brush.horizontalGradient(
                                 listOf(Color(0xFF00E5FF), AccentPrimary)
                             )
                         )
@@ -940,11 +950,30 @@ fun R2VideoUploadingView(
 
             Text(
                 text = statusMessage,
-                color = TextSecondary,
+                color = if (isError) Color(0xFFFF8A80) else TextSecondary,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Center,
                 lineHeight = 18.sp
             )
+
+            if (isError) {
+                Spacer(modifier = Modifier.height(20.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    AthloSecondaryButton(
+                        text = "Cancel",
+                        onClick = onCancel,
+                        modifier = Modifier.weight(1f)
+                    )
+                    AthloButton(
+                        text = "Retry Upload ↺",
+                        onClick = onRetry,
+                        modifier = Modifier.weight(1.2f)
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(32.dp))
 
